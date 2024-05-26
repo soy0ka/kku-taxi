@@ -5,16 +5,16 @@ import { Heading, Input, InputField, Box, Button, ButtonText } from '@gluestack-
 export default function index() {
   const login = () => {
     return (
-      router.push('tabs')
+      router.push('authcode')
     )
   }
   return (
-    <Box style={Styles.MiddleContainer.container}>
+    <Box style={Styles.container}>
       <Heading style={{ fontSize: '36px' }}>로그인</Heading>
-      <Input m={10}>
+      <Input mb={10} mt={20}>
         <InputField placeholder="학교 이메일" />
       </Input>
-      <Button onPress={login}>
+      <Button onPress={login} style={Styles.Button}>
         <ButtonText>로그인</ButtonText>
       </Button>
     </Box>
