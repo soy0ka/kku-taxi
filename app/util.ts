@@ -1,31 +1,8 @@
 import Axios from 'axios'
+import Device from 'expo-device'
 import { Platform } from 'react-native'
-import * as Device from 'expo-device'
-import * as Application from 'expo-application'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-// import {
-//   initializeAppCheck,
-//   getToken,
-//   ReCaptchaV3Provider,
-// } from 'firebase/app-check'
-// import { app } from '~/service/firebase'
-// import { getCookie } from 'react-use-cookie'
-
-// const appCheck = initializeAppCheck(app, {
-//   provider: new ReCaptchaV3Provider('6LcPWBEkAAAAAGvMehTfPWRw4-yqyAJ9mNg28xRp'),
-// })
-
-export const setToken = async (token: string) => {
-  await AsyncStorage.setItem('@TOKEN', token)
-}
-
-export const removeToken = async () => {
-  await AsyncStorage.removeItem('@TOKEN')
-}
-
-export const getToken = async () => {
-  return await AsyncStorage.getItem('@TOKEN')
-}
+import Application from 'expo-application'
+import { tokenManager } from '../utils/localStorage'
 
 export const api = Axios.create({
   baseURL: 'http://192.168.0.2:3000'
@@ -33,16 +10,16 @@ export const api = Axios.create({
 
 const getDeviceId = async () => {
   if (Platform.OS === 'android') {
-    const deviceId = await Application.getAndroidId()
+    const deviceId = await Application?.getAndroidId()
     return deviceId
   } else {
-    const deviceId = await Application.getIosIdForVendorAsync()
+    const deviceId = await Application?.getIosIdForVendorAsync()
     return deviceId
   }
 }
 
 export const fetcher = async (url: string) => {
-  const Authorization = await AsyncStorage.getItem('@TOKEN')
+  const Authorization = await tokenManager.getToken()
   const deviceId = await getDeviceId()
   // const appCheckTokenResponse = await getToken(
   //   appCheck,
@@ -55,7 +32,7 @@ export const fetcher = async (url: string) => {
         'X-Device-id': deviceId,
         'X-Platform': Platform.OS,
         'X-Device': await Device.deviceName,
-      //   'X-Firebase-AppCheck': appCheckTokenResponse.token,
+        // 'X-Firebase-AppCheck': appCheckTokenResponse.token,
       },
     })
 
@@ -67,7 +44,7 @@ export const fetcher = async (url: string) => {
 }
 
 export const poster = async (url: string, data: object) => {
-  const Authorization = await AsyncStorage.getItem('@TOKEN')
+  const Authorization =  await tokenManager.getToken()
   const deviceId = await getDeviceId()
   // const appCheckTokenResponse = await getToken(
   //   appCheck,
@@ -80,7 +57,7 @@ export const poster = async (url: string, data: object) => {
         'X-Device-ID': deviceId,
         'X-Platform': Platform.OS,
         'X-Device': await Device.deviceName,
-      //   'X-Firebase-AppCheck': appCheckTokenResponse.token,
+        // 'X-Firebase-AppCheck': appCheckTokenResponse.token,
       },
     })
 

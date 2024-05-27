@@ -2,7 +2,7 @@ import React from 'react'
 import Styles from './styles'
 import { router } from 'expo-router'
 import { Alert } from '../components/alert'
-import { fetcher, getToken, poster } from './util'
+import { fetcher, poster } from './util'
 import { Heading, Input, InputField, Box, Button, ButtonText, InputSlot, Text, set } from '@gluestack-ui/themed'
 
 export default function index() {

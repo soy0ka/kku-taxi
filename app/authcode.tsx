@@ -1,6 +1,7 @@
 import React from 'react'
 import Styles from './styles'
-import { poster, setToken } from './util'
+import { poster } from './util'
+import { tokenManager } from '../utils/localStorage'
 import { router } from 'expo-router'
 import {
   Box,
@@ -21,7 +22,7 @@ export default function AuthCodeScreen() {
     if (!code) return alertRef.current.openAlert('인증코드를 입력해주세요', '인증코드는 6자리 숫자로 이루어져있습니다')
     poster('/auth/code', { code }).then((res) => {
       if (res.success) {
-        setToken(res.body.token)
+        tokenManager.setToken(res.body.token)
         router.push('/tabs')
       } else {
         if (res.message === 'Forbidden') {
