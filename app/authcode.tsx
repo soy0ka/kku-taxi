@@ -1,6 +1,6 @@
 import React from 'react'
 import Styles from './styles'
-import { Box, Button, ButtonText, Text, Input, InputField, Heading } from '@gluestack-ui/themed'
+import { Box, Button, ButtonText, Text, Input, InputField, Heading, InputSlot } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 
 export default function AuthCodeScreen() {
@@ -12,7 +12,7 @@ export default function AuthCodeScreen() {
   return (
     <Box style={Styles.container}>
       <Heading fontSize={24} mb={5}>인증코드 입력</Heading>
-      <Text mb={10}> 학교 이메일로 인증코드를 보내드렸어요!</Text>
+      <Text> 학교 이메일로 인증코드를 보내드렸어요!</Text>
       <Input>
         <InputField placeholder="인증코드" />
       </Input>
