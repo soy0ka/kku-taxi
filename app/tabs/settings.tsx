@@ -1,17 +1,20 @@
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react'
+import styles from '../styles'
+import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed'
+import { removeToken } from '../util'
+import { router } from 'expo-router'
 
 export default function Tab() {
+  const handleLogout = () => {
+    removeToken()
+    router.push('/')
+  }
   return (
-    <View style={styles.container}>
-      <Text>Tab [Home|Settings]</Text>
-    </View>
-  );
+    <Box style={styles.container}>
+      <Text>Settings</Text>
+      <Button onPress={() => {handleLogout()}}>
+        <ButtonText>Logout</ButtonText>
+      </Button>
+    </Box>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
