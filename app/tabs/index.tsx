@@ -20,7 +20,6 @@ export default function Tab() {
         텍시팟 구하기
       </Heading>
       <Text size="sm">같이 택시탈 사람을 구해봐요</Text>
-      <Text size="sm">현재 토큰: {token}</Text>
     </Card>
   </Box>
   )

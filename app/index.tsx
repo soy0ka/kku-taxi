@@ -1,28 +1,20 @@
 import React from 'react'
 import Styles from './styles'
-import { getToken, poster } from './util'
 import { router } from 'expo-router'
 import { Alert } from '../components/alert'
+import { fetcher, getToken, poster } from './util'
 import { Heading, Input, InputField, Box, Button, ButtonText, InputSlot, Text, set } from '@gluestack-ui/themed'
 
 export default function index() {
-  const [token, setToken] = React.useState('')
   const [email, setEmail] = React.useState('')
   const alertRef = React.useRef<any>(null)
 
   React.useEffect(() => {
-    const getTokenA = async () => {
-      const token = await getToken()
-      setToken(token || '')
-    }
-    getTokenA()
+    fetcher('/auth/me').then((res) => {
+      if (!res) return
+      if (res.id) router.push('/tabs')
+    })
   }, [])
-
-  React.useEffect(() => {
-    if (token) {
-      router.push('/tabs')
-    }
-  }, [token])
 
   const login = () => {
     if (!email) {
