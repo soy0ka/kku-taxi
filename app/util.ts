@@ -5,7 +5,7 @@ import * as Application from 'expo-application'
 import { tokenManager } from '../utils/localStorage'
 
 export const api = Axios.create({
-  baseURL: 'http://192.168.0.2:3000',
+  baseURL: "http://192.168.0.2:3000"
 })
 
 const getDeviceId = async () => {
@@ -31,7 +31,8 @@ const getHeaders = async () => {
 
 export const fetcher = async (url: string) => {
   try {
-    const { data } = await api.get(url, { headers: await getHeaders() })
+    const headers = await getHeaders()
+    const { data } = await api.get(url, { headers })
     return data?.body
   } catch (error: any) {
     return error.response?.data
@@ -40,7 +41,8 @@ export const fetcher = async (url: string) => {
 
 export const poster = async (url: string, data: object) => {
   try {
-    const response = await api.post(url, data, { headers: await getHeaders() })
+    const headers = await getHeaders()
+    const response = await api.post(url, data, { headers })
     return response.data
   } catch (error: any) {
     return error.response?.data

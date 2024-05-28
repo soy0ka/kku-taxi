@@ -4,7 +4,7 @@ import { router } from 'expo-router'
 import { Alert } from '../components/alert'
 import { fetcher, poster } from './util'
 import { Heading, Input, InputField, Box, Button, ButtonText, InputSlot, Text, set } from '@gluestack-ui/themed'
-import { tokenManager } from '../utils/localStorage'
+import { tokenManager, userManager } from '../utils/localStorage'
 
 export default function index() {
   const [email, setEmail] = React.useState('')
@@ -13,7 +13,10 @@ export default function index() {
   React.useEffect(() => {
     fetcher('/auth/me').then((res) => {
       if (!res) return
-      if (res.id) router.push('/tabs')
+      if (res.id) {
+        userManager.setUser(res)
+        router.push('/tabs')
+      }
     })
   }, [])
 

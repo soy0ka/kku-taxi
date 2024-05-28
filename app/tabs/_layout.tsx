@@ -1,5 +1,5 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
+import { Tabs } from 'expo-router'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 export default function TabLayout() {
   return (
@@ -8,16 +8,29 @@ export default function TabLayout() {
         name="index"
         options={{
           title: '메인',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="home" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: '채팅',
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="home" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Settings',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+          title: '설정',
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="cog" color={color} />
+          ),
         }}
       />
     </Tabs>
-  );
+  )
 }
