@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../styles'
+import styles from '../../styles'
 import {
   Alert,
   AlertIcon,
@@ -11,10 +11,11 @@ import {
   Heading,
 } from '@gluestack-ui/themed'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
-import { DestinationSelector } from '../../components/destinationSelector'
-import { fetcher } from '../util'
+import { Stack } from 'expo-router'
+import { fetcher } from '../../util'
+import { router } from 'expo-router'
 
-export default function Tab() {
+export default function Home() {
   const [notification, setNotification] = React.useState<any>(null)
 
   React.useEffect(() => {
@@ -34,11 +35,13 @@ export default function Tab() {
         </Alert>
       )}
       <Box style={{ padding: 20 }}>
-        <Heading mb={10}>어디로 가시나요?</Heading>
-        <DestinationSelector props={{ title: '출발지' }} />
-        <Divider mb={10} mt={10} />
-        <DestinationSelector props={{ title: '목적지' }} />
-        <Button style={styles.Button} mt={20}>
+        <Button
+          style={styles.Button}
+          mt={20}
+          onPress={() => {
+            router.push('/tabs/home/create')
+          }}
+        >
           <ButtonText>출발</ButtonText>
         </Button>
       </Box>
