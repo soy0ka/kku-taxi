@@ -12,7 +12,10 @@
 
 <table>
   <tr>
-    <td><img src="https://github.com/soy0ka/kku-taxi/assets/55011525/37a24973-54ac-4182-a523-eae9112e2f01" alt="Screenshot 1" width="300"/></td>
-    <td><img src="https://github.com/soy0ka/kku-taxi/assets/55011525/bd7869c8-5a9a-421b-ae2a-20beb8685953" alt="Screenshot 2" width="300"/></td>
+    <td><img src="https://github.com/soy0ka/kku-taxi/assets/55011525/37a24973-54ac-4182-a523-eae9112e2f01" width="300"/></td>
+    <td><img src="https://github.com/soy0ka/kku-taxi/assets/55011525/e42208ca-610e-489d-9f2c-24879eb1bbc8" width="300"/></td>
+    <td><img src="https://github.com/soy0ka/kku-taxi/assets/55011525/f3b70757-2b93-4ecd-8326-d2a3a8447562" width="300"> </td>
   </tr>
 </table>
+
+
