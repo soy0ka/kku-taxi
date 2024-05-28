@@ -5,7 +5,7 @@ import * as Application from 'expo-application'
 import { tokenManager } from '../utils/localStorage'
 
 export const api = Axios.create({
-  baseURL: "http://10.10.8.134:3000"
+  baseURL: "http://192.168.0.2:3000"
 })
 
 export const getDeviceId = async () => {
