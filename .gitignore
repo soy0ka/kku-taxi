@@ -36,3 +36,4 @@ yarn-error.*
 
 .env
 /app/firebase.ts
+googleServiceAccount.json
