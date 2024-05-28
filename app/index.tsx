@@ -4,6 +4,7 @@ import { router } from 'expo-router'
 import { Alert } from '../components/alert'
 import { fetcher, poster } from './util'
 import { Heading, Input, InputField, Box, Button, ButtonText, InputSlot, Text, set } from '@gluestack-ui/themed'
+import { tokenManager } from '../utils/localStorage'
 
 export default function index() {
   const [email, setEmail] = React.useState('')
@@ -21,10 +22,10 @@ export default function index() {
       alertRef.current.openAlert('알림', '이메일을 입력해주세요')
     }
     poster('/auth/login', { email: `${email}@kku.ac.kr` }).then((res) => {
-      if (res.success) {
-        router.push('/authcode')
-      } else {
+      if (!res.success) {
         alertRef.current.openAlert('알림', '에러가 발생했어요')
+      } else {
+        router.push('/authcode')
       }
     })
   }
