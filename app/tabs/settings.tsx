@@ -1,12 +1,12 @@
 import React from 'react'
 import styles from '../styles'
 import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed'
-import { removeToken } from '../util'
+import { tokenManager } from '../../utils/localStorage'
 import { router } from 'expo-router'
 
 export default function Tab() {
   const handleLogout = () => {
-    removeToken()
+    tokenManager.removeToken()
     router.push('/')
   }
   return (
