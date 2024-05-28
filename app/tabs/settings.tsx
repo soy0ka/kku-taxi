@@ -17,11 +17,12 @@ import {
 } from '@gluestack-ui/themed'
 import { tokenManager, userManager } from '../../utils/localStorage'
 import { router } from 'expo-router'
-import { fetcher } from '../util'
+import { fetcher, getDeviceId, poster } from '../util'
 
 export default function Tab() {
   const [user, setUser] = React.useState<any>(null)
   const [devices, setDevices] = React.useState<any>(null)
+  const [currentdevice, setDevice] = React.useState<string>('')
 
   React.useEffect(() => {
     const fetchUser = async () => {
@@ -32,9 +33,17 @@ export default function Tab() {
   }, [])
 
   React.useEffect(() => {
+    const fetchDevice = async () => {
+      const device = await getDeviceId()
+      setDevice(device || '')
+    }
+    fetchDevice()
+  }, [])
+
+  React.useEffect(() => {
     const fetchDevices = async () => {
-      const devices = await fetcher('/auth/mydevice')
-      setDevices(devices)
+      const device = await fetcher('/auth/mydevice')
+      setDevices(device)
     }
     fetchDevices()
   }, [])
@@ -43,6 +52,11 @@ export default function Tab() {
     fetcher('/auth/logout')
     tokenManager.removeToken()
     router.push('/')
+  }
+
+  const expireToken = (token: string) => {
+    setDevices(devices.filter((device: any) => device.token !== token))
+    poster('/auth/logout', { token })
   }
 
   const formatDate = (date: string) => {
@@ -79,9 +93,14 @@ export default function Tab() {
               marginBottom: 10,
             }}
           >
+            {currentdevice === device.device && (
+              <Text color="#036B3F" bold={true}>
+                현재기기
+              </Text>
+            )}
             <HStack space="md" reversed={false}>
               <Text>{device.platform}</Text>
-              <LinkText size="sm" style={{ marginLeft: 'auto' }}>
+              <LinkText size="sm" style={{ marginLeft: 'auto' }} onPress={() => expireToken(device.token)}>
                 로그아웃
               </LinkText>
             </HStack>

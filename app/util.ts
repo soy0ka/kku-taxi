@@ -8,7 +8,7 @@ export const api = Axios.create({
   baseURL: "http://192.168.0.2:3000"
 })
 
-const getDeviceId = async () => {
+export const getDeviceId = async () => {
   if (Platform.OS === 'android') {
     const deviceId = await Application.getAndroidId()
     return deviceId
