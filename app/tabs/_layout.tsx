@@ -18,16 +18,16 @@ export default function TabLayout() {
         options={{
           title: '채팅',
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            <FontAwesome size={28} name="comment" color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: '설정',
+          title: '마이페이지',
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
+            <FontAwesome size={28} name="user" color={color} />
           ),
         }}
       />

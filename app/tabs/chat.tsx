@@ -1,28 +1,30 @@
 import React from 'react'
 import {
   Box,
-  Button,
-  ButtonText,
-  Divider,
+  Text,
   Heading,
+  Card,
+  Avatar,
+  AvatarFallbackText,
+  HStack,
 } from '@gluestack-ui/themed'
-import { DestinationSelector } from '../../components/destinationSelector'
 import styles from '../styles'
 
-export default function Tab() {
+export default function Chat() {
   return (
-    <Box
-      style={{
-        padding: 20,
-      }}
-    >
-      <Heading mb={10}>어디로 가시나요?</Heading>
-      <DestinationSelector props={{ title: '출발지' }} />
-      <Divider mb={10} mt={10} />
-      <DestinationSelector props={{ title: '목적지' }} />
-      <Button style={styles.Button} mt={20}>
-        <ButtonText>출발</ButtonText>
-      </Button>
+    <Box style={{ padding: 20 }}>
+      <Card>
+        <HStack style={{ alignItems: 'center' }}>
+          <Avatar size="md" borderRadius="$full">
+            <AvatarFallbackText>고독한 카피바라</AvatarFallbackText>
+          </Avatar>
+          <Heading ml={10} size="lg">
+            고독한 카피바라의 택시팟
+          </Heading>
+        </HStack>
+        <Text size="sm">2024-05-28 | 건국대학교정문 - 충주역</Text>
+        <Text size="sm">총 인원: 4명</Text>
+      </Card>
     </Box>
   )
 }
