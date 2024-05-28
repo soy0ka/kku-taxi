@@ -16,14 +16,15 @@ interface DestinationSelectorProps {
 }
 export const DestinationSelector: React.FC<DestinationSelectorProps> = ({ props }) => {
   const places = [
+    '충주역',
+    '충주터미널',
     '건국대학교 정문',
     '건국대학교 후문',
-    '모시래마을 & 기숙사',
+    '건국체육관',
     '중원도서관',
     '신촌마을',
     '해오름기숙사',
-    '충주역',
-    '충주터미널',
+    '모시래마을 & 기숙사',
   ]
 
   return (
