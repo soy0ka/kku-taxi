@@ -53,7 +53,7 @@ export default function Tab() {
   return (
     <Box style={{ padding: 20 }}>
       <HStack style={{ alignItems: 'center' }} mb={20}>
-        <Avatar bgColor="$amber600" size="md" borderRadius="$full">
+        <Avatar size="md">
           <AvatarFallbackText>{user?.name}</AvatarFallbackText>
         </Avatar>
         <Heading ml={10} fontSize={18}>
