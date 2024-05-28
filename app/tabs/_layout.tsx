@@ -9,6 +9,7 @@ export default function TabLayout() {
         name="home"
         options={{
           title: '메인',
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="home" color={color} />
           ),
@@ -18,6 +19,7 @@ export default function TabLayout() {
         name="chat"
         options={{
           title: '채팅',
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="comment" color={color} />
           ),
@@ -27,6 +29,7 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: '마이페이지',
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="user" color={color} />
           ),

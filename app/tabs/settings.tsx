@@ -14,6 +14,7 @@ import {
   LinkText,
   Progress,
   ProgressFilledTrack,
+  SafeAreaView,
 } from '@gluestack-ui/themed'
 import { tokenManager, userManager } from '../../utils/localStorage'
 import { router } from 'expo-router'
@@ -65,57 +66,63 @@ export default function Tab() {
   }
 
   return (
-    <Box style={{ padding: 20 }}>
-      <HStack style={{ alignItems: 'center' }} mb={20}>
-        <Avatar size="md">
-          <AvatarFallbackText>{user?.name}</AvatarFallbackText>
-        </Avatar>
-        <Heading ml={10} fontSize={18}>
-          {user?.name}
+    <SafeAreaView>
+      <Box style={{ padding: 20 }}>
+        <HStack style={{ alignItems: 'center' }} mb={20}>
+          <Avatar size="md">
+            <AvatarFallbackText>{user?.name}</AvatarFallbackText>
+          </Avatar>
+          <Heading ml={10} fontSize={18}>
+            {user?.name}
+          </Heading>
+        </HStack>
+        <Text mb={5}>계좌: 토스뱅크 1000-6144-2438</Text>
+        <Heading fontSize={18}>매너온도 36.5°C</Heading>
+        <Progress value={36.5} w={300} size="md">
+          <ProgressFilledTrack />
+        </Progress>
+        <Heading fontSize={18} mt={10}>
+          로그인된 기기
         </Heading>
-      </HStack>
-      <Text mb={5}>계좌: 토스뱅크 1000-6144-2438</Text>
-      <Heading fontSize={18}>매너온도 36.5°C</Heading>
-      <Progress value={36.5} w={300} size="md">
-        <ProgressFilledTrack />
-      </Progress>
-      <Heading fontSize={18} mt={10}>
-        로그인된 기기
-      </Heading>
-      <ScrollView>
-        {devices?.map((device: any) => (
-          <Card
-            key={device.id}
-            style={{
-              padding: 10,
-              backgroundColor: '#f5f5f5',
-              borderRadius: 5,
-              marginBottom: 10,
-            }}
-          >
-            {currentdevice === device.device && (
-              <Text color="#036B3F" bold={true}>
-                현재기기
-              </Text>
-            )}
-            <HStack space="md" reversed={false}>
-              <Text>{device.platform}</Text>
-              <LinkText size="sm" style={{ marginLeft: 'auto' }} onPress={() => expireToken(device.token)}>
-                로그아웃
-              </LinkText>
-            </HStack>
-            <Text>로그인 : {formatDate(device.createdAt)}</Text>
-          </Card>
-        ))}
-      </ScrollView>
-      <Button
-        style={styles.Button}
-        onPress={() => {
-          handleLogout()
-        }}
-      >
-        <ButtonText>로그아웃</ButtonText>
-      </Button>
-    </Box>
+        <ScrollView>
+          {devices?.map((device: any) => (
+            <Card
+              key={device.id}
+              style={{
+                padding: 10,
+                backgroundColor: '#f5f5f5',
+                borderRadius: 5,
+                marginBottom: 10,
+              }}
+            >
+              {currentdevice === device.device && (
+                <Text color="#036B3F" bold={true}>
+                  현재기기
+                </Text>
+              )}
+              <HStack space="md" reversed={false}>
+                <Text>{device.platform}</Text>
+                <LinkText
+                  size="sm"
+                  style={{ marginLeft: 'auto' }}
+                  onPress={() => expireToken(device.token)}
+                >
+                  로그아웃
+                </LinkText>
+              </HStack>
+              <Text>로그인 : {formatDate(device.createdAt)}</Text>
+            </Card>
+          ))}
+        </ScrollView>
+        <Button
+          style={styles.Button}
+          onPress={() => {
+            handleLogout()
+          }}
+        >
+          <ButtonText>로그아웃</ButtonText>
+        </Button>
+      </Box>
+    </SafeAreaView>
   )
 }

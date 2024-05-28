@@ -9,6 +9,7 @@ import {
   ButtonText,
   Divider,
   Heading,
+  SafeAreaView,
 } from '@gluestack-ui/themed'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { Stack } from 'expo-router'
@@ -27,24 +28,28 @@ export default function Home() {
   }, [])
 
   return (
-    <Box>
-      {notification && (
-        <Alert action="info" variant="accent">
-          <AlertIcon as={() => <FontAwesome name="info-circle" size={20} />} />
-          <AlertText ml={10}>{notification}</AlertText>
-        </Alert>
-      )}
-      <Box style={{ padding: 20 }}>
-        <Button
-          style={styles.Button}
-          mt={20}
-          onPress={() => {
-            router.push('/tabs/home/create')
-          }}
-        >
-          <ButtonText>출발</ButtonText>
-        </Button>
+    <SafeAreaView>
+      <Box>
+        {notification && (
+          <Alert action="info" variant="accent">
+            <AlertIcon
+              as={() => <FontAwesome name="info-circle" size={20} />}
+            />
+            <AlertText ml={10}>{notification}</AlertText>
+          </Alert>
+        )}
+        <Box style={{ padding: 20 }}>
+          <Button
+            style={styles.Button}
+            mt={20}
+            onPress={() => {
+              router.push('/tabs/home/create')
+            }}
+          >
+            <ButtonText>출발</ButtonText>
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </SafeAreaView>
   )
 }
