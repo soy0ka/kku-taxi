@@ -16,7 +16,7 @@ import { router } from 'expo-router'
 export default function Home() {
   return (
     <SafeAreaView>
-      <ScrollView style={{ padding: 20 }}>
+      <ScrollView style={{ padding: 20 }} mt={10}>
         {new Array(100).fill(0).map((_, i) => (
           <Pressable onPress={() => router.push('/tabs/chat/chatroom')} key={i} mt={10}>
             <Card>

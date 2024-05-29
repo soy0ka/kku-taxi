@@ -7,26 +7,43 @@ import {
   Box,
   Button,
   ButtonText,
-  Divider,
-  Heading,
+  Input,
+  InputField,
   ScrollView,
+  Text,
 } from '@gluestack-ui/themed'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
-import { Stack } from 'expo-router'
-import { fetcher } from '../../util'
-import { router } from 'expo-router'
 
 export default function Chatroom() {
-  const [notification, setNotification] = React.useState<any>(null)
+  const [notification, setNotification] = React.useState<string>('카피바라~ 카피바라 카피바라 카피바라 카피바라')
+  const [messages, setMessages] = React.useState<string[]>([])
+  const webSocket = React.useRef<WebSocket | null>(null)
 
   React.useEffect(() => {
-    const fetchNotification = async () => {
-      const notification = await fetcher('/notice')
-      setNotification(notification)
+    webSocket.current = new WebSocket('ws://192.168.0.2:3000')
+    webSocket.current.onopen = () => {
+      console.log('WebSocket 연결!')
     }
-    fetchNotification()
+    webSocket.current.onclose = (error: any) => {
+      console.log(error)
+    }
+    webSocket.current.onerror = (error: any) => {
+      console.log(error)
+    }
+    webSocket.current.onmessage = (event: MessageEvent) => {
+      setMessages((prev) => [...prev, event.data])
+    }
+
+    return () => {
+      webSocket.current?.close()
+    }
   }, [])
 
+  const sendMessage = (message: string) => {
+    if (webSocket.current?.readyState === WebSocket.OPEN) {
+      webSocket.current.send(message)
+    }
+  }
   return (
     <Box>
       {notification && (
@@ -35,9 +52,27 @@ export default function Chatroom() {
           <AlertText ml={10}>{notification}</AlertText>
         </Alert>
       )}
-      <ScrollView style={{ padding: 20 }}>
-
+      <ScrollView style={{ padding: 10 }}>
+        {messages.map((message, i) => (
+          <Box key={i} style={{ padding: 10, backgroundColor: '#F0F0F0', borderRadius: 10, marginBottom: 10 }}>
+            <Text>{message}</Text>
+          </Box>
+        ))}
       </ScrollView>
+      <Box style={{ padding: 10 }}>
+        <Input variant="outline" size="md">
+          <InputField />
+          <Button
+            size="md"
+            variant="solid"
+            style={{
+              backgroundColor: '#036B3F',
+            }}
+          >
+            <ButtonText>전송</ButtonText>
+          </Button>
+        </Input>
+      </Box>
     </Box>
   )
 }

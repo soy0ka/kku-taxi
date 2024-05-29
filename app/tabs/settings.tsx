@@ -67,7 +67,7 @@ export default function Tab() {
 
   return (
     <SafeAreaView>
-      <Box style={{ padding: 20 }}>
+      <Box style={{ padding: 20 }} mt={10}>
         <HStack style={{ alignItems: 'center' }} mb={20}>
           <Avatar size="md">
             <AvatarFallbackText>{user?.name}</AvatarFallbackText>
