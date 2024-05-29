@@ -4,7 +4,7 @@ import { router } from 'expo-router'
 import { Alert } from '../components/alert'
 import { fetcher, poster } from './util'
 import { Heading, Input, InputField, Box, Button, ButtonText, InputSlot, Text, set } from '@gluestack-ui/themed'
-import { tokenManager, userManager } from '../utils/localStorage'
+import { userManager } from '../utils/localStorage'
 
 export default function index() {
   const [email, setEmail] = React.useState('')

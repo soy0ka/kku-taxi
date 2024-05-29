@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from '../../styles'
 import {
   Alert,
   AlertIcon,
@@ -12,38 +11,28 @@ import {
   ScrollView,
   Text,
 } from '@gluestack-ui/themed'
+import io from 'socket.io-client'
+import { useLocalSearchParams } from 'expo-router'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 export default function Chatroom() {
-  const [notification, setNotification] = React.useState<string>('카피바라~ 카피바라 카피바라 카피바라 카피바라')
+  const { id } = useLocalSearchParams()
   const [messages, setMessages] = React.useState<string[]>([])
-  const webSocket = React.useRef<WebSocket | null>(null)
+  const [notification, setNotification] = React.useState<string>('')
 
   React.useEffect(() => {
-    webSocket.current = new WebSocket('ws://192.168.0.2:3000')
-    webSocket.current.onopen = () => {
-      console.log('WebSocket 연결!')
-    }
-    webSocket.current.onclose = (error: any) => {
-      console.log(error)
-    }
-    webSocket.current.onerror = (error: any) => {
-      console.log(error)
-    }
-    webSocket.current.onmessage = (event: MessageEvent) => {
-      setMessages((prev) => [...prev, event.data])
-    }
+    const socket = io('http://10.20.19.186:3000', {
+      transports: ['websocket'],
+    })
 
-    return () => {
-      webSocket.current?.close()
-    }
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket server')
+    })
+    socket.on('message', (message) => {
+      setMessages((prev) => [...prev, message])
+    })
   }, [])
 
-  const sendMessage = (message: string) => {
-    if (webSocket.current?.readyState === WebSocket.OPEN) {
-      webSocket.current.send(message)
-    }
-  }
   return (
     <Box>
       {notification && (
@@ -54,8 +43,16 @@ export default function Chatroom() {
       )}
       <ScrollView style={{ padding: 10 }}>
         {messages.map((message, i) => (
-          <Box key={i} style={{ padding: 10, backgroundColor: '#F0F0F0', borderRadius: 10, marginBottom: 10 }}>
-            <Text>{message}</Text>
+          <Box
+            key={i}
+            style={{
+              padding: 10,
+              backgroundColor: '#F0F0F0',
+              borderRadius: 10,
+              marginBottom: 10,
+            }}
+          >
+            <Text>{id}</Text>
           </Box>
         ))}
       </ScrollView>

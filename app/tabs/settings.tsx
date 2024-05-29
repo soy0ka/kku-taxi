@@ -17,21 +17,39 @@ import {
   SafeAreaView,
 } from '@gluestack-ui/themed'
 import { tokenManager, userManager } from '../../utils/localStorage'
-import { router } from 'expo-router'
+import { router, useNavigation } from 'expo-router'
 import { fetcher, getDeviceId, poster } from '../util'
 
 export default function Tab() {
+  const navigation = useNavigation()
   const [user, setUser] = React.useState<any>(null)
   const [devices, setDevices] = React.useState<any>(null)
   const [currentdevice, setDevice] = React.useState<string>('')
 
   React.useEffect(() => {
-    const fetchUser = async () => {
-      const user = await userManager.getUser()
-      setUser(user)
-    }
-    fetchUser()
-  }, [])
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchUser()
+      fetchDevices()
+      fetchDevice()
+    })
+
+    return unsubscribe
+  }, [navigation])
+
+  const fetchDevice = async () => {
+    const device = await getDeviceId()
+    setDevice(device || '')
+  }
+
+  const fetchUser = async () => {
+    const user = await userManager.getUser()
+    setUser(user)
+  }
+
+  const fetchDevices = async () => {
+    const device = await fetcher('/auth/mydevice')
+    setDevices(device)
+  }
 
   React.useEffect(() => {
     const fetchDevice = async () => {
@@ -39,14 +57,6 @@ export default function Tab() {
       setDevice(device || '')
     }
     fetchDevice()
-  }, [])
-
-  React.useEffect(() => {
-    const fetchDevices = async () => {
-      const device = await fetcher('/auth/mydevice')
-      setDevices(device)
-    }
-    fetchDevices()
   }, [])
 
   const handleLogout = () => {
@@ -69,7 +79,7 @@ export default function Tab() {
     <SafeAreaView>
       <Box style={{ padding: 20 }} mt={10}>
         <HStack style={{ alignItems: 'center' }} mb={20}>
-          <Avatar size="md">
+          <Avatar size="md" bgColor='#036B3F'>
             <AvatarFallbackText>{user?.name}</AvatarFallbackText>
           </Avatar>
           <Heading ml={10} fontSize={18}>
