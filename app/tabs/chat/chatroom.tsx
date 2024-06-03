@@ -12,26 +12,38 @@ import {
   Text,
 } from '@gluestack-ui/themed'
 import io from 'socket.io-client'
-import { useLocalSearchParams } from 'expo-router'
+import { useLocalSearchParams, useNavigation } from 'expo-router'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
+import { fetcher, poster } from '../../util'
 
 export default function Chatroom() {
   const { id } = useLocalSearchParams()
+  const navigation = useNavigation()
+  const [value, setValue] = React.useState<string>('')
   const [messages, setMessages] = React.useState<string[]>([])
   const [notification, setNotification] = React.useState<string>('')
 
   React.useEffect(() => {
-    const socket = io('http://10.20.19.186:3000', {
-      transports: ['websocket'],
+    const unsubscribe = navigation.addListener('focus', async() => {
+      setMessages([])
+      const response = await fetcher(`/chat/room/${id}`)
+      if (!response) return
+      for (const message of response) {
+        setMessages((prev) => [...prev, message.content])
+      }
     })
 
-    socket.on('connect', () => {
-      console.log('Connected to WebSocket server')
-    })
-    socket.on('message', (message) => {
-      setMessages((prev) => [...prev, message])
-    })
-  }, [])
+    return unsubscribe
+  }, [navigation])
+
+
+  const ws = new WebSocket(`ws://localhost:3000`)
+  ws.onopen = () => {
+    console.log('Connected to WebSocket server')
+    ws.send('something')
+  }
+  React.useEffect(() => {
+}, [])
 
   return (
     <Box>
@@ -52,19 +64,20 @@ export default function Chatroom() {
               marginBottom: 10,
             }}
           >
-            <Text>{id}</Text>
+            <Text>{message}</Text>
           </Box>
         ))}
       </ScrollView>
       <Box style={{ padding: 10 }}>
         <Input variant="outline" size="md">
-          <InputField />
+          <InputField value={value} onChangeText={(text) => setValue(text)}/>
           <Button
             size="md"
             variant="solid"
             style={{
               backgroundColor: '#036B3F',
             }}
+            onPress={() => handleSend()}
           >
             <ButtonText>전송</ButtonText>
           </Button>
