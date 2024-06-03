@@ -1,88 +1,206 @@
 import React from 'react'
 import {
-  Alert,
   AlertIcon,
   AlertText,
+  Avatar,
+  AvatarFallbackText,
   Box,
   Button,
   ButtonText,
+  HStack,
   Input,
   InputField,
   ScrollView,
   Text,
+  VStack,
+  Heading,
+  AvatarImage,
+  KeyboardAvoidingView,
 } from '@gluestack-ui/themed'
-import io from 'socket.io-client'
+import { Alert } from '../../../components/alert'
+import { io, Socket } from 'socket.io-client'
+import { fetcher, poster, Profile } from '../../util'
+import { userManager } from '../../../utils/localStorage'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
-import { fetcher, poster } from '../../util'
+import { Keyboard, Platform } from 'react-native'
+
+interface Message {
+  id: number
+  content: string
+  isdeleted: boolean
+  sender: {
+    id: number
+    name: string
+  }
+}
 
 export default function Chatroom() {
-  const { id } = useLocalSearchParams()
   const navigation = useNavigation()
+  const { id } = useLocalSearchParams()
+  const alertRef = React.useRef<any>(null)
+  const [user, setUser] = React.useState<any>({})
   const [value, setValue] = React.useState<string>('')
-  const [messages, setMessages] = React.useState<string[]>([])
-  const [notification, setNotification] = React.useState<string>('')
+  const [messages, setMessages] = React.useState<Message[]>([])
+  const [socket, setSocket] = React.useState<Socket | null>(null)
+  const [connection, setConnection] = React.useState<boolean>(false)
+  const URL = process.env.EXPO_PUBLIC_WS_URL || 'http://localhost:3000'
+  const scrollViewRef = React.useRef<any>(null)
 
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', async() => {
-      setMessages([])
+    const ws = io(URL)
+    setSocket(ws)
+    ws.emit('joinRoom', id)
+    fetchUser()
+    setMessages([])
+    const fetchMessages = async () => {
       const response = await fetcher(`/chat/room/${id}`)
-      if (!response) return
-      for (const message of response) {
-        setMessages((prev) => [...prev, message.content])
+      if (response) {
+        setMessages(response)
+        setTimeout(() => {
+          scrollViewRef.current?.scrollToEnd({ animated: true })
+        }, 100)
       }
-    })
+    }
+    fetchMessages()
 
-    return unsubscribe
-  }, [navigation])
+    const unsubscribe = navigation.addListener('focus', fetchMessages)
 
+    return () => {
+      ws.disconnect()
+      unsubscribe()
+    }
+  }, [navigation, id])
 
-  const ws = new WebSocket(`ws://localhost:3000`)
-  ws.onopen = () => {
-    console.log('Connected to WebSocket server')
-    ws.send('something')
-  }
   React.useEffect(() => {
-}, [])
+    if (!socket) return
+    const messageHandler = (message: Message) => {
+      setMessages((prev) => [...prev, message])
+      setTimeout(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true })
+      }, 100)
+    }
+
+    socket.on('messageCreate', messageHandler)
+
+    return () => {
+      socket.off('messageCreate', messageHandler)
+    }
+  }, [socket])
+
+  const fetchUser = async () => {
+    const user = await userManager.getUser()
+    setUser(user)
+  }
+
+  const handleSend = async () => {
+    if (!value) return
+    const message = {
+      content: value,
+      senderId: user.id,
+      roomId: id,
+      sender: {
+        id: user.id,
+        name: user.name,
+      },
+    }
+    socket?.emit('messageCreate', message)
+    setValue('')
+  }
+
+  React.useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        scrollViewRef.current?.scrollToEnd({ animated: true })
+      },
+    )
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        scrollViewRef.current?.scrollToEnd({ animated: true })
+      },
+    )
+
+    return () => {
+      keyboardDidHideListener.remove()
+      keyboardDidShowListener.remove()
+    }
+  }, [])
 
   return (
-    <Box>
-      {notification && (
-        <Alert action="info" variant="accent">
-          <AlertIcon as={() => <FontAwesome name="info-circle" size={20} />} />
-          <AlertText ml={10}>{notification}</AlertText>
-        </Alert>
-      )}
-      <ScrollView style={{ padding: 10 }}>
-        {messages.map((message, i) => (
-          <Box
-            key={i}
-            style={{
-              padding: 10,
-              backgroundColor: '#F0F0F0',
-              borderRadius: 10,
-              marginBottom: 10,
-            }}
-          >
-            <Text>{message}</Text>
-          </Box>
-        ))}
-      </ScrollView>
-      <Box style={{ padding: 10 }}>
-        <Input variant="outline" size="md">
-          <InputField value={value} onChangeText={(text) => setValue(text)}/>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.select({ ios: 80, android: 60 })} // Adjust the offset if needed
+    >
+      <Box style={{ flex: 1, paddingBottom: 70 }}>
+        <Alert ref={alertRef} />
+        <ScrollView
+          ref={scrollViewRef}
+          style={{ flex: 1 }}
+          contentContainerStyle={{ padding: 10, paddingBottom: 20 }}
+        >
+          {messages.map((message, i) => (
+            <Box
+              key={i}
+              style={{
+                padding: 10,
+                backgroundColor: '#F0F0F0',
+                borderRadius: 10,
+                marginBottom: 10,
+              }}
+            >
+              <HStack space="md">
+                <Avatar bgColor="$indigo600">
+                  <AvatarFallbackText>{message.sender.name}</AvatarFallbackText>
+                  <AvatarImage
+                    source={{ uri: Profile(message.sender.name) }}
+                    alt={`${message.sender.name}의 프로필사진`}
+                  />
+                </Avatar>
+                <VStack>
+                  <Heading size="sm">{message.sender.name}</Heading>
+                  <Text size="sm">{message.content}</Text>
+                </VStack>
+                <ButtonText style={{ marginLeft: 'auto' }}>
+                  <Text style={{ color: 'red', fontSize: 14 }}>신고</Text>
+                </ButtonText>
+              </HStack>
+            </Box>
+          ))}
+        </ScrollView>
+        <Box
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            padding: 10,
+            marginBottom: 10,
+          }}
+        >
+          <Input variant="outline" size="md" style={{ flex: 1 }}>
+            <InputField
+              value={value}
+              onChangeText={(text) => setValue(text)}
+            />
+          </Input>
           <Button
             size="md"
             variant="solid"
             style={{
               backgroundColor: '#036B3F',
+              marginLeft: 10,
             }}
+            disabled={!value}
             onPress={() => handleSend()}
           >
             <ButtonText>전송</ButtonText>
           </Button>
-        </Input>
+        </Box>
       </Box>
-    </Box>
+    </KeyboardAvoidingView>
   )
 }
