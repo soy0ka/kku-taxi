@@ -15,9 +15,9 @@
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.0.1",
     "axios": "^1.7.2",
-    "expo": "~51.0.8",
+    "expo": "~51.0.9",
     "expo-application": "~5.9.1",
-    "expo-dev-client": "~4.0.14",
+    "expo-dev-client": "~4.0.15",
     "expo-device": "~6.0.2",
     "expo-document-picker": "^12.0.1",
     "expo-file-system": "~17.0.1",
@@ -50,7 +50,7 @@
     "eslint-plugin-react": "^7.34.1",
     "globals": "^15.3.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3",
+    "typescript": "~5.3.3",
     "typescript-eslint": "^7.10.0"
   },
   "private": true
