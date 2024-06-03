@@ -3,6 +3,7 @@ import styles from '../../styles'
 import {
   Avatar,
   AvatarFallbackText,
+  AvatarImage,
   Card,
   Heading,
   HStack,
@@ -12,7 +13,7 @@ import {
   Text,
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
-import { fetcher } from '../../util'
+import { fetcher, Profile } from '../../util'
 
 export default function ChatRooms() {
   const [chatRooms, setChatRooms] = React.useState<any[]>([])
@@ -41,6 +42,7 @@ export default function ChatRooms() {
               <HStack style={{ alignItems: 'center' }}>
                 <Avatar size="md" borderRadius="$full" bgColor='#036B3F'>
                   <AvatarFallbackText>{room.name}</AvatarFallbackText>
+                  <AvatarImage source={{ uri: Profile(room.name) }} alt={room.name} />
                 </Avatar>
                 <Heading ml={10} size="lg">
                   {room.name}

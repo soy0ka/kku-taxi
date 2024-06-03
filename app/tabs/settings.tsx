@@ -15,10 +15,11 @@ import {
   Progress,
   ProgressFilledTrack,
   SafeAreaView,
+  AvatarImage,
 } from '@gluestack-ui/themed'
 import { tokenManager, userManager } from '../../utils/localStorage'
 import { router, useNavigation } from 'expo-router'
-import { fetcher, getDeviceId, poster } from '../util'
+import { fetcher, getDeviceId, poster, Profile } from '../util'
 
 export default function Tab() {
   const navigation = useNavigation()
@@ -79,8 +80,9 @@ export default function Tab() {
     <SafeAreaView>
       <Box style={{ padding: 20 }} mt={10}>
         <HStack style={{ alignItems: 'center' }} mb={20}>
-          <Avatar size="md" bgColor='#036B3F'>
+          <Avatar size="md" bgColor="#036B3F">
             <AvatarFallbackText>{user?.name}</AvatarFallbackText>
+            <AvatarImage source={{ uri: Profile(user?.name) }} alt={`${user?.name}의 프로필사진`} />
           </Avatar>
           <Heading ml={10} fontSize={18}>
             {user?.name}
