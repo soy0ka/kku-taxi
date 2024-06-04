@@ -29,21 +29,56 @@ import RNDateTimePicker, {
 import { DestinationSelector } from '../../../components/destinationSelector'
 import styles from '../../styles'
 import { Platform } from 'react-native'
+import { poster } from '../../util'
+import { Alert } from '../../../components/alert'
+import { router } from 'expo-router'
+import EasterEgg from '../../../utils/easterEgg'
 
 export default function Create() {
+  const alertRef = React.useRef<any>(null)
   const [date, setDate] = React.useState(new Date())
+  const [departure, setDeparture] = React.useState(0)
+  const [arrival, setArrival] = React.useState(0)
+  const [maxSize, setMaxSize] = React.useState(0)
+  const [description, setDescription] = React.useState('')
+  const [pressCount, setPressCount] = React.useState(0)
 
   const formatDate = (date: Date) => {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`
   }
 
+  const handleSubmit = async () => {
+    if (!departure || !arrival) return alertRef.current.openAlert('에러', '출발지와 목적지를 선택해주세요')
+    if (departure === arrival) {
+      alertRef.current.openAlert('에러', EasterEgg.ArrivalAndDestinationsAreSame(pressCount))
+      return setPressCount(pressCount + 1)
+    }
+    if (!maxSize) return alertRef.current.openAlert('에러', '모집인원을 선택해주세요')
+    if (date < new Date()) return alertRef.current.openAlert('에러', '출발시간은 현재 시간보다 이후여야합니다')
+
+    const response = await poster('/party/create', {
+      description: description || '셜명이 없습니다',
+      dateTime: date,
+      departure,
+      arrival,
+      maxSize
+    })
+    if (!response.success){
+      alertRef.current.openAlert('error', response.message)
+    } else {
+      alertRef.current.openAlert('success', '팟이 생성되었습니다.')
+      router.push('home')
+    }
+  }
+
   return (
     <Box style={{ padding: 20 }}>
+      <Alert ref={alertRef} />
       <ScrollView>
         <Heading mb={10}>어디로 가시나요?</Heading>
-        <DestinationSelector props={{ title: '출발지' }} />
+        <DestinationSelector props={{ title: '출발지' }} onChange={(value) => setDeparture(value)} />
         <Divider mb={10} mt={10} />
-        <DestinationSelector props={{ title: '목적지' }} />
+        <DestinationSelector props={{ title: '목적지' }} onChange={(value) => setArrival(value)} />
         {Platform.OS === 'ios' ? (
           <RNDateTimePicker
             minimumDate={new Date()}
@@ -93,7 +128,7 @@ export default function Create() {
           <FormControlLabel mb="$1">
             <FormControlLabelText>모집인원</FormControlLabelText>
           </FormControlLabel>
-          <Select>
+          <Select onValueChange={(value) => setMaxSize(Number(value))}>
             <SelectTrigger variant="outline" size="md">
               <SelectInput placeholder="0명" />
             </SelectTrigger>
@@ -114,10 +149,16 @@ export default function Create() {
             </SelectPortal>
           </Select>
           <Textarea size="md" mt={10}>
-            <TextareaInput placeholder="설명글 (하고싶은 말을 추가해주세요)" />
+            <TextareaInput
+              value={description}
+              onChangeText={(newValue) => {
+                setDescription(newValue)
+              }}
+              placeholder="설명글 (하고싶은 말을 추가해주세요)"
+            />
           </Textarea>
         </FormControl>
-        <Button style={styles.Button} mt={20}>
+        <Button style={styles.Button} mt={20} onPress={handleSubmit}>
           <ButtonText>만들기</ButtonText>
         </Button>
       </ScrollView>

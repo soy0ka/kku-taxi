@@ -10,11 +10,12 @@ import {
 } from '@gluestack-ui/themed'
 
 interface DestinationSelectorProps {
+  onChange?: (value: number) => void
   props: {
     title: string
   }
 }
-export const DestinationSelector: React.FC<DestinationSelectorProps> = ({ props }) => {
+export const DestinationSelector: React.FC<DestinationSelectorProps> = ({ props, onChange }) => {
   const places = [
     '충주역',
     '충주터미널',
@@ -28,7 +29,13 @@ export const DestinationSelector: React.FC<DestinationSelectorProps> = ({ props 
   ]
 
   return (
-    <Select>
+    <Select 
+      onValueChange={(value) => {
+        if (onChange) {
+          onChange(parseInt(value))
+        }
+      }}
+    >
       <SelectTrigger variant="outline" size="md">
         <SelectInput placeholder={props?.title} />
       </SelectTrigger>

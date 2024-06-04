@@ -38,3 +38,5 @@ yarn-error.*
 /app/firebase.ts
 googleServiceAccount.json
 eas.json
+*.apk
+*.aab

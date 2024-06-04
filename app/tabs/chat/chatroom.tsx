@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   AlertIcon,
   AlertText,
@@ -16,84 +16,85 @@ import {
   Heading,
   AvatarImage,
   KeyboardAvoidingView,
-} from '@gluestack-ui/themed'
-import { Alert } from '../../../components/alert'
-import { io, Socket } from 'socket.io-client'
-import { fetcher, poster, Profile } from '../../util'
-import { userManager } from '../../../utils/localStorage'
-import { useLocalSearchParams, useNavigation } from 'expo-router'
-import { Keyboard, Platform } from 'react-native'
+} from '@gluestack-ui/themed';
+import { Alert } from '../../../components/alert';
+import { io, Socket } from 'socket.io-client';
+import { fetcher, poster, Profile } from '../../util';
+import { userManager } from '../../../utils/localStorage';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { Keyboard, Platform } from 'react-native';
 
 interface Message {
-  id: number
-  content: string
-  isdeleted: boolean
+  id: number;
+  content: string;
+  isdeleted: boolean;
+  createdAt: string;
   sender: {
-    id: number
-    name: string
-  }
+    id: number;
+    name: string;
+  };
 }
 
 export default function Chatroom() {
-  const navigation = useNavigation()
-  const { id } = useLocalSearchParams()
-  const alertRef = React.useRef<any>(null)
-  const [user, setUser] = React.useState<any>({})
-  const [value, setValue] = React.useState<string>('')
-  const [messages, setMessages] = React.useState<Message[]>([])
-  const [socket, setSocket] = React.useState<Socket | null>(null)
-  const [connection, setConnection] = React.useState<boolean>(false)
-  const URL = process.env.EXPO_PUBLIC_WS_URL || 'http://localhost:3000'
-  const scrollViewRef = React.useRef<any>(null)
+  const navigation = useNavigation();
+  const { id } = useLocalSearchParams();
+  const alertRef = React.useRef<any>(null);
+  const [user, setUser] = React.useState<any>({});
+  const [value, setValue] = React.useState<string>('');
+  const [messages, setMessages] = React.useState<Message[]>([]);
+  const [socket, setSocket] = React.useState<Socket | null>(null);
+  const [connection, setConnection] = React.useState<boolean>(false);
+  const URL = process.env.EXPO_PUBLIC_WS_URL || 'http://localhost:3000';
+  const scrollViewRef = React.useRef<any>(null);
 
   React.useEffect(() => {
-    const ws = io(URL)
-    setSocket(ws)
-    ws.emit('joinRoom', id)
-    fetchUser()
-    setMessages([])
+    const ws = io(URL);
+    setSocket(ws);
+    ws.emit('joinRoom', id);
+    fetchUser();
+    setMessages([]);
     const fetchMessages = async () => {
-      const response = await fetcher(`/chat/room/${id}`)
+      const response = await fetcher(`/chat/room/${id}`);
       if (response) {
-        setMessages(response)
+        setMessages(response);
         setTimeout(() => {
-          scrollViewRef.current?.scrollToEnd({ animated: true })
-        }, 100)
+          scrollViewRef.current?.scrollToEnd({ animated: true });
+        }, 100);
       }
-    }
-    fetchMessages()
+    };
+    fetchMessages();
 
-    const unsubscribe = navigation.addListener('focus', fetchMessages)
+    const unsubscribe = navigation.addListener('focus', fetchMessages);
 
     return () => {
-      ws.disconnect()
-      unsubscribe()
-    }
-  }, [navigation, id])
+      ws.disconnect();
+      unsubscribe();
+    };
+  }, [navigation, id]);
 
   React.useEffect(() => {
-    if (!socket) return
+    if (!socket) return;
     const messageHandler = (message: Message) => {
-      setMessages((prev) => [...prev, message])
+      setMessages((prev) => [...prev, message]);
       setTimeout(() => {
-        scrollViewRef.current?.scrollToEnd({ animated: true })
-      }, 100)
-    }
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+      }, 100);
+    };
 
-    socket.on('messageCreate', messageHandler)
+    socket.on('messageCreate', messageHandler);
 
     return () => {
-      socket.off('messageCreate', messageHandler)
-    }
-  }, [socket])
+      socket.off('messageCreate', messageHandler);
+    };
+  }, [socket]);
 
   const fetchUser = async () => {
-    const user = await userManager.getUser()
-    setUser(user)
-  }
+    const user = await userManager.getUser();
+    setUser(user);
+  };
 
   const handleSend = async () => {
-    if (!value) return
+    if (!value) return;
     const message = {
       content: value,
       senderId: user.id,
@@ -102,43 +103,43 @@ export default function Chatroom() {
         id: user.id,
         name: user.name,
       },
-    }
-    socket?.emit('messageCreate', message)
-    setValue('')
-  }
+    };
+    socket?.emit('messageCreate', message);
+    setValue('');
+  };
 
   React.useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        scrollViewRef.current?.scrollToEnd({ animated: true })
+        scrollViewRef.current?.scrollToEnd({ animated: true });
       },
-    )
+    );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        scrollViewRef.current?.scrollToEnd({ animated: true })
+        scrollViewRef.current?.scrollToEnd({ animated: true });
       },
-    )
+    );
 
     return () => {
-      keyboardDidHideListener.remove()
-      keyboardDidShowListener.remove()
-    }
-  }, [])
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
-      keyboardVerticalOffset={Platform.select({ ios: 80, android: 60 })} // Adjust the offset if needed
+      keyboardVerticalOffset={Platform.select({ ios: 80, android: 90 })}
     >
-      <Box style={{ flex: 1, paddingBottom: 70 }}>
+      <Box style={{ flex: 1 }}>
         <Alert ref={alertRef} />
         <ScrollView
           ref={scrollViewRef}
           style={{ flex: 1 }}
-          contentContainerStyle={{ padding: 10, paddingBottom: 20 }}
+          contentContainerStyle={{ padding: 10, paddingBottom: 100 }}
         >
           {messages.map((message, i) => (
             <Box
@@ -162,9 +163,9 @@ export default function Chatroom() {
                   <Heading size="sm">{message.sender.name}</Heading>
                   <Text size="sm">{message.content}</Text>
                 </VStack>
-                <ButtonText style={{ marginLeft: 'auto' }}>
-                  <Text style={{ color: 'red', fontSize: 14 }}>신고</Text>
-                </ButtonText>
+                <Text style={{ color: '#666', fontSize: 12, marginLeft: 'auto' }}>
+                  {new Date(message.createdAt).toLocaleString()}
+                </Text>
               </HStack>
             </Box>
           ))}
@@ -173,12 +174,13 @@ export default function Chatroom() {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
+            padding: 10,
+            marginBottom: Platform.OS === 'ios' ? 10 : 40,
+            backgroundColor: '#fff',
             position: 'absolute',
             bottom: 0,
             left: 0,
             right: 0,
-            padding: 10,
-            marginBottom: 10,
           }}
         >
           <Input variant="outline" size="md" style={{ flex: 1 }}>
@@ -194,7 +196,7 @@ export default function Chatroom() {
               backgroundColor: '#036B3F',
               marginLeft: 10,
             }}
-            disabled={!value}
+            isDisabled={!value}
             onPress={() => handleSend()}
           >
             <ButtonText>전송</ButtonText>
@@ -202,5 +204,5 @@ export default function Chatroom() {
         </Box>
       </Box>
     </KeyboardAvoidingView>
-  )
+  );
 }
