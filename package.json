@@ -35,6 +35,7 @@
     "expo-sharing": "^12.0.1",
     "expo-status-bar": "~1.12.1",
     "md5": "^2.3.0",
+    "metro": "^0.80.9",
     "metro-cache": "^0.80.9",
     "react": "18.2.0",
     "react-native": "0.74.1",

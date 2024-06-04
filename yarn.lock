@@ -6873,7 +6873,7 @@ metro-transform-worker@0.80.9:
     metro-transform-plugins "0.80.9"
     nullthrows "^1.1.1"
 
-metro@0.80.9, metro@^0.80.3:
+metro@0.80.9, metro@^0.80.3, metro@^0.80.9:
   version "0.80.9"
   resolved "https://registry.yarnpkg.com/metro/-/metro-0.80.9.tgz#de3c2011df62036520d51d040d2dde0d015aecb6"
   integrity sha512-Bc57Xf3GO2Xe4UWQsBj/oW6YfLPABEu8jfDVDiNmJvoQW4CO34oDPuYKe4KlXzXhcuNsqOtSxpbjCRRVjhhREg==
