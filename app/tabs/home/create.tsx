@@ -67,7 +67,7 @@ export default function Create() {
       alertRef.current.openAlert('error', response.message)
     } else {
       alertRef.current.openAlert('success', '팟이 생성되었습니다.')
-      router.push('home')
+      router.push(`/tabs/chat/chatroom?id=${response.body.id}`)
     }
   }
 
@@ -76,9 +76,9 @@ export default function Create() {
       <Alert ref={alertRef} />
       <ScrollView>
         <Heading mb={10}>어디로 가시나요?</Heading>
-        <DestinationSelector props={{ title: '출발지' }} onChange={(value) => setDeparture(value)} />
+        <DestinationSelector props={{ title: '출발지' }} onChange={(value) => setDeparture(value + 1)} />
         <Divider mb={10} mt={10} />
-        <DestinationSelector props={{ title: '목적지' }} onChange={(value) => setArrival(value)} />
+        <DestinationSelector props={{ title: '목적지' }} onChange={(value) => setArrival(value + 1)} />
         {Platform.OS === 'ios' ? (
           <RNDateTimePicker
             minimumDate={new Date()}
