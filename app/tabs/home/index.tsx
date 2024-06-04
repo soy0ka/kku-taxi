@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from '../../styles'
 import {
   Alert,
   AlertIcon,
@@ -7,14 +6,12 @@ import {
   Box,
   Button,
   ButtonText,
-  Divider,
-  Heading,
   SafeAreaView,
 } from '@gluestack-ui/themed'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
-import { Stack } from 'expo-router'
-import { fetcher } from '../../util'
+import styles from '../../styles'
 import { router } from 'expo-router'
+import { fetcher } from '../../util'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 export default function Home() {
   const [notification, setNotification] = React.useState<any>(null)

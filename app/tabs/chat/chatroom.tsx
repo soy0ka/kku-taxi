@@ -1,7 +1,5 @@
-import React from 'react';
+import React from 'react'
 import {
-  AlertIcon,
-  AlertText,
   Avatar,
   AvatarFallbackText,
   Box,
@@ -16,85 +14,85 @@ import {
   Heading,
   AvatarImage,
   KeyboardAvoidingView,
-} from '@gluestack-ui/themed';
-import { Alert } from '../../../components/alert';
-import { io, Socket } from 'socket.io-client';
-import { fetcher, poster, Profile } from '../../util';
-import { userManager } from '../../../utils/localStorage';
-import { useLocalSearchParams, useNavigation } from 'expo-router';
-import { Keyboard, Platform } from 'react-native';
+} from '@gluestack-ui/themed'
+import { io, Socket } from 'socket.io-client'
+import { fetcher, Profile } from '../../util'
+import { Keyboard, Platform } from 'react-native'
+import { Alert } from '../../../components/alert'
+import { userManager } from '../../../utils/localStorage'
+import { useLocalSearchParams, useNavigation } from 'expo-router'
 
 interface Message {
-  id: number;
-  content: string;
-  isdeleted: boolean;
-  createdAt: string;
+  id: number
+  content: string
+  isdeleted: boolean
+  createdAt: string
   sender: {
-    id: number;
-    name: string;
-  };
+    id: number
+    name: string
+  }
 }
 
 export default function Chatroom() {
-  const navigation = useNavigation();
-  const { id } = useLocalSearchParams();
-  const alertRef = React.useRef<any>(null);
-  const [user, setUser] = React.useState<any>({});
-  const [value, setValue] = React.useState<string>('');
-  const [messages, setMessages] = React.useState<Message[]>([]);
-  const [socket, setSocket] = React.useState<Socket | null>(null);
-  const [connection, setConnection] = React.useState<boolean>(false);
-  const URL = process.env.EXPO_PUBLIC_WS_URL || 'http://localhost:3000';
-  const scrollViewRef = React.useRef<any>(null);
+  const navigation = useNavigation()
+  const { id } = useLocalSearchParams()
+  const alertRef = React.useRef<any>(null)
+  const [user, setUser] = React.useState<any>({})
+  const [value, setValue] = React.useState<string>('')
+  const [messages, setMessages] = React.useState<Message[]>([])
+  const [socket, setSocket] = React.useState<Socket | null>(null)
+  const [connection, setConnection] = React.useState<boolean>(false)
+  const URL = process.env.EXPO_PUBLIC_WS_URL || 'http://localhost:3000'
+  const scrollViewRef = React.useRef<any>(null)
 
   React.useEffect(() => {
-    const ws = io(URL);
-    setSocket(ws);
-    ws.emit('joinRoom', id);
-    fetchUser();
-    setMessages([]);
+    const ws = io(URL)
+    setSocket(ws)
+    ws.emit('joinRoom', id)
+    fetchUser()
+    setMessages([])
     const fetchMessages = async () => {
-      const response = await fetcher(`/chat/room/${id}`);
+      const response = await fetcher(`/chat/room/${id}`)
       if (response) {
-        setMessages(response);
+        setMessages(response)
         setTimeout(() => {
-          scrollViewRef.current?.scrollToEnd({ animated: true });
-        }, 100);
+          scrollViewRef.current?.scrollToEnd({ animated: true })
+        }, 100)
       }
-    };
-    fetchMessages();
+    }
+    fetchMessages()
 
-    const unsubscribe = navigation.addListener('focus', fetchMessages);
+    const unsubscribe = navigation.addListener('focus', fetchMessages)
 
     return () => {
-      ws.disconnect();
-      unsubscribe();
-    };
-  }, [navigation, id]);
+      ws.disconnect()
+      unsubscribe()
+    }
+  }, [navigation, id])
 
   React.useEffect(() => {
-    if (!socket) return;
+    if (!socket) return
     const messageHandler = (message: Message) => {
-      setMessages((prev) => [...prev, message]);
+      setMessages((prev) => [...prev, message])
       setTimeout(() => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
-      }, 100);
-    };
+        scrollViewRef.current?.scrollToEnd({ animated: true })
+      }, 100)
+    }
 
-    socket.on('messageCreate', messageHandler);
+    socket.on('messageCreate', messageHandler)
 
     return () => {
-      socket.off('messageCreate', messageHandler);
-    };
-  }, [socket]);
+      socket.off('messageCreate', messageHandler)
+    }
+  }, [socket])
 
   const fetchUser = async () => {
-    const user = await userManager.getUser();
-    setUser(user);
-  };
+    const user = await userManager.getUser()
+    setUser(user)
+  }
 
   const handleSend = async () => {
-    if (!value) return;
+    if (!value) return
     const message = {
       content: value,
       senderId: user.id,
@@ -103,30 +101,30 @@ export default function Chatroom() {
         id: user.id,
         name: user.name,
       },
-    };
-    socket?.emit('messageCreate', message);
-    setValue('');
-  };
+    }
+    socket?.emit('messageCreate', message)
+    setValue('')
+  }
 
   React.useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
+        scrollViewRef.current?.scrollToEnd({ animated: true })
       },
-    );
+    )
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
+        scrollViewRef.current?.scrollToEnd({ animated: true })
       },
-    );
+    )
 
     return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
+      keyboardDidHideListener.remove()
+      keyboardDidShowListener.remove()
+    }
+  }, [])
 
   return (
     <KeyboardAvoidingView
@@ -210,5 +208,5 @@ export default function Chatroom() {
         </Box>
       </Box>
     </KeyboardAvoidingView>
-  );
+  )
 }

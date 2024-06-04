@@ -23,16 +23,16 @@ import {
   Text,
   ScrollView,
 } from '@gluestack-ui/themed'
+import styles from '../../styles'
+import { poster } from '../../util'
+import { router } from 'expo-router'
+import { Platform } from 'react-native'
 import RNDateTimePicker, {
   DateTimePickerAndroid,
 } from '@react-native-community/datetimepicker'
-import { DestinationSelector } from '../../../components/destinationSelector'
-import styles from '../../styles'
-import { Platform } from 'react-native'
-import { poster } from '../../util'
-import { Alert } from '../../../components/alert'
-import { router } from 'expo-router'
 import EasterEgg from '../../../utils/easterEgg'
+import { Alert } from '../../../components/alert'
+import { DestinationSelector } from '../../../components/destinationSelector'
 
 export default function Create() {
   const alertRef = React.useRef<any>(null)

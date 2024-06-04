@@ -1,7 +1,7 @@
-import Axios from 'axios'
 import md5 from 'md5'
-import { Platform } from 'react-native'
+import Axios from 'axios'
 import * as Device from 'expo-device'
+import { Platform } from 'react-native'
 import * as Application from 'expo-application'
 import { tokenManager } from '../utils/localStorage'
 
@@ -10,7 +10,7 @@ export const api = Axios.create({
 })
 
 export const Profile = (identifinder: string) => {
-  if (!identifinder) return `https://www.gravatar.com/avatar/${md5(Math.random())}?d=identicon&s=200`
+  if (!identifinder) return `https://www.gravatar.com/avatar/${md5(String(Math.random()))}?d=identicon&s=200`
   const hash = md5(identifinder)
   return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=200`
 }

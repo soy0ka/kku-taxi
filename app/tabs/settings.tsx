@@ -17,9 +17,9 @@ import {
   SafeAreaView,
   AvatarImage,
 } from '@gluestack-ui/themed'
-import { tokenManager, userManager } from '../../utils/localStorage'
 import { router, useNavigation } from 'expo-router'
 import { fetcher, getDeviceId, poster, Profile } from '../util'
+import { tokenManager, userManager } from '../../utils/localStorage'
 
 export default function Tab() {
   const navigation = useNavigation()

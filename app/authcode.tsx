@@ -1,8 +1,4 @@
 import React from 'react'
-import Styles from './styles'
-import { poster } from './util'
-import { tokenManager } from '../utils/localStorage'
-import { router } from 'expo-router'
 import {
   Box,
   Button,
@@ -12,7 +8,11 @@ import {
   InputField,
   Heading,
 } from '@gluestack-ui/themed'
+import Styles from './styles'
+import { poster } from './util'
+import { router } from 'expo-router'
 import { Alert } from '../components/alert'
+import { tokenManager } from '../utils/localStorage'
 
 export default function AuthCodeScreen() {
   const [code, setCode] = React.useState('')

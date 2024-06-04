@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from '../../styles'
 import {
   Avatar,
   AvatarFallbackText,
@@ -13,8 +12,8 @@ import {
   Text,
   VStack,
 } from '@gluestack-ui/themed'
-import { router, useNavigation } from 'expo-router'
 import { fetcher, Profile } from '../../util'
+import { router, useNavigation } from 'expo-router'
 
 export default function ChatRooms() {
   const [chatRooms, setChatRooms] = React.useState<any[]>([])
