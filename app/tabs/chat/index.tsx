@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
+  VStack,
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
 import { fetcher, Profile } from '../../util'
@@ -32,7 +33,11 @@ export default function ChatRooms() {
     if (!res) return
     setChatRooms(res)
   }
-
+  
+  const formatTime = (date: string) => {
+    const d = new Date(date)
+    return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${d.getHours()}:${d.getMinutes()}`
+  }
   return (
     <SafeAreaView>
       <ScrollView style={{ padding: 20 }} mt={10}>
@@ -42,17 +47,18 @@ export default function ChatRooms() {
               <HStack style={{ alignItems: 'center' }}>
                 <Avatar size="md" borderRadius="$full" bgColor='#036B3F'>
                   <AvatarFallbackText>{room.name}</AvatarFallbackText>
-                  <AvatarImage source={{ uri: Profile(room.name) }} alt={room.name} />
+                  <AvatarImage source={{ uri: Profile(room.id) }} alt={room.name} />
                 </Avatar>
-                <Heading ml={10} size="lg">
-                  {room.name}
-                </Heading>
+                <VStack ml={10}>
+                  <Heading size="md">{room.name}</Heading>
+                  <Text size="md">{room.party.from.name} - {room.party.to.name}</Text>
+                </VStack>
               </HStack>
-              <Text size="sm">2024-05-28 | 건국대학교정문 - 충주역</Text>
-              <Text size="sm">총 인원: 4명</Text>
+              <Text size="sm">{formatTime(room.party.departure)}</Text>
             </Card>
           </Pressable>
         ))}
+        {!chatRooms.length && <Text style={{ textAlign: 'center' }}>아직 참여중인 채팅방이 없습니다.</Text>}
       </ScrollView>
     </SafeAreaView>
   )
