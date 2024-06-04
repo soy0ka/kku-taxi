@@ -141,6 +141,12 @@ export default function Chatroom() {
           style={{ flex: 1 }}
           contentContainerStyle={{ padding: 10, paddingBottom: 100 }}
         >
+          {!messages.length && (
+            <Box style={{ alignItems: 'center', marginTop: 20 }}>
+              <Text>아직 아무도 대화를 시작하지 않았군요</Text>
+              <Text>가장 처음으로 안녕이라고 인사해보는건 어떤가요?</Text>
+            </Box>
+          )}
           {messages.map((message, i) => (
             <Box
               key={i}
