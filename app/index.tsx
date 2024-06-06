@@ -25,7 +25,7 @@ export default function index() {
       alertRef.current.openAlert('알림', '이메일을 입력해주세요')
     }
     poster('/auth/login', { email: `${email}@kku.ac.kr` }).then((res) => {
-      if (!res.success) {
+      if (!res ||!res.success) {
         alertRef.current.openAlert('알림', '에러가 발생했어요')
       } else {
         router.push('/authcode')

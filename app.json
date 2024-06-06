@@ -14,12 +14,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.onde.kkutaxi",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "bundleIdentifier": "com.onde.kkutaxi"
     },
     "android": {
+      "versionCode": 2,
       "package": "com.onde.kkutaxi",
-      "googleServicesFile": "./android/app/google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -29,20 +28,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router",
-      "expo-dev-client",
-      "@react-native-firebase/app",
-      "@react-native-firebase/auth",
-      "@react-native-firebase/app-check",
-      "@react-native-firebase/crashlytics",
-      [
-        "expo-build-properties",
-        {
-          "ios": {
-            "useFrameworks": "static"
-          }
-        }
-      ]
+      "expo-router"
     ],
     "extra": {
       "router": {

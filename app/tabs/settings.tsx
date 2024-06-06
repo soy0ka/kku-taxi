@@ -96,7 +96,7 @@ export default function Tab() {
         <Heading fontSize={18} mt={10}>
           로그인된 기기
         </Heading>
-        <ScrollView>
+        <ScrollView style={{ maxHeight: '60%' }}>
           {devices?.map((device: any) => (
             <Card
               key={device.id}
