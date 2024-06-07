@@ -1,6 +1,7 @@
 import md5 from 'md5'
 import Axios from 'axios'
 import * as Device from 'expo-device'
+import Constants from 'expo-constants'
 import { Platform } from 'react-native'
 import * as Application from 'expo-application'
 import { tokenManager } from '../utils/localStorage'
@@ -33,6 +34,7 @@ const getHeaders = async () => {
     'X-Device-id': deviceId,
     'X-Platform': Platform.OS,
     'X-Device': await Device.deviceName,
+    'X-App-Version': Constants.expoConfig?.version || '0.0.0',
   }
 }
 
