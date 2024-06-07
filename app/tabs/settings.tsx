@@ -16,6 +16,7 @@ import {
   ProgressFilledTrack,
   SafeAreaView,
   AvatarImage,
+  VStack,
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
 import { fetcher, getDeviceId, poster, Profile } from '../util'
@@ -82,11 +83,17 @@ export default function Tab() {
         <HStack style={{ alignItems: 'center' }} mb={20}>
           <Avatar size="md" bgColor="#036B3F">
             <AvatarFallbackText>{user?.name}</AvatarFallbackText>
-            <AvatarImage source={{ uri: Profile(user?.name) }} alt={`${user?.name}의 프로필사진`} />
+            <AvatarImage
+              source={{ uri: Profile(user?.textId) }}
+              alt={`${user?.name}의 프로필사진`}
+            />
           </Avatar>
-          <Heading ml={10} fontSize={18}>
-            {user?.name}
-          </Heading>
+          <VStack>
+            <Heading ml={10} fontSize={18}>
+              {user?.name}
+            </Heading>
+            <Text ml={10}>@{user?.textId}</Text>
+          </VStack>
         </HStack>
         <Text mb={5}>계좌: 토스뱅크 1000-6144-2438</Text>
         <Heading fontSize={18}>매너온도 36.5°C</Heading>
