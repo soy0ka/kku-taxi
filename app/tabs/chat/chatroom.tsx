@@ -30,6 +30,7 @@ interface Message {
   sender: {
     id: number
     name: string
+    textId: string
   }
 }
 
@@ -159,12 +160,15 @@ export default function Chatroom() {
                 <Avatar bgColor="$indigo600">
                   <AvatarFallbackText>{message.sender.name}</AvatarFallbackText>
                   <AvatarImage
-                    source={{ uri: Profile(message.sender.name) }}
+                    source={{ uri: Profile(message.sender.textId) }}
                     alt={`${message.sender.name}의 프로필사진`}
                   />
                 </Avatar>
                 <VStack>
-                  <Heading size="sm">{message.sender.name}</Heading>
+                  <HStack style={{alignItems:'center'}}>
+                    <Heading size="sm">{message.sender.name}</Heading>  
+                    <Text style={{ color: '#666', marginLeft: 5 }} fontSize={12}>@{message.sender.textId}</Text>
+                  </HStack>
                   <Text size="sm">{message.content}</Text>
                 </VStack>
                 <Text style={{ color: '#666', fontSize: 12, marginLeft: 'auto' }}>
