@@ -4,7 +4,6 @@ import Constants from 'expo-constants'
 import { Platform } from 'react-native'
 import { Stack } from 'expo-router/stack'
 import { config } from '@gluestack-ui/config'
-import * as Permissions from 'expo-permissions'
 import * as Notifications from 'expo-notifications'
 import { GluestackUIProvider } from '@gluestack-ui/themed'
 
@@ -79,19 +78,26 @@ async function sendPushNotification(expoPushToken: string) {
 }
 
 async function registerForPushNotificationsAsync() {
-  let token
+  let token;
+
   if (Constants.isDevice) {
-    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
-    let finalStatus = existingStatus
+    // Notification permissions request
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
     if (existingStatus !== 'granted') {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
-      finalStatus = status
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
     }
+
     if (finalStatus !== 'granted') {
       alert('Failed to get push token for push notification!')
-      return
+      return;
     }
-    token = (await Notifications.getExpoPushTokenAsync()).data
+
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+  } else {
+    alert('푸시 알림은 실제 기기에서만 사용할 수 있습니다.')
   }
 
   if (Platform.OS === 'android') {
@@ -100,8 +106,8 @@ async function registerForPushNotificationsAsync() {
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
       lightColor: '#FF231F7C',
-    })
+    });
   }
 
-  return token
+  return token;
 }
