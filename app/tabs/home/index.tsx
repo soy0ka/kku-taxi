@@ -25,6 +25,7 @@ import {
 import styles from '../../styles'
 import { fetcher, Profile } from '../../util'
 import { router, useNavigation } from 'expo-router'
+import * as Notifications from 'expo-notifications'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 export default function Home() {
@@ -86,6 +87,19 @@ export default function Home() {
 
     return `${year}${dayPart} ${d.getHours()}시 ${d.getMinutes()}분`
   }
+
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        sound: 'default',
+        title: 'You\'ve got mail! 📬',
+        body: 'Here is the notification body',
+        data: { data: 'goes here' },
+      },
+      trigger: { seconds: 2 },
+    })
+  }
+
   return (
     <React.Fragment>
       <SafeAreaView>

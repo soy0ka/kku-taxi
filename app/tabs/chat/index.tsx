@@ -37,6 +37,7 @@ export default function ChatRooms() {
     const d = new Date(date)
     return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${d.getHours()}:${d.getMinutes()}`
   }
+  
   return (
     <SafeAreaView>
       <ScrollView style={{ padding: 20 }} mt={10}>

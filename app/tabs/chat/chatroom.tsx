@@ -19,6 +19,7 @@ import { io, Socket } from 'socket.io-client'
 import { fetcher, Profile } from '../../util'
 import { Keyboard, Platform } from 'react-native'
 import { Alert } from '../../../components/alert'
+import * as Notifications from 'expo-notifications'
 import { userManager } from '../../../utils/localStorage'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
 
@@ -42,7 +43,6 @@ export default function Chatroom() {
   const [value, setValue] = React.useState<string>('')
   const [messages, setMessages] = React.useState<Message[]>([])
   const [socket, setSocket] = React.useState<Socket | null>(null)
-  const [connection, setConnection] = React.useState<boolean>(false)
   const URL = process.env.EXPO_PUBLIC_WS_URL || 'http://localhost:3000'
   const scrollViewRef = React.useRef<any>(null)
 
@@ -56,9 +56,7 @@ export default function Chatroom() {
       const response = await fetcher(`/chat/room/${id}`)
       if (response) {
         setMessages(response)
-        setTimeout(() => {
-          scrollViewRef.current?.scrollToEnd({ animated: true })
-        }, 100)
+        setTimeout(() => { scrollViewRef.current?.scrollToEnd({ animated: true }) }, 100)
       }
     }
     fetchMessages()
@@ -71,9 +69,14 @@ export default function Chatroom() {
     }
   }, [navigation, id])
 
+  const sendNotification = async (title: string, body: string) => {
+    await Notifications.scheduleNotificationAsync({ content: {title, body}, trigger: null })
+  }
+
   React.useEffect(() => {
     if (!socket) return
     const messageHandler = (message: Message) => {
+      sendNotification('새로운 메세지가 있습니다', `${message.sender.name}: ${message.content}`)
       setMessages((prev) => [...prev, message])
       setTimeout(() => {
         scrollViewRef.current?.scrollToEnd({ animated: true })
@@ -101,6 +104,7 @@ export default function Chatroom() {
       sender: {
         id: user.id,
         name: user.name,
+        textId: user.textId,
       },
     }
     socket?.emit('messageCreate', message)

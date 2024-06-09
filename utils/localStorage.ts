@@ -19,8 +19,9 @@ export const tokenManager = {
 }
 
 interface User {
-  id: string
+  id: number
   name: string
+  textId: string
 }
 
 const setUser = async (user: User) => {
