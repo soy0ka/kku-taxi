@@ -40,6 +40,7 @@
     "expo-router": "~3.5.14",
     "expo-sharing": "^12.0.1",
     "expo-status-bar": "~1.12.1",
+    "glob": "^10.4.1",
     "md5": "^2.3.0",
     "metro": "^0.80.9",
     "metro-cache": "^0.80.9",
@@ -58,6 +59,7 @@
     "react-native-screens": "^3.31.1",
     "react-native-svg": "15.2.0",
     "react-native-web": "^0.19.12",
+    "rimraf": "^5.0.7",
     "socket.io-client": "^4.7.5",
     "tailwindcss": "~3"
   },
