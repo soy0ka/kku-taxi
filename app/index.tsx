@@ -10,14 +10,14 @@ import {
 } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 import React from 'react'
-import { Alert } from '../components/alert'
+import { Alert, AlertRef } from '../components/alert'
 import { userManager } from '../utils/localStorage'
 import Styles from './styles'
 import { fetcher, poster } from './util'
 
 export default function index() {
   const [email, setEmail] = React.useState('')
-  const alertRef = React.useRef<any>(null)
+  const alertRef = React.useRef<AlertRef>(null)
 
   React.useEffect(() => {
     fetcher('/auth/me').then((res) => {
@@ -30,11 +30,11 @@ export default function index() {
   }, [])
 
   const login = () => {
-    if (!email) {
+    if (!email && alertRef.current) {
       alertRef.current.openAlert('알림', '이메일을 입력해주세요')
     }
     poster('/auth/login', { email: `${email}@kku.ac.kr` }).then((res) => {
-      if (!res || !res.success) {
+      if ((!res || !res.success) && alertRef.current) {
         alertRef.current.openAlert('알림', '에러가 발생했어요')
       } else {
         router.push('/authcode')

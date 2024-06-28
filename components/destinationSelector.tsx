@@ -14,7 +14,6 @@ interface DestinationSelectorProps {
   props: {
     title: string
   }
-  title: string
 }
 export const DestinationSelector: React.FC<DestinationSelectorProps> = ({
   props,

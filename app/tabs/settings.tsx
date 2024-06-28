@@ -1,31 +1,32 @@
-import React from 'react'
-import styles from '../styles'
 import {
+  Avatar,
+  AvatarFallbackText,
+  AvatarImage,
   Box,
   Button,
   ButtonText,
   Card,
-  Text,
-  Avatar,
-  AvatarFallbackText,
-  HStack,
   Heading,
-  ScrollView,
+  HStack,
   LinkText,
   Progress,
   ProgressFilledTrack,
   SafeAreaView,
-  AvatarImage,
+  ScrollView,
+  Text,
   VStack,
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
-import { fetcher, getDeviceId, poster, Profile } from '../util'
+import React from 'react'
+import { UserMe } from '../../types/users'
 import { tokenManager, userManager } from '../../utils/localStorage'
+import styles from '../styles'
+import { fetcher, getDeviceId, poster, Profile } from '../util'
 
 export default function Tab() {
   const navigation = useNavigation()
-  const [user, setUser] = React.useState<any>(null)
-  const [devices, setDevices] = React.useState<any>(null)
+  const [user, setUser] = React.useState<UserMe | null>(null)
+  const [devices, setDevices] = React.useState<string[]>(null)
   const [currentdevice, setDevice] = React.useState<string>('')
 
   React.useEffect(() => {

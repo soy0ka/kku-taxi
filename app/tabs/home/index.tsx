@@ -23,6 +23,7 @@ import {
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
 import React from 'react'
+import { Party } from '../../../types/parties'
 import styles from '../../styles'
 import { fetcher, Profile } from '../../util'
 
@@ -31,8 +32,8 @@ export default function Home() {
   const [direction, setDirection] = React.useState<'toSchool' | 'fromSchool'>(
     'fromSchool'
   )
-  const [parties, setParties] = React.useState<any>([])
-  const [notification, setNotification] = React.useState<any>(null)
+  const [parties, setParties] = React.useState<Party[]>([])
+  const [notification, setNotification] = React.useState<string | null>(null)
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -117,7 +118,7 @@ export default function Home() {
             </HStack>
             <Divider mt={20} />
             <ScrollView maxHeight="$96">
-              {parties.map((party: any) => (
+              {parties.map((party: Party) => (
                 <Card key={party.id}>
                   <Text>{formatTime(party.departure)} 출발</Text>
                   <VStack mb="$6">

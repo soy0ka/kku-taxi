@@ -1,13 +1,14 @@
-import React from 'react'
 import {
   Box,
   Button,
   ButtonText,
   Divider,
-  Heading,
   FormControl,
   FormControlLabel,
   FormControlLabelText,
+  Heading,
+  HStack,
+  ScrollView,
   Select,
   SelectBackdrop,
   SelectContent,
@@ -17,25 +18,24 @@ import {
   SelectItem,
   SelectPortal,
   SelectTrigger,
+  Text,
   Textarea,
   TextareaInput,
-  HStack,
-  Text,
-  ScrollView,
 } from '@gluestack-ui/themed'
-import styles from '../../styles'
-import { poster } from '../../util'
-import { router } from 'expo-router'
-import { Platform } from 'react-native'
 import RNDateTimePicker, {
   DateTimePickerAndroid,
 } from '@react-native-community/datetimepicker'
-import EasterEgg from '../../../utils/easterEgg'
-import { Alert } from '../../../components/alert'
+import { router } from 'expo-router'
+import React from 'react'
+import { Platform } from 'react-native'
+import { Alert, AlertRef } from '../../../components/alert'
 import { DestinationSelector } from '../../../components/destinationSelector'
+import EasterEgg from '../../../utils/easterEgg'
+import styles from '../../styles'
+import { poster } from '../../util'
 
 export default function Create() {
-  const alertRef = React.useRef<any>(null)
+  const alertRef = React.useRef<AlertRef>(null)
   const [date, setDate] = React.useState(new Date())
   const [departure, setDeparture] = React.useState(0)
   const [arrival, setArrival] = React.useState(0)
@@ -44,29 +44,43 @@ export default function Create() {
   const [pressCount, setPressCount] = React.useState(0)
 
   const formatDate = (date: Date) => {
-    return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`
+    return `${date.getFullYear()}년 ${
+      date.getMonth() + 1
+    }월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`
   }
 
   const handleSubmit = async () => {
-    if (!departure || !arrival) return alertRef.current.openAlert('에러', '출발지와 목적지를 선택해주세요')
+    if (!departure || !arrival)
+      return alertRef.current?.openAlert(
+        '에러',
+        '출발지와 목적지를 선택해주세요'
+      )
     if (departure === arrival) {
-      alertRef.current.openAlert('에러', EasterEgg.ArrivalAndDestinationsAreSame(pressCount))
+      alertRef.current?.openAlert(
+        '에러',
+        EasterEgg.ArrivalAndDestinationsAreSame(pressCount)
+      )
       return setPressCount(pressCount + 1)
     }
-    if (!maxSize) return alertRef.current.openAlert('에러', '모집인원을 선택해주세요')
-    if (date < new Date()) return alertRef.current.openAlert('에러', '출발시간은 현재 시간보다 이후여야합니다')
+    if (!maxSize)
+      return alertRef.current?.openAlert('에러', '모집인원을 선택해주세요')
+    if (date < new Date())
+      return alertRef.current?.openAlert(
+        '에러',
+        '출발시간은 현재 시간보다 이후여야합니다'
+      )
 
     const response = await poster('/party/create', {
       description: description || '셜명이 없습니다',
       dateTime: date,
       departure,
       arrival,
-      maxSize
+      maxSize,
     })
-    if (!response.success){
-      alertRef.current.openAlert('error', response.message)
+    if (!response.success) {
+      alertRef.current?.openAlert('error', response.message)
     } else {
-      alertRef.current.openAlert('success', '팟이 생성되었습니다.')
+      alertRef.current?.openAlert('success', '팟이 생성되었습니다.')
       router.push(`/tabs/chat/chatroom?id=${response.body.id}`)
     }
   }
@@ -76,9 +90,15 @@ export default function Create() {
       <Alert ref={alertRef} />
       <ScrollView>
         <Heading mb={10}>어디로 가시나요?</Heading>
-        <DestinationSelector props={{ title: '출발지' }} onChange={(value) => setDeparture(value + 1)} />
+        <DestinationSelector
+          props={{ title: '출발지' }}
+          onChange={(value) => setDeparture(value + 1)}
+        />
         <Divider mb={10} mt={10} />
-        <DestinationSelector props={{ title: '목적지' }} onChange={(value) => setArrival(value + 1)} />
+        <DestinationSelector
+          props={{ title: '목적지' }}
+          onChange={(value) => setArrival(value + 1)}
+        />
         {Platform.OS === 'ios' ? (
           <RNDateTimePicker
             minimumDate={new Date()}

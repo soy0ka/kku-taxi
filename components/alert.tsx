@@ -15,7 +15,14 @@ import {
 } from '@gluestack-ui/themed'
 import React from 'react'
 
-export const Alert = React.forwardRef(function AlertComponent(props, ref) {
+export type AlertRef = {
+  openAlert: (alertTitle: string, alertMessage: string) => void
+  closeAlert: () => void
+}
+export const Alert = React.forwardRef<AlertRef, {}>(function AlertComponent(
+  props,
+  ref
+) {
   const [open, setOpen] = React.useState(false)
   const [data, setData] = React.useState({ title: '', message: '' })
 
