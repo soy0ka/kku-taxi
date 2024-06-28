@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Select,
   SelectBackdrop,
@@ -8,14 +7,19 @@ import {
   SelectPortal,
   SelectTrigger,
 } from '@gluestack-ui/themed'
+import React from 'react'
 
 interface DestinationSelectorProps {
   onChange?: (value: number) => void
   props: {
     title: string
   }
+  title: string
 }
-export const DestinationSelector: React.FC<DestinationSelectorProps> = ({ props, onChange }) => {
+export const DestinationSelector: React.FC<DestinationSelectorProps> = ({
+  props,
+  onChange,
+}) => {
   const places = [
     '충주역',
     '충주터미널',
@@ -29,7 +33,7 @@ export const DestinationSelector: React.FC<DestinationSelectorProps> = ({ props,
   ]
 
   return (
-    <Select 
+    <Select
       onValueChange={(value) => {
         if (onChange) {
           onChange(parseInt(value))

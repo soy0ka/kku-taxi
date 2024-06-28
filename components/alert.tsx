@@ -1,7 +1,6 @@
 import {
   Button,
   ButtonText,
-  Center,
   CloseIcon,
   Heading,
   Icon,
@@ -16,7 +15,7 @@ import {
 } from '@gluestack-ui/themed'
 import React from 'react'
 
-export const Alert = React.forwardRef((props, ref) => {
+export const Alert = React.forwardRef(function AlertComponent(props, ref) {
   const [open, setOpen] = React.useState(false)
   const [data, setData] = React.useState({ title: '', message: '' })
 
@@ -27,7 +26,7 @@ export const Alert = React.forwardRef((props, ref) => {
     },
     closeAlert() {
       setOpen(false)
-    }
+    },
   }))
 
   return (
@@ -53,7 +52,9 @@ export const Alert = React.forwardRef((props, ref) => {
             size="sm"
             action="positive"
             borderWidth="$0"
-            onPress={() => {setOpen(false)}}
+            onPress={() => {
+              setOpen(false)
+            }}
           >
             <ButtonText>확인</ButtonText>
           </Button>

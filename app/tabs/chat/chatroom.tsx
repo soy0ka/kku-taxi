@@ -1,27 +1,26 @@
-import React from 'react'
 import {
   Avatar,
   AvatarFallbackText,
+  AvatarImage,
   Box,
   Button,
   ButtonText,
+  Heading,
   HStack,
   Input,
   InputField,
+  KeyboardAvoidingView,
   ScrollView,
   Text,
   VStack,
-  Heading,
-  AvatarImage,
-  KeyboardAvoidingView,
 } from '@gluestack-ui/themed'
-import { io, Socket } from 'socket.io-client'
-import { fetcher, Profile } from '../../util'
-import { Keyboard, Platform } from 'react-native'
-import { Alert } from '../../../components/alert'
-import * as Notifications from 'expo-notifications'
-import { userManager } from '../../../utils/localStorage'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
+import React from 'react'
+import { Keyboard, Platform } from 'react-native'
+import { io, Socket } from 'socket.io-client'
+import { Alert } from '../../../components/alert'
+import { userManager } from '../../../utils/localStorage'
+import { fetcher, Profile } from '../../util'
 
 interface Message {
   id: number
@@ -56,7 +55,9 @@ export default function Chatroom() {
       const response = await fetcher(`/chat/room/${id}`)
       if (response) {
         setMessages(response)
-        setTimeout(() => { scrollViewRef.current?.scrollToEnd({ animated: true }) }, 100)
+        setTimeout(() => {
+          scrollViewRef.current?.scrollToEnd({ animated: true })
+        }, 100)
       }
     }
     fetchMessages()
@@ -69,14 +70,9 @@ export default function Chatroom() {
     }
   }, [navigation, id])
 
-  const sendNotification = async (title: string, body: string) => {
-    await Notifications.scheduleNotificationAsync({ content: {title, body}, trigger: null })
-  }
-
   React.useEffect(() => {
     if (!socket) return
     const messageHandler = (message: Message) => {
-      sendNotification('새로운 메세지가 있습니다', `${message.sender.name}: ${message.content}`)
       setMessages((prev) => [...prev, message])
       setTimeout(() => {
         scrollViewRef.current?.scrollToEnd({ animated: true })
@@ -116,13 +112,13 @@ export default function Chatroom() {
       'keyboardDidShow',
       () => {
         scrollViewRef.current?.scrollToEnd({ animated: true })
-      },
+      }
     )
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
         scrollViewRef.current?.scrollToEnd({ animated: true })
-      },
+      }
     )
 
     return () => {
@@ -169,13 +165,20 @@ export default function Chatroom() {
                   />
                 </Avatar>
                 <VStack>
-                  <HStack style={{alignItems:'center'}}>
-                    <Heading size="sm">{message.sender.name}</Heading>  
-                    <Text style={{ color: '#666', marginLeft: 5 }} fontSize={12}>@{message.sender.textId}</Text>
+                  <HStack style={{ alignItems: 'center' }}>
+                    <Heading size="sm">{message.sender.name}</Heading>
+                    <Text
+                      style={{ color: '#666', marginLeft: 5 }}
+                      fontSize={12}
+                    >
+                      @{message.sender.textId}
+                    </Text>
                   </HStack>
                   <Text size="sm">{message.content}</Text>
                 </VStack>
-                <Text style={{ color: '#666', fontSize: 12, marginLeft: 'auto' }}>
+                <Text
+                  style={{ color: '#666', fontSize: 12, marginLeft: 'auto' }}
+                >
                   {new Date(message.createdAt).toLocaleString()}
                 </Text>
               </HStack>
@@ -196,10 +199,7 @@ export default function Chatroom() {
           }}
         >
           <Input variant="outline" size="md" style={{ flex: 1 }}>
-            <InputField
-              value={value}
-              onChangeText={(text) => setValue(text)}
-            />
+            <InputField value={value} onChangeText={(text) => setValue(text)} />
           </Input>
           <Button
             size="md"

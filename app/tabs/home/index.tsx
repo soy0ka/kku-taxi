@@ -1,37 +1,35 @@
-import React from 'react'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
-  HStack,
+  AddIcon,
   Alert,
   AlertIcon,
   AlertText,
+  Avatar,
+  AvatarImage,
   Box,
   Button,
   ButtonText,
-  SafeAreaView,
-  Divider,
-  ScrollView,
-  Fab,
-  FabLabel,
-  FabIcon,
-  AddIcon,
   Card,
-  Text,
-  Avatar,
-  AvatarFallbackText,
-  AvatarImage,
-  VStack,
+  Divider,
+  Fab,
+  FabIcon,
+  FabLabel,
   Heading,
+  HStack,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  VStack,
 } from '@gluestack-ui/themed'
+import { router, useNavigation } from 'expo-router'
+import React from 'react'
 import styles from '../../styles'
 import { fetcher, Profile } from '../../util'
-import { router, useNavigation } from 'expo-router'
-import * as Notifications from 'expo-notifications'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 export default function Home() {
   const navigation = useNavigation()
   const [direction, setDirection] = React.useState<'toSchool' | 'fromSchool'>(
-    'fromSchool',
+    'fromSchool'
   )
   const [parties, setParties] = React.useState<any>([])
   const [notification, setNotification] = React.useState<any>(null)
@@ -88,18 +86,6 @@ export default function Home() {
     return `${year}${dayPart} ${d.getHours()}시 ${d.getMinutes()}분`
   }
 
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        sound: 'default',
-        title: 'You\'ve got mail! 📬',
-        body: 'Here is the notification body',
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 2 },
-    })
-  }
-
   return (
     <React.Fragment>
       <SafeAreaView>
@@ -135,11 +121,12 @@ export default function Home() {
                 <Card key={party.id}>
                   <Text>{formatTime(party.departure)} 출발</Text>
                   <VStack mb="$6">
-                    <Heading size="md" fontFamily="$heading" mb='$1'>
-                      {party.name} ({party._count.partyMemberships} / {party.maxSize} 명)
+                    <Heading size="md" fontFamily="$heading" mb="$1">
+                      {party.name} ({party._count.partyMemberships} /{' '}
+                      {party.maxSize} 명)
                     </Heading>
-                    <Text size="sm" fontFamily="$heading" fontSize='$lg'>
-                      {party.fromPlace.name} → {party.toPlace.name} 
+                    <Text size="sm" fontFamily="$heading" fontSize="$lg">
+                      {party.fromPlace.name} → {party.toPlace.name}
                     </Text>
                   </VStack>
                   <Box flexDirection="row">
@@ -148,7 +135,7 @@ export default function Home() {
                         source={{
                           uri: Profile(party.owner.email.split('@')[0]),
                         }}
-                        alt = {party.owner.name}
+                        alt={party.owner.name}
                       />
                     </Avatar>
                     <VStack>

@@ -3,13 +3,13 @@
     "name": "kku-taxi",
     "scheme": "kkutaxi",
     "slug": "kku-taxi",
-    "version": "1.0.0",
     "versionCode": 2,
+    "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,18 +22,20 @@
       "googleServicesFile": "./google-services.json",
       "permissions": [],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+"foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
     },
     "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    },
     "extra": {
-      "router": {
-        "origin": false
-      },
       "eas": {
         "projectId": "260ef7f5-24f3-49b6-93ad-5632be016ff2"
       }
