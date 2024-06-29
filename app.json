@@ -3,7 +3,6 @@
     "name": "kku-taxi",
     "scheme": "kkutaxi",
     "slug": "kku-taxi",
-    "versionCode": 2,
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -22,7 +21,7 @@
       "googleServicesFile": "./google-services.json",
       "permissions": [],
       "adaptiveIcon": {
-"foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
