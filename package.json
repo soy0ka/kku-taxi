@@ -9,7 +9,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "ios-post-install-fix": "node fix.js",
+    "eas-build-post-install": "yarn ios-post-install-fix"
   },
   "jest": {
     "preset": "jest-expo"
