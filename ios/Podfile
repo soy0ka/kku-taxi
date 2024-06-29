@@ -9,7 +9,8 @@ ENV['EX_DEV_CLIENT_NETWORK_INSPECTOR'] = podfile_properties['EX_DEV_CLIENT_NETWO
 
 platform :ios, podfile_properties['ios.deploymentTarget'] || '13.4'
 install! 'cocoapods',
-  :deterministic_uuids => false
+  :deterministic_uuids => false,
+  :warn_for_unused_master_specs_repo => false
 
 prepare_react_native_project!
 
@@ -19,6 +20,16 @@ target 'kkutaxi' do
 
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
+
+  # Modular headers 설정 추가
+  use_modular_headers!
+
+  # Here we explicitly set modular headers for specific pods to avoid conflicts.
+  pod 'expo-dev-menu', path: '../node_modules/expo-dev-menu', :configurations => :debug
+  pod 'expo-dev-launcher', path: '../node_modules/expo-dev-launcher', :configurations => :debug
+  pod 'expo-dev-menu-interface', path: '../node_modules/expo-dev-menu-interface/ios', :configurations => :debug
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context', :modular_headers => true
+  # Add other necessary pods here with :modular_headers => true
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -43,6 +54,15 @@ target 'kkutaxi' do
       target_installation_result.resource_bundle_targets.each do |resource_bundle_target|
         resource_bundle_target.build_configurations.each do |config|
           config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+        end
+      end
+    end
+
+    # Add the following lines to fix the ReactCommon module redefinition issue
+    installer.pods_project.targets.each do |target|
+      if target.name == "ReactCommon"
+        target.build_configurations.each do |config|
+          config.build_settings['DEFINES_MODULE'] = 'NO'
         end
       end
     end
