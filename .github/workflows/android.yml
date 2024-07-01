@@ -33,7 +33,7 @@ jobs:
       - name: Expo Login
         run: |
           expect <<EOF
-          spawn npx expo login -u $env(EXPO_USERNAME) -p $env(EXPO_PASSWORD)
+          spawn npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
           expect "Logged in as"
           EOF
         env:
