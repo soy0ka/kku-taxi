@@ -10,6 +10,7 @@ import {
   Input,
   InputField,
   KeyboardAvoidingView,
+  LinkText,
   ScrollView,
   Text,
   VStack,
@@ -20,7 +21,7 @@ import { Keyboard, Platform } from 'react-native'
 import { io, Socket } from 'socket.io-client'
 import { Alert } from '../../../components/alert'
 import { userManager } from '../../../utils/localStorage'
-import { fetcher, Profile } from '../../util'
+import { fetcher, poster, Profile } from '../../util'
 
 interface Message {
   id: number
@@ -181,6 +182,21 @@ export default function Chatroom() {
                 >
                   {new Date(message.createdAt).toLocaleString()}
                 </Text>
+                <LinkText
+                  style={{ fontSize: 12 }}
+                  onPress={() => {
+                    poster('/chat/report', {
+                      id: message.id,
+                      reason: 'unset',
+                    })
+                    alertRef.current?.openAlert(
+                      '신고가 접수되었습니다.',
+                      `@${message.sender.textId}: ${message.content} `
+                    )
+                  }}
+                >
+                  신고
+                </LinkText>
               </HStack>
             </Box>
           ))}
