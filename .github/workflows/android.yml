@@ -2,9 +2,11 @@ name: Expo EAS Android CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - 'main'
   pull_request:
-    branches: [ main ]
+    branches:
+      - '*'
 
 jobs:
   build:
