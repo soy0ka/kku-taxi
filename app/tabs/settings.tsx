@@ -152,7 +152,7 @@ export default function Tab() {
               </Card>
             ))
           ) : (
-            <Text sx={{ mb: 10 }}>애플 테스트 계정입니다</Text>
+            <Text sx={{ mb: 10 }}>디바이스 정보를 불러올 수 없습니다</Text>
           )}
         </ScrollView>
         <Button
