@@ -73,21 +73,18 @@ export const BankAccountModal: React.FC<BankAccountModalProps> = (props) => {
           <ModalBody>
             <Input mt="$1.5">
               <InputField
-                value={bank}
                 onChangeText={(text) => setBank(text)}
                 placeholder="은행명"
               />
             </Input>
             <Input mt="$1.5">
               <InputField
-                value={account}
                 onChangeText={(text) => setAccount(text)}
                 placeholder="계좌번호"
               />
             </Input>
             <Input mt="$1.5">
               <InputField
-                value={owner}
                 onChangeText={(text) => setOwner(text)}
                 placeholder="예금주"
               />
