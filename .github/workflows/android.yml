@@ -3,7 +3,7 @@ name: Expo EAS Android CI
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
   pull_request:
     branches:
       - '*'
