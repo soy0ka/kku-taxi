@@ -18,6 +18,7 @@ import {
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
 import React from 'react'
+import { BankAccountModal } from '../../components/accountChange'
 import { UserMe } from '../../types/users'
 import { tokenManager, userManager } from '../../utils/localStorage'
 import styles from '../styles'
@@ -28,6 +29,7 @@ export default function Tab() {
   const [user, setUser] = React.useState<UserMe | null>(null)
   const [devices, setDevices] = React.useState<string[]>([])
   const [currentdevice, setDevice] = React.useState<string>('')
+  const [modal, setModal] = React.useState(false)
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -80,6 +82,7 @@ export default function Tab() {
 
   return (
     <SafeAreaView>
+      <BankAccountModal isOpen={modal} onClose={() => setModal(false)} />
       <Box style={{ padding: 20 }} mt={10}>
         <HStack style={{ alignItems: 'center' }} mb={20}>
           <Avatar size="md" bgColor="#036B3F">
@@ -96,7 +99,21 @@ export default function Tab() {
             <Text ml={10}>@{user?.textId}</Text>
           </VStack>
         </HStack>
-        <Text mb={5}>계좌: 토스뱅크 1000-6144-2438</Text>
+        <HStack>
+          <Text mb={5}>
+            계좌번호:{' '}
+            {user?.account
+              ? user?.account.bankName + ' ' + user?.account.account
+              : '계좌정보 없음'}
+          </Text>
+          <LinkText
+            size="sm"
+            style={{ marginLeft: 'auto' }}
+            onPress={() => setModal(true)}
+          >
+            정보수정
+          </LinkText>
+        </HStack>
         <Heading fontSize={18}>매너온도 36.5°C</Heading>
         <Progress value={36.5} w={300} size="md">
           <ProgressFilledTrack />

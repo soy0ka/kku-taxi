@@ -13,5 +13,10 @@ export interface UserMe {
   deletedAt: Date | null
   isdeleted: boolean
   textId: string
+  account: {
+    bankName: string
+    account: string
+    holder: string
+  }
   _count: { partyMemberships: number }
 }
