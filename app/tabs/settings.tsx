@@ -26,7 +26,7 @@ import { fetcher, getDeviceId, poster, Profile } from '../util'
 export default function Tab() {
   const navigation = useNavigation()
   const [user, setUser] = React.useState<UserMe | null>(null)
-  const [devices, setDevices] = React.useState<string[]>(null)
+  const [devices, setDevices] = React.useState<string[]>([])
   const [currentdevice, setDevice] = React.useState<string>('')
 
   React.useEffect(() => {
@@ -105,34 +105,38 @@ export default function Tab() {
           로그인된 기기
         </Heading>
         <ScrollView style={{ maxHeight: '60%' }}>
-          {devices?.map((device: any) => (
-            <Card
-              key={device.id}
-              style={{
-                padding: 10,
-                backgroundColor: '#f5f5f5',
-                borderRadius: 5,
-                marginBottom: 10,
-              }}
-            >
-              {currentdevice === device.device && (
-                <Text color="#036B3F" bold={true}>
-                  현재기기
-                </Text>
-              )}
-              <HStack space="md" reversed={false}>
-                <Text>{device.platform}</Text>
-                <LinkText
-                  size="sm"
-                  style={{ marginLeft: 'auto' }}
-                  onPress={() => expireToken(device.token)}
-                >
-                  로그아웃
-                </LinkText>
-              </HStack>
-              <Text>로그인 : {formatDate(device.createdAt)}</Text>
-            </Card>
-          ))}
+          {devices && devices.length ? (
+            devices?.map((device: any) => (
+              <Card
+                key={device.id}
+                style={{
+                  padding: 10,
+                  backgroundColor: '#f5f5f5',
+                  borderRadius: 5,
+                  marginBottom: 10,
+                }}
+              >
+                {currentdevice === device.device && (
+                  <Text color="#036B3F" bold={true}>
+                    현재기기
+                  </Text>
+                )}
+                <HStack space="md" reversed={false}>
+                  <Text>{device.platform}</Text>
+                  <LinkText
+                    size="sm"
+                    style={{ marginLeft: 'auto' }}
+                    onPress={() => expireToken(device.token)}
+                  >
+                    로그아웃
+                  </LinkText>
+                </HStack>
+                <Text>로그인 : {formatDate(device.createdAt)}</Text>
+              </Card>
+            ))
+          ) : (
+            <Text sx={{ mb: 10 }}>애플 테스트 계정입니다</Text>
+          )}
         </ScrollView>
         <Button
           style={styles.Button}

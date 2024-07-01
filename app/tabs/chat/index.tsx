@@ -44,33 +44,34 @@ export default function ChatRooms() {
   return (
     <SafeAreaView>
       <ScrollView style={{ padding: 20 }} mt={10}>
-        {chatRooms?.map((room, i) => (
-          <Pressable
-            onPress={() => router.push(`/tabs/chat/chatroom?id=${room.id}`)}
-            key={i}
-            mt={10}
-          >
-            <Card>
-              <HStack style={{ alignItems: 'center' }}>
-                <Avatar size="md" borderRadius="$full" bgColor="#036B3F">
-                  <AvatarFallbackText>{room.name}</AvatarFallbackText>
-                  <AvatarImage
-                    source={{ uri: Profile(room.id) }}
-                    alt={room.name}
-                  />
-                </Avatar>
-                <VStack ml={10}>
-                  <Heading size="md">{room.name}</Heading>
-                  <Text size="md">
-                    {room.party.from.name} - {room.party.to.name}
-                  </Text>
-                </VStack>
-              </HStack>
-              <Text size="sm">{formatTime(room.party.departure)}</Text>
-            </Card>
-          </Pressable>
-        ))}
-        {!chatRooms.length && (
+        {chatRooms && chatRooms.length ? (
+          chatRooms?.map((room, i) => (
+            <Pressable
+              onPress={() => router.push(`/tabs/chat/chatroom?id=${room.id}`)}
+              key={i}
+              mt={10}
+            >
+              <Card>
+                <HStack style={{ alignItems: 'center' }}>
+                  <Avatar size="md" borderRadius="$full" bgColor="#036B3F">
+                    <AvatarFallbackText>{room.name}</AvatarFallbackText>
+                    <AvatarImage
+                      source={{ uri: Profile(room.id) }}
+                      alt={room.name}
+                    />
+                  </Avatar>
+                  <VStack ml={10}>
+                    <Heading size="md">{room.name}</Heading>
+                    <Text size="md">
+                      {room.party.from.name} - {room.party.to.name}
+                    </Text>
+                  </VStack>
+                </HStack>
+                <Text size="sm">{formatTime(room.party.departure)}</Text>
+              </Card>
+            </Pressable>
+          ))
+        ) : (
           <Text style={{ textAlign: 'center' }}>
             아직 참여중인 채팅방이 없습니다.
           </Text>

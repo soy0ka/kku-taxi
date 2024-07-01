@@ -14,6 +14,8 @@ export interface Party {
   fromPlaceId: number
   toPlaceId: number
   fromPlace: Place
+  to: Place
+  from: Place
   toPlace: Place
   owner: AnotherUser
   _count: { partyMemberships: number }

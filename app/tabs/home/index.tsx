@@ -116,41 +116,45 @@ export default function Home() {
                 <ButtonText>시내 방면</ButtonText>
               </Button>
             </HStack>
-            <Divider mt={20} />
-            <ScrollView maxHeight="$96">
-              {parties.map((party: Party) => (
-                <Card key={party.id}>
-                  <Text>{formatTime(party.departure)} 출발</Text>
-                  <VStack mb="$6">
-                    <Heading size="md" fontFamily="$heading" mb="$1">
-                      {party.name} ({party._count.partyMemberships} /{' '}
-                      {party.maxSize} 명)
-                    </Heading>
-                    <Text size="sm" fontFamily="$heading" fontSize="$lg">
-                      {party.fromPlace.name} → {party.toPlace.name}
-                    </Text>
-                  </VStack>
-                  <Box flexDirection="row">
-                    <Avatar mr="$3">
-                      <AvatarImage
-                        source={{
-                          uri: Profile(party.owner.email.split('@')[0]),
-                        }}
-                        alt={party.owner.name}
-                      />
-                    </Avatar>
-                    <VStack>
-                      <Heading size="sm" fontFamily="$heading">
-                        {party.owner.name}
+            <Divider mt={20} mb={20} />
+            {parties && parties.length ? (
+              <ScrollView maxHeight="$96">
+                {parties.map((party: Party) => (
+                  <Card key={party.id}>
+                    <Text>{formatTime(party.departure)} 출발</Text>
+                    <VStack mb="$6">
+                      <Heading size="md" fontFamily="$heading" mb="$1">
+                        {party.name} ({party._count.partyMemberships} /{' '}
+                        {party.maxSize} 명)
                       </Heading>
-                      <Text size="sm" fontFamily="$heading">
-                        @{party.owner.email.split('@')[0]}
+                      <Text size="sm" fontFamily="$heading" fontSize="$lg">
+                        {party.fromPlace.name} → {party.toPlace.name}
                       </Text>
                     </VStack>
-                  </Box>
-                </Card>
-              ))}
-            </ScrollView>
+                    <Box flexDirection="row">
+                      <Avatar mr="$3">
+                        <AvatarImage
+                          source={{
+                            uri: Profile(party.owner.email.split('@')[0]),
+                          }}
+                          alt={party.owner.name}
+                        />
+                      </Avatar>
+                      <VStack>
+                        <Heading size="sm" fontFamily="$heading">
+                          {party.owner.name}
+                        </Heading>
+                        <Text size="sm" fontFamily="$heading">
+                          @{party.owner.email.split('@')[0]}
+                        </Text>
+                      </VStack>
+                    </Box>
+                  </Card>
+                ))}
+              </ScrollView>
+            ) : (
+              <Text style={{ textAlign: 'center' }}>팟이 없습니다.</Text>
+            )}
           </Box>
         </Box>
       </SafeAreaView>
