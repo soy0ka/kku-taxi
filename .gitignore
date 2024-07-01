@@ -41,6 +41,7 @@ GoogleService-Info.plist
 /app/firebase.ts
 
 # fastlane
+eas.json
 *.apk
 *.aab
 build-*.tar.gz
