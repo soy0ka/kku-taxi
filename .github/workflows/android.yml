@@ -27,6 +27,13 @@ jobs:
       - name: Install Expo CLI
         run: yarn global add expo-cli
 
+      - name: Expo Login
+        run: |
+          echo $EXPO_PASSWORD | expo login -u $EXPO_USERNAME --password-stdin
+        env:
+          EXPO_USERNAME: ${{ secrets.EXPO_USERNAME }}
+          EXPO_PASSWORD: ${{ secrets.EXPO_PASSWORD }}
+
       - name: Install Expo dependencies
         run: npx expo install --check
 
