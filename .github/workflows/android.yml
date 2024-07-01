@@ -3,7 +3,7 @@ name: Expo EAS Android CI
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
   pull_request:
     branches:
       - '*'
@@ -27,9 +27,15 @@ jobs:
       - name: Install Expo CLI
         run: yarn global add expo-cli
 
+      - name: Install expect
+        run: sudo apt-get install -y expect
+
       - name: Expo Login
         run: |
-          echo $EXPO_PASSWORD | expo login -u $EXPO_USERNAME --password-stdin
+          expect <<EOF
+          spawn expo login -u $env(EXPO_USERNAME) -p $env(EXPO_PASSWORD)
+          expect "Logged in as"
+          EOF
         env:
           EXPO_USERNAME: ${{ secrets.EXPO_USERNAME }}
           EXPO_PASSWORD: ${{ secrets.EXPO_PASSWORD }}
