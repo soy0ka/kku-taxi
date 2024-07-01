@@ -10,29 +10,31 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: Install dependencies
-      run: yarn install
+      - name: Install dependencies
+        run: yarn install
 
-    - name: Install Expo CLI
-      run: yarn global add expo-cli
+      - name: Install Expo CLI
+        run: yarn global add expo-cli
 
-    - name: Install EAS CLI
-      run: yarn global add eas-cli
+      - name: Run Expo Doctor
+        run: npx expo-doctor
 
-    - name: Configure EAS
-      run: eas build:configure
+      - name: Install EAS CLI
+        run: yarn global add eas-cli
 
-    - name: Build APK
-      run: eas build --platform android --local
+      - name: Configure EAS
+        run: eas build:configure
+
+      - name: Build APK
+        run: eas build --platform android --local
