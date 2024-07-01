@@ -45,7 +45,7 @@ jobs:
 
       - name: Run Expo Doctor
         run: npx expo-doctor
-        continue-on-error: true # 이 부분을 추가하여 명령어가 실패해도 계속 진행
+        continue-on-error: true
 
       - name: Install EAS CLI
         run: yarn global add eas-cli
