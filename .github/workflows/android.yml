@@ -47,11 +47,5 @@ jobs:
         run: npx expo-doctor
         continue-on-error: true
 
-      - name: Install EAS CLI
-        run: yarn global add eas-cli
-
-      - name: Configure EAS
-        run: eas build:configure
-
-      - name: Build APK
-        run: eas build --platform android --local
+      - name: Build Android
+        run: ./gradlew assembleRelease
