@@ -1,13 +1,15 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import * as Notifications from 'expo-notifications'
 import { Tabs } from 'expo-router'
-import React from 'react'
-import { Platform } from 'react-native'
-import { AlertRef } from '../../components/alert'
+import React, { useEffect } from 'react'
+import { Alert, Platform } from 'react-native'
 import { poster } from '../util'
 
 export default function TabLayout() {
-  registerToken()
+  useEffect(() => {
+    registerToken()
+  }, [])
+
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: '#036B3F' }}>
       <Tabs.Screen
@@ -46,12 +48,13 @@ export default function TabLayout() {
 
 async function registerToken() {
   const token = await registerForPushNotificationsAsync()
-  console.log('token', token)
-  await poster('/auth/notification', { token })
+  if (token) {
+    console.log('token', token)
+    await poster('/auth/notification', { token })
+  }
 }
 
 async function registerForPushNotificationsAsync() {
-  const alertRef = React.useRef<AlertRef>(null)
   let token
   const { status: existingStatus } = await Notifications.getPermissionsAsync()
   let finalStatus = existingStatus
@@ -60,7 +63,8 @@ async function registerForPushNotificationsAsync() {
     finalStatus = status
   }
   if (finalStatus !== 'granted') {
-    return alert('Failed to get push token for push notification!')
+    Alert.alert('Failed to get push token for push notification!')
+    return
   }
   token = (await Notifications.getExpoPushTokenAsync()).data
 
@@ -71,15 +75,15 @@ async function registerForPushNotificationsAsync() {
       vibrationPattern: [0, 250, 250, 250],
       lightColor: '#FF231F7C',
     })
-  } else if (Platform.OS === 'ios') {
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: true,
-      }),
-    })
   }
+
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    }),
+  })
 
   return token
 }
