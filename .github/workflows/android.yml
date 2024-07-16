@@ -61,6 +61,7 @@ jobs:
 
       - name: Install Android SDK packages
         run: |
+          sudo apt-get install -y yes
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
