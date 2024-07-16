@@ -18,4 +18,26 @@
   </tr>
 </table>
 
+## 설치 및 실행
+
+### 요구 사항
+- Node.js (v18 이상)
+- Yarn (npm도 가능)
+- Expo (SDK Version 51)
+
+### 설치
+
+```bash
+# 리포지토리 클론
+git clone https://github.com/soy0ka/kku-taxi-back.git
+cd kku-taxi-back
+
+# 의존성 설치
+yarn install
+
+```
+
+## 라이선스
+이 프로젝트는 GPL-3.0 license 라이선스 하에 배포됩니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
+
 
