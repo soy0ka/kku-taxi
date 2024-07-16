@@ -11,6 +11,7 @@ import {
   Text,
   VStack,
 } from '@gluestack-ui/themed'
+import { router } from 'expo-router'
 import React from 'react'
 import { fetcher } from '../app/util'
 import { Party } from '../types/parties'
@@ -36,7 +37,11 @@ const timeRemain = (date: string | undefined) => {
   const diff = d.getTime() - now.getTime()
   const diffHours = diff / (1000 * 60 * 60)
   const diffMinutes = (diffHours % 1) * 60
-  return `${Math.floor(diffHours)}시간 ${Math.floor(diffMinutes)}분`
+  if (diffHours < 12) {
+    return `${Math.floor(diffHours)}시간 ${Math.floor(diffMinutes)}분`
+  } else {
+    return `${Math.floor(diffHours / 24)}일`
+  }
 }
 export type PartyModalRef = {
   openModal: (party: Party) => void
@@ -105,8 +110,11 @@ export const PartyModal = React.forwardRef<PartyModalRef, {}>(
               action="positive"
               borderWidth="$0"
               onPress={() => {
-                fetcher(`/parties/${data?.id}/join`)
+                fetcher(`/party/join/${data?.id}`).then((res) => {
+                  console.log(res)
+                })
                 setOpen(false)
+                router.push(`/tabs/chat/chatroom?id=${data?.id}`)
               }}
             >
               <ButtonText>참여</ButtonText>
