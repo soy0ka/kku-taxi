@@ -16,6 +16,7 @@ import {
   FabLabel,
   Heading,
   HStack,
+  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
@@ -23,6 +24,7 @@ import {
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
 import React from 'react'
+import { PartyModal, PartyModalRef } from '../../../components/partyModal'
 import { Party } from '../../../types/parties'
 import styles from '../../styles'
 import { fetcher, Profile } from '../../util'
@@ -35,8 +37,10 @@ export default function Home() {
   const [parties, setParties] = React.useState<Party[]>([])
   const [notification, setNotification] = React.useState<string | null>(null)
 
+  const partyModalRef = React.useRef<PartyModalRef>(null)
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
+      setDirection('fromSchool')
       fetchNotification()
       fetchParties()
     })
@@ -120,36 +124,44 @@ export default function Home() {
             {parties && parties.length ? (
               <ScrollView maxHeight="$96">
                 {parties.map((party: Party) => (
-                  <Card key={party.id}>
-                    <Text>{formatTime(party.departure)} 출발</Text>
-                    <VStack mb="$6">
-                      <Heading size="md" fontFamily="$heading" mb="$1">
-                        {party.name} ({party._count.partyMemberships} /{' '}
-                        {party.maxSize} 명)
-                      </Heading>
-                      <Text size="sm" fontFamily="$heading" fontSize="$lg">
-                        {party.fromPlace.name} → {party.toPlace.name}
-                      </Text>
-                    </VStack>
-                    <Box flexDirection="row">
-                      <Avatar mr="$3">
-                        <AvatarImage
-                          source={{
-                            uri: Profile(party.owner.email.split('@')[0]),
-                          }}
-                          alt={party.owner.name}
-                        />
-                      </Avatar>
-                      <VStack>
-                        <Heading size="sm" fontFamily="$heading">
-                          {party.owner.name}
+                  <Pressable
+                    key={party.id}
+                    onPress={() => {
+                      partyModalRef.current?.openModal(party)
+                    }}
+                  >
+                    <PartyModal ref={partyModalRef} />
+                    <Card>
+                      <Text>{formatTime(party.departure)} 출발</Text>
+                      <VStack mb="$6">
+                        <Heading size="md" fontFamily="$heading" mb="$1">
+                          {party.name} ({party._count.partyMemberships} /{' '}
+                          {party.maxSize} 명)
                         </Heading>
-                        <Text size="sm" fontFamily="$heading">
-                          @{party.owner.email.split('@')[0]}
+                        <Text size="sm" fontFamily="$heading" fontSize="$lg">
+                          {party.fromPlace.name} → {party.toPlace.name}
                         </Text>
                       </VStack>
-                    </Box>
-                  </Card>
+                      <Box flexDirection="row">
+                        <Avatar mr="$3">
+                          <AvatarImage
+                            source={{
+                              uri: Profile(party.owner.email.split('@')[0]),
+                            }}
+                            alt={party.owner.name}
+                          />
+                        </Avatar>
+                        <VStack>
+                          <Heading size="sm" fontFamily="$heading">
+                            {party.owner.name}
+                          </Heading>
+                          <Text size="sm" fontFamily="$heading">
+                            @{party.owner.email.split('@')[0]}
+                          </Text>
+                        </VStack>
+                      </Box>
+                    </Card>
+                  </Pressable>
                 ))}
               </ScrollView>
             ) : (
