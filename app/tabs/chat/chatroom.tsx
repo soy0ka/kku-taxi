@@ -27,6 +27,7 @@ interface Message {
   id: number
   content: string
   isdeleted: boolean
+  isSystem: boolean
   createdAt: string
   sender: {
     id: number
@@ -157,47 +158,57 @@ export default function Chatroom() {
                 marginBottom: 10,
               }}
             >
-              <HStack space="md">
-                <Avatar bgColor="$indigo600">
-                  <AvatarFallbackText>{message.sender.name}</AvatarFallbackText>
-                  <AvatarImage
-                    source={{ uri: Profile(message.sender.textId) }}
-                    alt={`${message.sender.name}의 프로필사진`}
-                  />
-                </Avatar>
-                <VStack>
-                  <HStack style={{ alignItems: 'center' }}>
-                    <Heading size="sm">{message.sender.name}</Heading>
-                    <Text
-                      style={{ color: '#666', marginLeft: 5 }}
-                      fontSize={12}
+              {message.isSystem ? (
+                <Box style={{ alignItems: 'center' }}>
+                  <Text style={{ color: '#666' }}>{message.content}</Text>
+                </Box>
+              ) : (
+                <React.Fragment>
+                  <HStack space="md">
+                    <Avatar bgColor="$indigo600">
+                      <AvatarFallbackText>
+                        {message.sender.name}
+                      </AvatarFallbackText>
+                      <AvatarImage
+                        source={{ uri: Profile(message.sender.textId) }}
+                        alt={`${message.sender.name}의 프로필사진`}
+                      />
+                    </Avatar>
+                    <VStack>
+                      <HStack style={{ alignItems: 'center' }}>
+                        <Heading size="sm">{message.sender.name}</Heading>
+                        <Text
+                          style={{ color: '#666', marginLeft: 5 }}
+                          fontSize={12}
+                        >
+                          @{message.sender.textId}
+                        </Text>
+                      </HStack>
+                      <Text size="sm">{message.content}</Text>
+                    </VStack>
+                    <LinkText
+                      style={{ fontSize: 12, marginLeft: 'auto' }}
+                      onPress={() => {
+                        poster('/chat/report', {
+                          id: message.id,
+                          reason: 'unset',
+                        })
+                        alertRef.current?.openAlert(
+                          '신고가 접수되었습니다.',
+                          `@${message.sender.textId}: ${message.content} `
+                        )
+                      }}
                     >
-                      @{message.sender.textId}
-                    </Text>
+                      신고
+                    </LinkText>
                   </HStack>
-                  <Text size="sm">{message.content}</Text>
-                </VStack>
-                <Text
-                  style={{ color: '#666', fontSize: 12, marginLeft: 'auto' }}
-                >
-                  {new Date(message.createdAt).toLocaleString()}
-                </Text>
-                <LinkText
-                  style={{ fontSize: 12 }}
-                  onPress={() => {
-                    poster('/chat/report', {
-                      id: message.id,
-                      reason: 'unset',
-                    })
-                    alertRef.current?.openAlert(
-                      '신고가 접수되었습니다.',
-                      `@${message.sender.textId}: ${message.content} `
-                    )
-                  }}
-                >
-                  신고
-                </LinkText>
-              </HStack>
+                  <Text
+                    style={{ color: '#666', fontSize: 12, marginLeft: 'auto' }}
+                  >
+                    {new Date(message.createdAt).toLocaleString()}
+                  </Text>
+                </React.Fragment>
+              )}
             </Box>
           ))}
         </ScrollView>
