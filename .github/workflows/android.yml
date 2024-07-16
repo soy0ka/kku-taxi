@@ -51,9 +51,10 @@ jobs:
           mkdir -p $HOME/android-sdk/cmdline-tools
           unzip commandlinetools.zip -d $HOME/android-sdk/cmdline-tools
           mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/tools
-          echo 'export ANDROID_SDK_ROOT=$HOME/android-sdk' >> $GITHUB_ENV
-          echo 'export PATH=$PATH:$HOME/android-sdk/cmdline-tools/tools/bin' >> $GITHUB_ENV
-          echo 'export PATH=$PATH:$HOME/android-sdk/platform-tools' >> $GITHUB_ENV
+          echo 'ANDROID_SDK_ROOT=$HOME/android-sdk' >> $GITHUB_ENV
+          echo 'PATH=$PATH:$HOME/android-sdk/cmdline-tools/tools/bin' >> $GITHUB_ENV
+          echo 'PATH=$PATH:$HOME/android-sdk/platform-tools' >> $GITHUB_ENV
+          source $GITHUB_ENV
 
       - name: Install Android SDK packages
         run: |
