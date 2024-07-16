@@ -9,8 +9,6 @@ import {
   Heading,
   HStack,
   LinkText,
-  Progress,
-  ProgressFilledTrack,
   SafeAreaView,
   ScrollView,
   Text,
@@ -47,7 +45,8 @@ export default function Tab() {
   }
 
   const fetchUser = async () => {
-    const user = await userManager.getUser()
+    const user = await fetcher('/auth/me')
+    await userManager.setUser(user)
     setUser(user)
   }
 
@@ -114,10 +113,10 @@ export default function Tab() {
             정보수정
           </LinkText>
         </HStack>
-        <Heading fontSize={18}>매너온도 36.5°C</Heading>
+        {/* <Heading fontSize={18}>매너온도 36.5°C</Heading>
         <Progress value={36.5} w={300} size="md">
           <ProgressFilledTrack />
-        </Progress>
+        </Progress> */}
         <Heading fontSize={18} mt={10}>
           로그인된 기기
         </Heading>
