@@ -47,14 +47,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y wget tar unzip
-          wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O android-sdk.zip
-          unzip android-sdk.zip -d android-sdk
-          sudo mv android-sdk /usr/local/lib/
-          sudo mkdir -p /usr/local/lib/android-sdk/cmdline-tools/latest
-          sudo mv /usr/local/lib/android-sdk/cmdline-tools/* /usr/local/lib/android-sdk/cmdline-tools/latest
-          echo 'export ANDROID_SDK_ROOT=/usr/local/lib/android-sdk' >> $GITHUB_ENV
-          echo 'export PATH=$PATH:/usr/local/lib/android-sdk/cmdline-tools/latest/bin' >> $GITHUB_ENV
-          echo 'export PATH=$PATH:/usr/local/lib/android-sdk/platform-tools' >> $GITHUB_ENV
+          wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O commandlinetools.zip
+          mkdir -p $HOME/android-sdk/cmdline-tools
+          unzip commandlinetools.zip -d $HOME/android-sdk/cmdline-tools
+          mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/tools
+          echo 'export ANDROID_SDK_ROOT=$HOME/android-sdk' >> $GITHUB_ENV
+          echo 'export PATH=$PATH:$HOME/android-sdk/cmdline-tools/tools/bin' >> $GITHUB_ENV
+          echo 'export PATH=$PATH:$HOME/android-sdk/platform-tools' >> $GITHUB_ENV
 
       - name: Install Android SDK packages
         run: |
