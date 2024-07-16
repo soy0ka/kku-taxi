@@ -37,6 +37,30 @@ jobs:
         run: npx expo-doctor
         continue-on-error: true
 
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Download and setup Android SDK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget tar unzip
+          wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O android-sdk.zip
+          unzip android-sdk.zip -d android-sdk
+          sudo mv android-sdk /usr/local/lib/
+          sudo mkdir -p /usr/local/lib/android-sdk/cmdline-tools/latest
+          sudo mv /usr/local/lib/android-sdk/cmdline-tools/* /usr/local/lib/android-sdk/cmdline-tools/latest
+          echo 'export ANDROID_SDK_ROOT=/usr/local/lib/android-sdk' >> $GITHUB_ENV
+          echo 'export PATH=$PATH:/usr/local/lib/android-sdk/cmdline-tools/latest/bin' >> $GITHUB_ENV
+          echo 'export PATH=$PATH:/usr/local/lib/android-sdk/platform-tools' >> $GITHUB_ENV
+
+      - name: Install Android SDK packages
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+
       - name: Create eas.json
         run: |
           echo '{
