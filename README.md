@@ -37,7 +37,15 @@ yarn install
 
 ```
 
+### 테스트 하기
+```
+yarn start
+```
+
+### 빌드와 배포하기
+[Expo Document](https://docs.expo.dev/build/setup/)를 참고하여 테스트 빌드 및 프로덕션 빌드를 수행합니다
+
 ## 라이선스
-이 프로젝트는 GPL-3.0 license 라이선스 하에 배포됩니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
+이 프로젝트는 GPL-3.0 license 라이선스 하에 배포됩니다. 자세한 내용은 [LICENSE](https://github.com/soy0ka/kku-taxi/blob/master/LICENSE) 파일을 참조하세요.
 
 
