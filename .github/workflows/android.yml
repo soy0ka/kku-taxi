@@ -1,4 +1,4 @@
-name: Expo EAS Android CI
+name: Expo Android Build Test
 
 on:
   push:
@@ -25,20 +25,10 @@ jobs:
         run: yarn install
 
       - name: Install Expo CLI
-        run: yarn global add expo
+        run: yarn global add expo-cli
 
       - name: Install expect
         run: sudo apt-get install -y expect
-
-      - name: Expo Login
-        run: |
-          expect <<EOF
-          spawn npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-          expect "Logged in as"
-          EOF
-        env:
-          EXPO_USERNAME: ${{ secrets.EXPO_USERNAME }}
-          EXPO_PASSWORD: ${{ secrets.EXPO_PASSWORD }}
 
       - name: Install Expo dependencies
         run: npx expo install --check
@@ -47,5 +37,21 @@ jobs:
         run: npx expo-doctor
         continue-on-error: true
 
+      - name: Create eas.json
+        run: |
+          echo '{
+            "build": {
+              "development": {
+                "distribution": "internal",
+                "android": {
+                  "buildType": "apk"
+                },
+                "ios": {
+                  "simulator": true
+                }
+              }
+            }
+          }' > eas.json
+
       - name: Build Android
-        run: ./gradlew assembleRelease
+        run: npx expo run:android
