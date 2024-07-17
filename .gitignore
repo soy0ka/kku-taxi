@@ -39,6 +39,7 @@ yarn-error.*
 google-services.json
 GoogleService-Info.plist
 /app/firebase.ts
+google-submit.json
 
 # fastlane
 eas.json
