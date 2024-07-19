@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: 'unbuntu-latest'
+    runs-on: 'macos-latest'
     strategy:
       matrix:
         node: [18.x]
@@ -44,9 +44,6 @@ jobs:
             "build": {
               "development": {
                 "distribution": "internal",
-                "android": {
-                  "buildType": "apk"
-                },
               }
             }
           }' > eas.json
@@ -61,5 +58,5 @@ jobs:
           eas build --local \
             --non-interactive \
             --output=./app-build \
-            --platform=android \
+            --platform=ios \
             --profile=development
