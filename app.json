@@ -2,7 +2,6 @@
   "expo": {
     "name": "kku-taxi",
     "scheme": "kkutaxi",
-    "projectId": "260ef7f5-24f3-49b6-93ad-5632be016ff2",
     "slug": "kku-taxi",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -66,7 +65,6 @@
         "projectId": "260ef7f5-24f3-49b6-93ad-5632be016ff2"
       }
     },
-    "runtimeVersion": "1.0.0",
     "updates": {
       "url": "https://u.expo.dev/260ef7f5-24f3-49b6-93ad-5632be016ff2",
       "runtimeVersion": "1.0.0"
