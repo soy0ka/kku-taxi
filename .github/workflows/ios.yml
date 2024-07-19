@@ -48,6 +48,9 @@ jobs:
             }
           }' > eas.json
 
+      - name: 📝 Generate Google Service file
+        run: ./prepare-google-services.sh
+
       - name: 👷 Build app
         env:
           GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
