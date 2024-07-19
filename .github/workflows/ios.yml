@@ -1,4 +1,4 @@
-name: Expo Android Build Test
+name: Expo IOS Build Test
 
 on:
   push:
