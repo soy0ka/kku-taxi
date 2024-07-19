@@ -2,7 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome'
 import * as Notifications from 'expo-notifications'
 import { Tabs } from 'expo-router'
 import React, { useEffect } from 'react'
-import { Alert, Platform } from 'react-native'
+import { Platform } from 'react-native'
 import { poster } from '../util'
 
 export default function TabLayout() {
@@ -49,42 +49,49 @@ export default function TabLayout() {
 async function registerToken() {
   const token = await registerForPushNotificationsAsync()
   if (token) {
-    console.log('token', token)
     await poster('/auth/notification', { token })
   }
 }
 
 async function registerForPushNotificationsAsync() {
-  let token
-  const { status: existingStatus } = await Notifications.getPermissionsAsync()
-  let finalStatus = existingStatus
-  if (existingStatus !== 'granted') {
-    const { status } = await Notifications.requestPermissionsAsync()
-    finalStatus = status
-  }
-  if (finalStatus !== 'granted') {
-    Alert.alert('Failed to get push token for push notification!')
-    return
-  }
-  token = (await Notifications.getExpoPushTokenAsync()).data
-  alert(token)
+  try {
+    let token
+    const { status: existingStatus } = await Notifications.getPermissionsAsync()
+    let finalStatus = existingStatus
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync()
+      finalStatus = status
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!')
+      return
+    }
 
-  if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
+    token = (
+      await Notifications.getExpoPushTokenAsync({
+        projectId: '260ef7f5-24f3-49b6-93ad-5632be016ff2',
+      })
+    ).data
+
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      })
+    }
+
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+      }),
     })
+
+    return token
+  } catch (error) {
+    console.error('Error getting Expo push token:', error)
   }
-
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: true,
-    }),
-  })
-
-  return token
 }
