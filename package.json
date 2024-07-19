@@ -4,12 +4,17 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "build:development": "dotenv -e .env.development eas build --profile development",
+    "build:ios-development": "dotenv -e .env.development eas build --platform ios --profile development",
+    "build:android-development": "dotenv -e .env.development eas build --platform android --profile development",
+    "build:production": "dotenv -e .env.production eas build --profile production",
+    "build:ios-prodcution": "dotenv -e .env.production eas build --platform ios --profile production",
+    "build:android-prodcution": "dotenv -e .env.production eas build --platform android --profile production",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "ios-post-install-fix": "node ./scripts/fix-pods.js",
+    "ios-post-install-fix": "node ./fix-pods.js",
     "eas-build-post-install": "yarn ios-post-install-fix"
   },
   "jest": {
@@ -24,7 +29,7 @@
     "@gluestack-ui/themed": "^1.1.26",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.0.1",
-    "@react-native-firebase/app": "^20.1.0",
+    "@react-native-firebase/app": "^20.3.0",
     "@react-navigation/native": "^6.0.2",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",

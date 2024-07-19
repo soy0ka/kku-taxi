@@ -3324,13 +3324,12 @@
   dependencies:
     invariant "^2.2.4"
 
-"@react-native-firebase/app@^20.1.0":
-  version "20.2.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-20.2.0.tgz#715858f673aab72720fa96336fd8c380ac55552a"
-  integrity sha512-IE1jFVUGndeQJSjsgtY2Qlzhkdt58+E+iI7zOGQfWZ4n990hfd4a6TVfHruTgfmGLH0q5O9OuS9h5FFz2GgOWQ==
+"@react-native-firebase/app@^20.3.0":
+  version "20.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-20.3.0.tgz#af188e1b1adb91f6e73380e654352d1a678bb69a"
+  integrity sha512-vmlu3g59wk0C8SmunLOg+6fC99kUe+ZlfBc7h9zdcFbnK+/6XScqKkG8B0yP3ANjrk9ZqWL1+M705m/uoo/WCQ==
   dependencies:
     firebase "10.12.2"
-    opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
 
 "@react-native/assets-registry@0.74.85":
@@ -8799,11 +8798,6 @@ open@^8.0.4, open@^8.3.0:
     define-lazy-prop "^2.0.0"
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
-
-opencollective-postinstall@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
-  integrity sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
 
 ora@3.4.0, ora@^3.4.0:
   version "3.4.0"
