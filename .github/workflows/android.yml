@@ -37,5 +37,20 @@ jobs:
         run: npx expo-doctor
         continue-on-error: true
 
+      - name: Login to Eas
+        run: |
+          expect -c '
+          spawn expo login -u ${{ secrets.EXPO_USERNAME }} -p ${{ secrets.EXPO_PASSWORD }}
+          expect "Would you like to save this password for future sessions?"
+          send "yes\n"
+          interact
+          '
+
+      - name: Create google-services.json from environment variable
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          echo "$GOOGLE_SERVICES_JSON" > ./google-services.json
+
       - name: Build Android
-        run: npx expo run:android
+        run: yarn build:android-development

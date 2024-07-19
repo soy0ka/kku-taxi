@@ -21,7 +21,7 @@
       "color": "#000000"
     },
     "ios": {
-      "buildNumber": "7",
+      "buildNumber": "8",
       "supportsTablet": true,
       "bundleIdentifier": "com.onde.kkutaxi",
       "googleServicesFile": "GoogleService-Info.plist"
