@@ -20,12 +20,14 @@ export default {
       buildNumber: '1',
       supportsTablet: true,
       bundleIdentifier: 'com.onde.kkutaxi',
-      googleServicesFile: process.env.IOS_GOOGLE_SERVICES_FILE,
+      googleServicesFile:
+        process.env.IOS_GOOGLE_SERVICES_FILE || './GoogleService-Info.plist',
     },
     android: {
       versionCode: 1,
       package: 'com.onde.kkutaxi',
-      googleServicesFile: process.env.ANDROID_GOOGLE_SERVICES_FILE,
+      googleServicesFile:
+        process.env.ANDROID_GOOGLE_SERVICES_FILE || './google-services.json',
       permissions: [],
       adaptiveIcon: {
         foregroundImage: './assets/images/icon.png',
