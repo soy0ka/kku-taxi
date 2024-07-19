@@ -2,6 +2,7 @@
   "expo": {
     "name": "kku-taxi",
     "scheme": "kkutaxi",
+    "projectId": "260ef7f5-24f3-49b6-93ad-5632be016ff2",
     "slug": "kku-taxi",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,13 +22,16 @@
       "color": "#000000"
     },
     "ios": {
-      "buildNumber": "8",
+      "buildNumber": "11",
       "supportsTablet": true,
       "bundleIdentifier": "com.onde.kkutaxi",
-      "googleServicesFile": "GoogleService-Info.plist"
+      "googleServicesFile": "GoogleService-Info.plist",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
-      "versionCode": 6,
+      "versionCode": 4,
       "package": "com.onde.kkutaxi",
       "googleServicesFile": "google-services.json",
       "permissions": [],
@@ -67,7 +71,8 @@
     },
     "runtimeVersion": "1.0.0",
     "updates": {
-      "url": "https://u.expo.dev/260ef7f5-24f3-49b6-93ad-5632be016ff2"
+      "url": "https://u.expo.dev/260ef7f5-24f3-49b6-93ad-5632be016ff2",
+      "runtimeVersion": "1.0.0"
     }
   }
 }
