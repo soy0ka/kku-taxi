@@ -7,10 +7,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -25,7 +22,7 @@
       "buildNumber": "11",
       "supportsTablet": true,
       "bundleIdentifier": "com.onde.kkutaxi",
-      "googleServicesFile": "GoogleService-Info.plist",
+      "googleServicesFile": "./googleServices/GoogleService-Info.plist",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -33,7 +30,7 @@
     "android": {
       "versionCode": 4,
       "package": "com.onde.kkutaxi",
-      "googleServicesFile": "google-services.json",
+      "googleServicesFile": "./googleServices/google-services.json",
       "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",

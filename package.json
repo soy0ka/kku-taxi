@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "eas-build-pre-install": "./prepare-google-services.sh",
     "build:development": "dotenv -e .env.development eas build --profile development --output ./builds",
     "build:ios-development": "dotenv -e .env.development eas build --platform ios --profile development --output ./builds",
     "build:android-development": "dotenv -e .env.development eas build --platform android --profile development --output ./builds",
