@@ -1,34 +1,44 @@
-import React from 'react'
 import {
   Box,
   Button,
   ButtonText,
-  Text,
+  Heading,
   Input,
   InputField,
-  Heading,
+  Text,
 } from '@gluestack-ui/themed'
-import Styles from './styles'
-import { poster } from './util'
 import { router } from 'expo-router'
+import React from 'react'
 import { Alert } from '../components/alert'
 import { tokenManager } from '../utils/localStorage'
+import Styles from './styles'
+import { poster } from './util'
 
 export default function AuthCodeScreen() {
   const [code, setCode] = React.useState('')
   const alertRef = React.useRef<any>(null)
-  
+
   function confirm() {
-    if (!code) return alertRef.current.openAlert('인증코드를 입력해주세요', '인증코드는 6자리 숫자로 이루어져있습니다')
+    if (!code)
+      return alertRef.current.openAlert(
+        '인증코드를 입력해주세요',
+        '인증코드는 6자리 숫자로 이루어져있습니다'
+      )
     poster('/auth/code', { code }).then((res) => {
       if (res.success) {
         tokenManager.setToken(res.body.token)
         router.push('/tabs')
       } else {
         if (res.message === 'Forbidden') {
-          alertRef.current.openAlert('인증코드가 만료되었어요', '인증코드는 5분간 유효해요')
+          alertRef.current.openAlert(
+            '인증코드가 만료되었어요',
+            '인증코드는 5분간 유효해요'
+          )
         } else {
-          alertRef.current.openAlert('인증코드가 틀렸어요', '인증코드를 다시 확인해주세요')
+          alertRef.current.openAlert(
+            '인증코드가 틀렸어요',
+            '인증코드를 다시 확인해주세요'
+          )
         }
       }
     })
@@ -43,6 +53,7 @@ export default function AuthCodeScreen() {
       <Text> 학교 이메일로 인증코드를 보내드렸어요!</Text>
       <Input>
         <InputField
+          keyboardType="numeric"
           value={code}
           onChangeText={setCode}
           placeholder="인증코드"

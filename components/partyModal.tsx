@@ -10,7 +10,7 @@ import {
   ModalHeader,
   Text,
 } from '@gluestack-ui/themed'
-import { router } from 'expo-router'
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { fetcher } from '../app/util'
 import { Party } from '../types/parties'
@@ -42,14 +42,17 @@ const timeRemain = (date: string | undefined) => {
     return `${Math.floor(diffHours / 24)}일`
   }
 }
+
 export type PartyModalRef = {
   openModal: (party: Party) => void
   closeModal: () => void
 }
+
 export const PartyModal = React.forwardRef<PartyModalRef, {}>(
   function AlertComponent(props, ref) {
     const [open, setOpen] = React.useState(false)
     const [data, setData] = React.useState<Party>()
+    const router = useRouter()
 
     React.useImperativeHandle(ref, () => ({
       openModal(party: Party) {
@@ -112,11 +115,14 @@ export const PartyModal = React.forwardRef<PartyModalRef, {}>(
               sx={{ width: '$20' }}
               borderWidth="$0"
               onPress={() => {
-                fetcher(`/party/join/${data?.id}`).then((res) => {
-                  console.log(res)
-                })
+                fetcher(`/party/join/${data?.id}`)
                 setOpen(false)
-                router.push(`/tabs/chat/chatroom?id=${data?.id}`)
+
+                // 첫 번째 경로로 이동
+                router.push('/tabs/chat')
+                setTimeout(() => {
+                  router.push(`/tabs/chat/chatroom?id=${data?.id}`)
+                }, 200)
               }}
             >
               <ButtonText>참여</ButtonText>

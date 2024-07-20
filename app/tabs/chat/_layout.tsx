@@ -11,9 +11,14 @@ export default function Layout() {
         options={{ title: '채팅', headerShown: false }}
       />
       <Stack.Screen
+        name="finish"
+        options={{ title: '운행 종료', headerShown: true }}
+      />
+      <Stack.Screen
         name="chatroom"
         options={{
           title: '채팅방',
+          headerShown: true,
           headerRight: () => (
             <Icon as={MenuIcon} m="$0" w="$6" h="$6" />
           ),

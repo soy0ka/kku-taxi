@@ -18,6 +18,7 @@ export interface Party {
   from: Place
   toPlace: Place
   owner: AnotherUser
+  payRequested: boolean
   _count: { partyMemberships: number }
 }
 

@@ -1,10 +1,12 @@
 import { Party } from '@/types/parties'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
   Avatar,
   AvatarFallbackText,
   AvatarImage,
   Box,
   Button,
+  ButtonIcon,
   ButtonText,
   Card,
   Heading,
@@ -22,6 +24,7 @@ import React from 'react'
 import { Keyboard, Platform } from 'react-native'
 import { io, Socket } from 'socket.io-client'
 import { Alert } from '../../../components/alert'
+import { PayRequestModal } from '../../../components/payRequest'
 import { userManager } from '../../../utils/localStorage'
 import { fetcher, poster, Profile } from '../../util'
 
@@ -47,6 +50,7 @@ export default function Chatroom() {
   const [messages, setMessages] = React.useState<Message[]>([])
   const [party, setParty] = React.useState<Party>()
   const [socket, setSocket] = React.useState<Socket | null>(null)
+  const [payModalOpen, setPayModalOpen] = React.useState(false)
   const URL = process.env.EXPO_PUBLIC_WS_URL || 'http://localhost:3000'
   const scrollViewRef = React.useRef<any>(null)
 
@@ -142,33 +146,101 @@ export default function Chatroom() {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
-      keyboardVerticalOffset={Platform.select({ ios: 80, android: 90 })}
+      keyboardVerticalOffset={Platform.select({ ios: 90, android: 130 })}
     >
       <Box style={{ flex: 1 }}>
+        <PayRequestModal
+          isOpen={payModalOpen}
+          party={party}
+          onClose={() => {
+            setPayModalOpen(false)
+          }}
+        />
         <Alert ref={alertRef} />
         {party && (
           <Card style={{ padding: 10, flexDirection: 'column' }}>
-            <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Heading size="md">
-                {party.name} {'[ '}
-                {party._count.partyMemberships} / {party.maxSize}
-                {' ]'}
-              </Heading>
-              {party.ownerId === user.id && (
-                <Button
-                  size="sm"
-                  sx={{ marginLeft: 'auto', bgColor: '#C80036' }}
-                  onPress={() => {
-                    router.push('/tabs/chat/finish')
-                  }}
-                >
-                  <ButtonText>운행종료</ButtonText>
-                </Button>
-              )}
-            </Box>
+            <Heading size="md">
+              {party.name} {'[ '}
+              {party._count.partyMemberships} / {party.maxSize}
+              {' ]'}
+            </Heading>
             <Text>
               {party.fromPlace.name} → {party.toPlace.name}
             </Text>
+            <Box
+              mt="$2.5"
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              {party.ownerId !== user.id && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  style={{ borderColor: '$black' }}
+                  onPress={() => {
+                    router.push(`/tabs/chat/finish?id=${id}`)
+                  }}
+                >
+                  <ButtonIcon
+                    as={() => (
+                      <FontAwesome
+                        style={{ color: '$black' }}
+                        name="pencil-square-o"
+                      />
+                    )}
+                  />
+                  <ButtonText ml="$2" sx={{ color: '$black' }}>
+                    후기작성
+                  </ButtonText>
+                </Button>
+              )}
+              {party.ownerId === user.id && (
+                <React.Fragment>
+                  <Button
+                    ml="$2"
+                    size="sm"
+                    variant="outline"
+                    style={{ borderColor: '#399918' }}
+                    isDisabled={party.payRequested}
+                    onPress={() => {
+                      setPayModalOpen(true)
+                    }}
+                  >
+                    <ButtonIcon
+                      as={() => (
+                        <FontAwesome
+                          style={{ color: '#399918' }}
+                          name="money"
+                        />
+                      )}
+                    />
+                    <ButtonText ml="$2" sx={{ color: '#399918' }}>
+                      정산요청
+                    </ButtonText>
+                  </Button>
+                  <Button
+                    size="sm"
+                    ml="$2"
+                    variant="outline"
+                    style={{ borderColor: '#FF7777' }}
+                    onPress={() => {
+                      router.push(`/tabs/chat/finish?id=${id}`)
+                    }}
+                  >
+                    <ButtonIcon
+                      as={() => (
+                        <FontAwesome style={{ color: '#FF7777' }} name="car" />
+                      )}
+                    />
+                    <ButtonText ml="$2" sx={{ color: '#FF7777' }}>
+                      운행종료
+                    </ButtonText>
+                  </Button>
+                </React.Fragment>
+              )}
+            </Box>
           </Card>
         )}
         <ScrollView
@@ -251,7 +323,6 @@ export default function Chatroom() {
             flexDirection: 'row',
             alignItems: 'center',
             padding: 10,
-            marginBottom: Platform.OS === 'ios' ? 10 : 40,
             backgroundColor: '#fff',
             position: 'absolute',
             bottom: 0,
