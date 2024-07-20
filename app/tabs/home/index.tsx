@@ -19,6 +19,7 @@ import {
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
 import React from 'react'
+import { Platform } from 'react-native'
 import { PartyCard } from '../../../components/partyCard'
 import { Party } from '../../../types/parties'
 import styles from '../../styles'
@@ -62,7 +63,11 @@ export default function Home() {
       <SafeAreaView>
         <Box>
           {notification && (
-            <Alert action="info" variant="accent">
+            <Alert
+              action="info"
+              variant="accent"
+              sx={{ mt: Platform.select({ ios: 0, android: 20 }) }}
+            >
               <AlertIcon
                 as={() => <FontAwesome name="info-circle" size={20} />}
               />
