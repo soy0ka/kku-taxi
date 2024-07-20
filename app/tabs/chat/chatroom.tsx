@@ -1,3 +1,4 @@
+import { Party } from '@/types/parties'
 import {
   Avatar,
   AvatarFallbackText,
@@ -5,6 +6,7 @@ import {
   Box,
   Button,
   ButtonText,
+  Card,
   Heading,
   HStack,
   Input,
@@ -15,7 +17,7 @@ import {
   Text,
   VStack,
 } from '@gluestack-ui/themed'
-import { useLocalSearchParams, useNavigation } from 'expo-router'
+import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 import React from 'react'
 import { Keyboard, Platform } from 'react-native'
 import { io, Socket } from 'socket.io-client'
@@ -43,6 +45,7 @@ export default function Chatroom() {
   const [user, setUser] = React.useState<any>({})
   const [value, setValue] = React.useState<string>('')
   const [messages, setMessages] = React.useState<Message[]>([])
+  const [party, setParty] = React.useState<Party>()
   const [socket, setSocket] = React.useState<Socket | null>(null)
   const URL = process.env.EXPO_PUBLIC_WS_URL || 'http://localhost:3000'
   const scrollViewRef = React.useRef<any>(null)
@@ -53,17 +56,8 @@ export default function Chatroom() {
     ws.emit('joinRoom', id)
     fetchUser()
     setMessages([])
-    const fetchMessages = async () => {
-      const response = await fetcher(`/chat/room/${id}`)
-      if (response) {
-        setMessages(response)
-        setTimeout(() => {
-          scrollViewRef.current?.scrollToEnd({ animated: true })
-        }, 100)
-      }
-    }
     fetchMessages()
-
+    fetchParty()
     const unsubscribe = navigation.addListener('focus', fetchMessages)
 
     return () => {
@@ -87,6 +81,21 @@ export default function Chatroom() {
       socket.off('messageCreate', messageHandler)
     }
   }, [socket])
+
+  const fetchMessages = async () => {
+    const response = await fetcher(`/chat/room/${id}`)
+    if (response) {
+      setMessages(response)
+      setTimeout(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true })
+      }, 100)
+    }
+  }
+
+  const fetchParty = async () => {
+    const party = await fetcher(`/party/chat/${id}`)
+    setParty(party)
+  }
 
   const fetchUser = async () => {
     const user = await userManager.getUser()
@@ -137,6 +146,31 @@ export default function Chatroom() {
     >
       <Box style={{ flex: 1 }}>
         <Alert ref={alertRef} />
+        {party && (
+          <Card style={{ padding: 10, flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Heading size="md">
+                {party.name} {'[ '}
+                {party._count.partyMemberships} / {party.maxSize}
+                {' ]'}
+              </Heading>
+              {party.ownerId === user.id && (
+                <Button
+                  size="sm"
+                  sx={{ marginLeft: 'auto', bgColor: '#C80036' }}
+                  onPress={() => {
+                    router.push('/tabs/chat/finish')
+                  }}
+                >
+                  <ButtonText>운행종료</ButtonText>
+                </Button>
+              )}
+            </Box>
+            <Text>
+              {party.fromPlace.name} → {party.toPlace.name}
+            </Text>
+          </Card>
+        )}
         <ScrollView
           ref={scrollViewRef}
           style={{ flex: 1 }}
