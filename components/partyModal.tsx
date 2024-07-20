@@ -9,7 +9,6 @@ import {
   ModalFooter,
   ModalHeader,
   Text,
-  VStack,
 } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 import React from 'react'
@@ -71,18 +70,19 @@ export const PartyModal = React.forwardRef<PartyModalRef, {}>(
       >
         <ModalBackdrop />
         <ModalContent>
-          <ModalHeader>
-            <VStack>
-              <Heading size="lg">파티에 참여 하시겠습니까?</Heading>
-              <Text size="sm" sx={{ color: 'gray' }}>
-                시간과 장소를 확인해주세요 {'\n'}
-                노쇼발생시 패널티가 부과될 수 있습니다!
-              </Text>
-            </VStack>
+          <ModalHeader
+            sx={{ flexDirection: 'column', alignItems: 'flex-start' }}
+          >
+            <Heading size="lg">파티에 참여 하시겠습니까?</Heading>
+            <Text size="sm" sx={{ color: 'gray', fontWeight: 'light' }}>
+              노쇼 발생시 패널티가 부과됩니다 {'\n'}
+              시간과 장소를 잘 확인해주세요
+            </Text>
           </ModalHeader>
           <ModalBody>
             <Text>
-              모집인원: {data?._count.partyMemberships}/{data?.maxSize}명
+              모집현황: {'['} {data?._count.partyMemberships} / {data?.maxSize}{' '}
+              명 {']'}
             </Text>
             <Text>
               {data?.fromPlace.name}발 {data?.toPlace.name}행
@@ -97,6 +97,7 @@ export const PartyModal = React.forwardRef<PartyModalRef, {}>(
             <Button
               variant="outline"
               size="sm"
+              sx={{ width: '$20' }}
               action="secondary"
               mr="$3"
               onPress={() => {
@@ -108,6 +109,7 @@ export const PartyModal = React.forwardRef<PartyModalRef, {}>(
             <Button
               size="sm"
               action="positive"
+              sx={{ width: '$20' }}
               borderWidth="$0"
               onPress={() => {
                 fetcher(`/party/join/${data?.id}`).then((res) => {

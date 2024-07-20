@@ -1,33 +1,28 @@
+import { PartyModalRef } from '@/components/partyModal'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
   AddIcon,
   Alert,
   AlertIcon,
   AlertText,
-  Avatar,
-  AvatarImage,
   Box,
   Button,
   ButtonText,
-  Card,
   Divider,
   Fab,
   FabIcon,
   FabLabel,
-  Heading,
   HStack,
-  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
-  VStack,
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
 import React from 'react'
-import { PartyModal, PartyModalRef } from '../../../components/partyModal'
+import { PartyCard } from '../../../components/partyCard'
 import { Party } from '../../../types/parties'
 import styles from '../../styles'
-import { fetcher, Profile } from '../../util'
+import { fetcher } from '../../util'
 
 export default function Home() {
   const navigation = useNavigation()
@@ -62,35 +57,6 @@ export default function Home() {
     fetchParties()
   }, [direction])
 
-  const formatTime = (date: string) => {
-    const d = new Date(date)
-    const now = new Date()
-
-    const year =
-      d.getFullYear() === now.getFullYear() ? '' : `${d.getFullYear()}년 `
-
-    const isToday = d.toDateString() === now.toDateString()
-    const isTomorrow =
-      d.toDateString() ===
-      new Date(now.setDate(now.getDate() + 1)).toDateString()
-    const isDayAfterTomorrow =
-      d.toDateString() ===
-      new Date(now.setDate(now.getDate() + 1)).toDateString()
-
-    let dayPart
-    if (isToday) {
-      dayPart = '오늘'
-    } else if (isTomorrow) {
-      dayPart = '내일'
-    } else if (isDayAfterTomorrow) {
-      dayPart = '모레'
-    } else {
-      dayPart = `${d.getMonth() + 1}월 ${d.getDate()}일`
-    }
-
-    return `${year}${dayPart} ${d.getHours()}시 ${d.getMinutes()}분`
-  }
-
   return (
     <React.Fragment>
       <SafeAreaView>
@@ -124,44 +90,11 @@ export default function Home() {
             {parties && parties.length ? (
               <ScrollView maxHeight="$96">
                 {parties.map((party: Party) => (
-                  <Pressable
+                  <PartyCard
                     key={party.id}
-                    onPress={() => {
-                      partyModalRef.current?.openModal(party)
-                    }}
-                  >
-                    <PartyModal ref={partyModalRef} />
-                    <Card>
-                      <Text>{formatTime(party.departure)} 출발</Text>
-                      <VStack mb="$6">
-                        <Heading size="md" fontFamily="$heading" mb="$1">
-                          {party.name} ({party._count.partyMemberships} /{' '}
-                          {party.maxSize} 명)
-                        </Heading>
-                        <Text size="sm" fontFamily="$heading" fontSize="$lg">
-                          {party.fromPlace.name} → {party.toPlace.name}
-                        </Text>
-                      </VStack>
-                      <Box flexDirection="row">
-                        <Avatar mr="$3">
-                          <AvatarImage
-                            source={{
-                              uri: Profile(party.owner.email.split('@')[0]),
-                            }}
-                            alt={party.owner.name}
-                          />
-                        </Avatar>
-                        <VStack>
-                          <Heading size="sm" fontFamily="$heading">
-                            {party.owner.name}
-                          </Heading>
-                          <Text size="sm" fontFamily="$heading">
-                            @{party.owner.email.split('@')[0]}
-                          </Text>
-                        </VStack>
-                      </Box>
-                    </Card>
-                  </Pressable>
+                    party={party}
+                    partyModalRef={partyModalRef}
+                  />
                 ))}
               </ScrollView>
             ) : (

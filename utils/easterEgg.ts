@@ -19,7 +19,7 @@ const ArrivalAndDestinationsAreSame = (count: number) => {
     case 8:
       return '언제까지 누르실거에요...'
     case 9:
-      return  '하 해보자는건가요?'
+      return '하 해보자는건가요?'
     case 10:
       return '제가 얼마나 만들어놓았는지 궁굼하시다고요?'
     case 11:
@@ -76,5 +76,5 @@ const ArrivalAndDestinationsAreSame = (count: number) => {
 }
 
 export default {
-  ArrivalAndDestinationsAreSame
+  ArrivalAndDestinationsAreSame,
 }
