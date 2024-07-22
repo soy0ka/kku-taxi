@@ -1,4 +1,5 @@
 import { Party } from '@/types/parties'
+import { UserMe } from '@/types/users'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
   Avatar,
@@ -23,7 +24,7 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 import React from 'react'
 import { Keyboard, Platform } from 'react-native'
 import { io, Socket } from 'socket.io-client'
-import { Alert } from '../../../components/alert'
+import { Alert, AlertRef } from '../../../components/alert'
 import { PayRequestModal } from '../../../components/payRequest'
 import { userManager } from '../../../utils/localStorage'
 import { fetcher, poster, Profile } from '../../util'
@@ -44,15 +45,16 @@ interface Message {
 export default function Chatroom() {
   const navigation = useNavigation()
   const { id } = useLocalSearchParams()
-  const alertRef = React.useRef<any>(null)
-  const [user, setUser] = React.useState<any>({})
+  const alertRef = React.useRef<AlertRef>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const scrollViewRef = React.useRef<any>(null)
+  const [user, setUser] = React.useState<UserMe | null>(null)
   const [value, setValue] = React.useState<string>('')
   const [messages, setMessages] = React.useState<Message[]>([])
   const [party, setParty] = React.useState<Party>()
   const [socket, setSocket] = React.useState<Socket | null>(null)
   const [payModalOpen, setPayModalOpen] = React.useState(false)
   const URL = process.env.EXPO_PUBLIC_WS_URL || 'http://localhost:3000'
-  const scrollViewRef = React.useRef<any>(null)
 
   React.useEffect(() => {
     const ws = io(URL)
@@ -107,7 +109,7 @@ export default function Chatroom() {
   }
 
   const handleSend = async () => {
-    if (!value) return
+    if (!value || !user) return
     const message = {
       content: value,
       senderId: user.id,
@@ -174,7 +176,7 @@ export default function Chatroom() {
                 alignItems: 'center',
               }}
             >
-              {party.ownerId !== user.id && (
+              {party.ownerId !== user?.id && (
                 <Button
                   size="sm"
                   variant="outline"
@@ -196,7 +198,7 @@ export default function Chatroom() {
                   </ButtonText>
                 </Button>
               )}
-              {party.ownerId === user.id && (
+              {party.ownerId === user?.id && (
                 <React.Fragment>
                   <Button
                     ml="$2"

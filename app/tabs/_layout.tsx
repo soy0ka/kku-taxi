@@ -55,7 +55,6 @@ async function registerToken() {
 
 async function registerForPushNotificationsAsync() {
   try {
-    let token
     const { status: existingStatus } = await Notifications.getPermissionsAsync()
     let finalStatus = existingStatus
     if (existingStatus !== 'granted') {
@@ -67,7 +66,7 @@ async function registerForPushNotificationsAsync() {
       return
     }
 
-    token = (
+    const token = (
       await Notifications.getExpoPushTokenAsync({
         projectId: '260ef7f5-24f3-49b6-93ad-5632be016ff2',
       })

@@ -46,6 +46,7 @@ export const fetcher = async (url: string) => {
     const headers = await getHeaders()
     const { data } = await api.get(url, { headers })
     return data?.body
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return error.response?.data
   }
@@ -56,6 +57,7 @@ export const poster = async (url: string, data: object) => {
     const headers = await getHeaders()
     const response = await api.post(url, data, { headers })
     return response.data
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return error.response?.data
   }

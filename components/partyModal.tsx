@@ -48,7 +48,7 @@ export type PartyModalRef = {
   closeModal: () => void
 }
 
-export const PartyModal = React.forwardRef<PartyModalRef, {}>(
+export const PartyModal = React.forwardRef<PartyModalRef, object>(
   function AlertComponent(props, ref) {
     const [open, setOpen] = React.useState(false)
     const [data, setData] = React.useState<Party>()

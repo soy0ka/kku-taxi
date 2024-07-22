@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
 Config plugin required when upgrading from 
 Expo 50 & react native 0.73 --> Expo 51 & react native 0.74
@@ -5,7 +6,6 @@ ReactCommon.modulemap and React-RuntimeApple.modulemap have the same content and
 The error message "redefinition of module 'ReactCommon'" suggests that the module is being defined more than once in your project, leading to a conflict.
 */
 
-// postinstall.js
 const fs = require('fs')
 const path = require('path')
 

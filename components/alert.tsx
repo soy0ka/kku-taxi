@@ -19,7 +19,7 @@ export type AlertRef = {
   openAlert: (alertTitle: string, alertMessage: string) => void
   closeAlert: () => void
 }
-export const Alert = React.forwardRef<AlertRef, {}>(function AlertComponent(
+export const Alert = React.forwardRef<AlertRef, object>(function AlertComponent(
   props,
   ref
 ) {

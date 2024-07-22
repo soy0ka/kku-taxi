@@ -22,10 +22,17 @@ import { tokenManager, userManager } from '../../utils/localStorage'
 import styles from '../styles'
 import { fetcher, getDeviceId, poster, Profile } from '../util'
 
+interface ApiDevice {
+  id: number
+  device: string
+  platform: string
+  token: string
+  createdAt: string
+}
 export default function Tab() {
   const navigation = useNavigation()
   const [user, setUser] = React.useState<UserMe | null>(null)
-  const [devices, setDevices] = React.useState<string[]>([])
+  const [devices, setDevices] = React.useState<ApiDevice[]>([])
   const [currentdevice, setDevice] = React.useState<string>('')
   const [modal, setModal] = React.useState(false)
 
@@ -70,7 +77,7 @@ export default function Tab() {
   }
 
   const expireToken = (token: string) => {
-    setDevices(devices.filter((device: any) => device.token !== token))
+    setDevices(devices.filter((device: ApiDevice) => device.token !== token))
     poster('/auth/logout', { token })
   }
 
@@ -122,7 +129,7 @@ export default function Tab() {
         </Heading>
         <ScrollView style={{ maxHeight: '60%' }}>
           {devices && devices.length ? (
-            devices?.map((device: any) => (
+            devices?.map((device: ApiDevice) => (
               <Card
                 key={device.id}
                 style={{
