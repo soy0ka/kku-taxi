@@ -64,11 +64,12 @@ export default function ChatRooms() {
                   <VStack ml={10}>
                     <Heading size="md">{room.name}</Heading>
                     <Text size="md">
-                      {room.party.from.name} - {room.party.to.name}
+                      {room.Party[0].fromPlace.name} -{' '}
+                      {room.Party[0].toPlace.name}
                     </Text>
                   </VStack>
                 </HStack>
-                <Text size="sm">{formatTime(room.party.departure)}</Text>
+                <Text size="sm">{formatTime(room.Party[0].departure)}</Text>
               </Card>
             </Pressable>
           ))

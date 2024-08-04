@@ -1,4 +1,8 @@
+import styles from '@/app/styles'
+import { PartyCard } from '@/components/partyCard'
 import { PartyModalRef } from '@/components/partyModal'
+import { Party } from '@/types/parties'
+import { fetcher } from '@/utils/apiClient'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
   AddIcon,
@@ -20,10 +24,6 @@ import {
 import { router, useNavigation } from 'expo-router'
 import React from 'react'
 import { Platform } from 'react-native'
-import { PartyCard } from '../../../components/partyCard'
-import { Party } from '../../../types/parties'
-import styles from '../../styles'
-import { fetcher } from '../../util'
 
 export default function Home() {
   const navigation = useNavigation()
@@ -46,12 +46,12 @@ export default function Home() {
 
   const fetchNotification = async () => {
     const notification = await fetcher('/notice')
-    setNotification(notification)
+    setNotification(notification.data.message)
   }
 
   const fetchParties = async () => {
     const parties = await fetcher(`/party?direction=${direction}`)
-    setParties(parties)
+    setParties(parties.data)
   }
 
   React.useEffect(() => {
