@@ -59,9 +59,9 @@ const ArrivalAndDestinationsAreSame = (count: number) => {
     case 28:
       return '이제 그만'
     case 29:
-      return '개발자가 얼마나 광기인지 보고싶다고요?'
+      return '개발자가 대체 몇개를 숨겨놓은건지 궁굼하시다고요?'
     case 30:
-      return '그거 아세요? 이걸 30번이나 누른 당신이 더 광기에요'
+      return '그거 아세요? 지금 당신은 이 버튼을 30번이나 눌렀어요'
     case 31:
       return '이제 준비해둔건 끝났어요 더 없어요'
     case 32:
@@ -69,7 +69,7 @@ const ArrivalAndDestinationsAreSame = (count: number) => {
     case 33:
       return '진짠데...'
     case 34:
-      return '진짜로 끝났어요'
+      return '이번엔 진짜로 끝났어요'
     default:
       return '출발지와 도착지가 같습니다'
   }
