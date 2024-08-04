@@ -1,3 +1,6 @@
+import styles from '@/app/styles'
+import { ApiStatus } from '@/types/api'
+import { poster } from '@/utils/apiClient'
 import {
   Button,
   ButtonText,
@@ -16,8 +19,6 @@ import {
   VStack,
 } from '@gluestack-ui/themed'
 import React from 'react'
-import styles from '../app/styles'
-import { poster } from '../app/util'
 
 interface BankAccountModalProps {
   isOpen: boolean
@@ -42,7 +43,7 @@ export const BankAccountModal: React.FC<BankAccountModalProps> = (props) => {
       number: account,
       holder: owner,
     }).then((res) => {
-      if (res.success) {
+      if (res.status === ApiStatus.SUCCESS) {
         props.onClose()
         setShowModal(false)
       } else {

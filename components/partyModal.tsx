@@ -1,3 +1,6 @@
+import { Party } from '@/types/parties'
+import { fetcher } from '@/utils/apiClient'
+import { formatRelativeDate, getTimeRemaining } from '@/utils/dateFormatter'
 import {
   Button,
   ButtonText,
@@ -12,36 +15,6 @@ import {
 } from '@gluestack-ui/themed'
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { fetcher } from '../app/util'
-import { Party } from '../types/parties'
-
-const formatDate = (date: string | undefined) => {
-  if (!date) return '불러올 수 없음'
-  const d = new Date(date)
-  const now = new Date()
-  const diff = now.getTime() - d.getTime()
-  const diffHours = diff / (1000 * 60 * 60)
-  const diffDays = diffHours / 24
-  if (diffDays < 1) {
-    return `${d.getHours()}시 ${d.getMinutes()}분`
-  } else {
-    return `${d.getMonth() + 1}월 ${d.getDate()}일`
-  }
-}
-
-const timeRemain = (date: string | undefined) => {
-  if (!date) return '불러올 수 없음'
-  const d = new Date(date)
-  const now = new Date()
-  const diff = d.getTime() - now.getTime()
-  const diffHours = diff / (1000 * 60 * 60)
-  const diffMinutes = (diffHours % 1) * 60
-  if (diffHours < 12) {
-    return `${Math.floor(diffHours)}시간 ${Math.floor(diffMinutes)}분`
-  } else {
-    return `${Math.floor(diffHours / 24)}일`
-  }
-}
 
 export type PartyModalRef = {
   openModal: (party: Party) => void
@@ -91,9 +64,9 @@ export const PartyModal = React.forwardRef<PartyModalRef, object>(
               {data?.fromPlace.name}발 {data?.toPlace.name}행
             </Text>
             <Text>
-              출발시간: {formatDate(data?.departure)}
+              출발시간: {formatRelativeDate(data?.departure)}
               {' ('}
-              {timeRemain(data?.departure)}남음{')'}
+              {getTimeRemaining(data?.departure)}남음{')'}
             </Text>
           </ModalBody>
           <ModalFooter>

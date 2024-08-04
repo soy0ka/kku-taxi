@@ -1,5 +1,6 @@
-import { poster } from '@/app/util'
+import styles from '@/app/styles'
 import { Party } from '@/types/parties'
+import { poster } from '@/utils/apiClient'
 import {
   Button,
   ButtonText,
@@ -18,7 +19,6 @@ import {
   VStack,
 } from '@gluestack-ui/themed'
 import React from 'react'
-import styles from '../app/styles'
 
 interface PayRequestModalProps {
   isOpen: boolean
