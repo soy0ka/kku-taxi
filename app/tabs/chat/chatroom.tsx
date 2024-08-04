@@ -1,5 +1,10 @@
+import { Alert, AlertRef } from '@/components/alert'
+import { PayRequestModal } from '@/components/payRequest'
 import { Party } from '@/types/parties'
 import { UserMe } from '@/types/users'
+import { fetcher, poster } from '@/utils/apiClient'
+import { Profile } from '@/utils/gravatar'
+import { userManager } from '@/utils/localStorage'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
   Avatar,
@@ -24,10 +29,6 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 import React from 'react'
 import { Keyboard, Platform } from 'react-native'
 import { io, Socket } from 'socket.io-client'
-import { Alert, AlertRef } from '../../../components/alert'
-import { PayRequestModal } from '../../../components/payRequest'
-import { userManager } from '../../../utils/localStorage'
-import { fetcher, poster, Profile } from '../../util'
 
 interface Message {
   id: number
@@ -91,7 +92,7 @@ export default function Chatroom() {
   const fetchMessages = async () => {
     const response = await fetcher(`/chat/room/${id}`)
     if (response) {
-      setMessages(response)
+      setMessages(response.data)
       setTimeout(() => {
         scrollViewRef.current?.scrollToEnd({ animated: true })
       }, 100)
@@ -100,7 +101,7 @@ export default function Chatroom() {
 
   const fetchParty = async () => {
     const party = await fetcher(`/party/chat/${id}`)
-    setParty(party)
+    setParty(party.data)
   }
 
   const fetchUser = async () => {

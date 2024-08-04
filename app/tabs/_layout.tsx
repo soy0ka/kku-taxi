@@ -1,9 +1,9 @@
+import { poster } from '@/utils/apiClient'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import * as Notifications from 'expo-notifications'
 import { Tabs } from 'expo-router'
 import React, { useEffect } from 'react'
 import { Platform } from 'react-native'
-import { poster } from '../util'
 
 export default function TabLayout() {
   useEffect(() => {

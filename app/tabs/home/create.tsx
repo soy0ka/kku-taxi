@@ -1,3 +1,9 @@
+import styles from '@/app/styles'
+import { Alert, AlertRef } from '@/components/alert'
+import { DestinationSelector } from '@/components/destinationSelector'
+import { ApiStatus } from '@/types/api'
+import { poster } from '@/utils/apiClient'
+import EasterEgg from '@/utils/easterEgg'
 import {
   Box,
   Button,
@@ -28,11 +34,6 @@ import RNDateTimePicker, {
 import { router } from 'expo-router'
 import React from 'react'
 import { Platform } from 'react-native'
-import { Alert, AlertRef } from '../../../components/alert'
-import { DestinationSelector } from '../../../components/destinationSelector'
-import EasterEgg from '../../../utils/easterEgg'
-import styles from '../../styles'
-import { poster } from '../../util'
 
 export default function Create() {
   const alertRef = React.useRef<AlertRef>(null)
@@ -77,11 +78,11 @@ export default function Create() {
       arrival,
       maxSize,
     })
-    if (!response.success) {
-      alertRef.current?.openAlert('error', response.message)
+    if (response.status === ApiStatus.ERROR) {
+      alertRef.current?.openAlert('error', String(response.error?.message))
     } else {
       alertRef.current?.openAlert('success', '팟이 생성되었습니다.')
-      router.push(`/tabs/chat/chatroom?id=${response.body.id}`)
+      router.push(`/tabs/chat/chatroom?id=${response.data.id}`)
     }
   }
 

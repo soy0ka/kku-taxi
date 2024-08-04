@@ -1,3 +1,5 @@
+import { fetcher } from '@/utils/apiClient'
+import { Profile } from '@/utils/gravatar'
 import {
   Avatar,
   AvatarFallbackText,
@@ -14,7 +16,6 @@ import {
 import { router, useNavigation } from 'expo-router'
 import React from 'react'
 import { ChatRoom } from '../../../types/chatrooms'
-import { fetcher, Profile } from '../../util'
 
 export default function ChatRooms() {
   const [chatRooms, setChatRooms] = React.useState<ChatRoom[]>([])
@@ -31,7 +32,7 @@ export default function ChatRooms() {
   const fetchChatRooms = async () => {
     const res = await fetcher('/chat/me')
     if (!res) return
-    setChatRooms(res)
+    setChatRooms(res.data)
   }
 
   const formatTime = (date: string) => {

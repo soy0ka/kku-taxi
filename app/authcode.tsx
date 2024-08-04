@@ -1,3 +1,7 @@
+import { Alert, AlertRef } from '@/components/alert'
+import { ApiStatus } from '@/types/api'
+import { poster } from '@/utils/apiClient'
+import { tokenManager } from '@/utils/localStorage'
 import {
   Box,
   Button,
@@ -9,10 +13,7 @@ import {
 } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 import React from 'react'
-import { Alert, AlertRef } from '../components/alert'
-import { tokenManager } from '../utils/localStorage'
 import Styles from './styles'
-import { poster } from './util'
 
 export default function AuthCodeScreen() {
   const [code, setCode] = React.useState('')
@@ -25,19 +26,19 @@ export default function AuthCodeScreen() {
         '인증코드는 6자리 숫자로 이루어져있습니다'
       )
     poster('/auth/code', { code }).then((res) => {
-      if (res.success) {
-        tokenManager.setToken(res.body.token)
+      if (res.status === ApiStatus.SUCCESS) {
+        tokenManager.setToken(res.data.token)
         router.push('/tabs')
       } else {
-        if (res.message === 'Forbidden') {
-          alertRef.current?.openAlert(
-            '인증코드가 만료되었어요',
-            '인증코드는 5분간 유효해요'
-          )
-        } else {
+        if (res.error?.code === 'C101') {
           alertRef.current?.openAlert(
             '인증코드가 틀렸어요',
             '인증코드를 다시 확인해주세요'
+          )
+        } else if (res.error?.code === 'C102') {
+          alertRef.current?.openAlert(
+            '인증코드가 만료되었어요',
+            '인증코드는 5분간 유효해요'
           )
         }
       }

@@ -1,3 +1,5 @@
+import { ApiStatus } from '@/types/api'
+import { fetcher, poster } from '@/utils/apiClient'
 import {
   Box,
   Button,
@@ -13,7 +15,6 @@ import React from 'react'
 import { Alert, AlertRef } from '../components/alert'
 import { userManager } from '../utils/localStorage'
 import Styles from './styles'
-import { fetcher, poster } from './util'
 
 export default function index() {
   const [email, setEmail] = React.useState('')
@@ -21,9 +22,8 @@ export default function index() {
 
   React.useEffect(() => {
     fetcher('/auth/me').then((res) => {
-      if (!res) return
-      if (res.id) {
-        userManager.setUser(res)
+      if (res.status === ApiStatus.SUCCESS) {
+        userManager.setUser(res.data)
         router.push('/tabs')
       }
     })
@@ -33,8 +33,9 @@ export default function index() {
     if (!email && alertRef.current) {
       alertRef.current.openAlert('알림', '이메일을 입력해주세요')
     }
+
     poster('/auth/login', { email: `${email}@kku.ac.kr` }).then((res) => {
-      if ((!res || !res.success) && alertRef.current) {
+      if ((!res || res.status !== 'success') && alertRef.current) {
         alertRef.current.openAlert('알림', '에러가 발생했어요')
       } else {
         router.push('/authcode')
