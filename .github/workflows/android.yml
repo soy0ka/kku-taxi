@@ -1,71 +1,71 @@
-name: Expo Android Build Test
+# name: Expo Android Build Test
 
-on:
-  push:
-    branches:
-      - 'master'
-  pull_request:
-    branches:
-      - '*'
+# on:
+#   push:
+#     branches:
+#       - 'master'
+#   pull_request:
+#     branches:
+#       - '*'
 
-jobs:
-  build:
-    runs-on: 'ubuntu-latest'
-    strategy:
-      matrix:
-        node: [18.x]
-    steps:
-      - name: 🏗 Setup repo
-        uses: actions/checkout@v2
+# jobs:
+#   build:
+#     runs-on: 'ubuntu-latest'
+#     strategy:
+#       matrix:
+#         node: [18.x]
+#     steps:
+#       - name: 🏗 Setup repo
+#         uses: actions/checkout@v2
 
-      - name: 🏗 Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
-          cache: yarn
+#       - name: 🏗 Setup Node
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: ${{ matrix.node }}
+#           cache: yarn
 
-      - name: 🏗 Setup Expo and EAS
-        uses: expo/expo-github-action@v7
-        with:
-          token: ${{ secrets.EXPO_TOKEN }}
-          expo-version: latest
-          eas-version: latest
+#       - name: 🏗 Setup Expo and EAS
+#         uses: expo/expo-github-action@v7
+#         with:
+#           token: ${{ secrets.EXPO_TOKEN }}
+#           expo-version: latest
+#           eas-version: latest
 
-      - name: 📦 Install dependencies
-        run: yarn
+#       - name: 📦 Install dependencies
+#         run: yarn
 
-      - name: 🩺 Run Expo Doctor
-        run: npx expo-doctor
-        continue-on-error: true
+#       - name: 🩺 Run Expo Doctor
+#         run: npx expo-doctor
+#         continue-on-error: true
 
-      - name: 📝 Generate eas.json
-        run: |
-          echo '{
-            "build": {
-              "development": {
-                "distribution": "internal",
-                "android": {
-                  "buildType": "apk"
-                },
-              }
-            }
-          }' > eas.json
+#       - name: 📝 Generate eas.json
+#         run: |
+#           echo '{
+#             "build": {
+#               "development": {
+#                 "distribution": "internal",
+#                 "android": {
+#                   "buildType": "apk"
+#                 },
+#               }
+#             }
+#           }' > eas.json
 
-      - name: Setup Java 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+#       - name: Setup Java 17
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: 'temurin'
+#           java-version: '17'
 
-      - name: 👷 Build app
-        env:
-          GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
-          GOOGLE_SERVICES_PLIST_BASE64: ${{ secrets.GOOGLE_SERVICES_PLIST_BASE64 }}
-          GOOGLE_SERVICES_JSON: ${{ vars.GOOGLE_SERVICES_JSON }}
-          GOOGLE_SERVICES_PLIST: ${{ vars.GOOGLE_SERVICES_PLIST }}
-        run: |
-          eas build --local \
-            --non-interactive \
-            --output=./app-build \
-            --platform=android \
-            --profile=development
+#       - name: 👷 Build app
+#         env:
+#           GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
+#           GOOGLE_SERVICES_PLIST_BASE64: ${{ secrets.GOOGLE_SERVICES_PLIST_BASE64 }}
+#           GOOGLE_SERVICES_JSON: ${{ vars.GOOGLE_SERVICES_JSON }}
+#           GOOGLE_SERVICES_PLIST: ${{ vars.GOOGLE_SERVICES_PLIST }}
+#         run: |
+#           eas build --local \
+#             --non-interactive \
+#             --output=./app-build \
+#             --platform=android \
+#             --profile=development
