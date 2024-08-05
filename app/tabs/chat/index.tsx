@@ -1,4 +1,6 @@
+import { ChatRoom } from '@/types/chatrooms'
 import { fetcher } from '@/utils/apiClient'
+import { formatDateToKorean } from '@/utils/dateFormatter'
 import { Profile } from '@/utils/gravatar'
 import {
   Avatar,
@@ -15,7 +17,6 @@ import {
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
 import React from 'react'
-import { ChatRoom } from '../../../types/chatrooms'
 
 export default function ChatRooms() {
   const [chatRooms, setChatRooms] = React.useState<ChatRoom[]>([])
@@ -33,13 +34,6 @@ export default function ChatRooms() {
     const res = await fetcher('/chat/me')
     if (!res) return
     setChatRooms(res.data)
-  }
-
-  const formatTime = (date: string) => {
-    const d = new Date(date)
-    return `${d.getFullYear()}년 ${
-      d.getMonth() + 1
-    }월 ${d.getDate()}일 ${d.getHours()}:${d.getMinutes()}`
   }
 
   return (
@@ -69,7 +63,9 @@ export default function ChatRooms() {
                     </Text>
                   </VStack>
                 </HStack>
-                <Text size="sm">{formatTime(room.Party[0].departure)}</Text>
+                <Text size="sm">
+                  {formatDateToKorean(room.Party[0].departure)} 출발
+                </Text>
               </Card>
             </Pressable>
           ))

@@ -3,7 +3,6 @@ import { Stack } from 'expo-router'
 import React from 'react'
 
 export default function Layout() {
-  // headerright 에 설정 버튼 추가
   return (
     <Stack>
       <Stack.Screen
