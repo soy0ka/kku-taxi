@@ -3,6 +3,7 @@ import { Alert, AlertRef } from '@/components/alert'
 import { DestinationSelector } from '@/components/destinationSelector'
 import { ApiStatus } from '@/types/api'
 import { poster } from '@/utils/apiClient'
+import { formatDateToKorean } from '@/utils/dateFormatter'
 import EasterEgg from '@/utils/easterEgg'
 import {
   Box,
@@ -44,44 +45,32 @@ export default function Create() {
   const [description, setDescription] = React.useState('')
   const [pressCount, setPressCount] = React.useState(0)
 
-  const formatDate = (date: Date) => {
-    return `${date.getFullYear()}년 ${
-      date.getMonth() + 1
-    }월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`
-  }
+  const openAlert = (title: string, message: string) =>
+    alertRef.current?.openAlert(title, message)
 
   const handleSubmit = async () => {
     if (!departure || !arrival)
-      return alertRef.current?.openAlert(
-        '에러',
-        '출발지와 목적지를 선택해주세요'
-      )
+      return openAlert('에러', '출발지와 목적지를 선택해주세요')
     if (departure === arrival) {
-      alertRef.current?.openAlert(
-        '에러',
-        EasterEgg.ArrivalAndDestinationsAreSame(pressCount)
-      )
+      openAlert('에러', EasterEgg.ArrivalAndDestinationsAreSame(pressCount))
       return setPressCount(pressCount + 1)
     }
-    if (!maxSize)
-      return alertRef.current?.openAlert('에러', '모집인원을 선택해주세요')
+    if (!maxSize) return openAlert('에러', '모집인원을 선택해주세요')
     if (date < new Date())
-      return alertRef.current?.openAlert(
-        '에러',
-        '출발시간은 현재 시간보다 이후여야합니다'
-      )
+      return openAlert('에러', '출발시간은 현재 시간보다 이후여야합니다')
 
     const response = await poster('/party/create', {
-      description: description || '셜명이 없습니다',
+      description: description || '설명이 없습니다',
       dateTime: date,
       departure,
       arrival,
       maxSize,
     })
+
     if (response.status === ApiStatus.ERROR) {
-      alertRef.current?.openAlert('error', String(response.error?.message))
+      openAlert('에러', String(response.error?.message))
     } else {
-      alertRef.current?.openAlert('success', '팟이 생성되었습니다.')
+      openAlert('성공', '팟이 생성되었습니다.')
       router.push(`/tabs/chat/chatroom?id=${response.data.id}`)
     }
   }
@@ -143,7 +132,7 @@ export default function Create() {
           </HStack>
         )}
         <Text textAlign="center" mt={10} fontSize={18}>
-          시간: {formatDate(date)}
+          시간: {formatDateToKorean(date)}
         </Text>
         <FormControl mt={20}>
           <FormControlLabel mb="$1">
