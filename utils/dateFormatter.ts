@@ -97,7 +97,7 @@ export const getTimeRemaining = (date: string | undefined): string => {
 
 /**
  * 주어진 날짜를 한국어로 포맷팅합니다. (년 월 일 시 분)
- * @param date - 날짜 문자열 (ISO 형식)
+ * @param date - 날짜 문자열 혹은 Date 객체
  * @returns 포맷된 날짜 문자열
  * @example
  * ```typescript
@@ -105,7 +105,7 @@ export const getTimeRemaining = (date: string | undefined): string => {
  * // '2021년 6월 1일 12시 30분'
  * ```
  */
-export const formatDateToKorean = (date: string) => {
+export const formatDateToKorean = (date: string | Date) => {
   const d = new Date(date)
   return `${d.getFullYear()}년 ${d.getMonth()}월 ${d.getDate()}일 ${d.getHours()}시 ${d.getMinutes()}분`
 }
