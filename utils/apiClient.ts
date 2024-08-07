@@ -57,3 +57,17 @@ export const poster = async (
     return error.response?.data
   }
 }
+
+export const patcher = async (
+  url: string,
+  payload: object
+): Promise<ApiBase> => {
+  try {
+    const headers = await getHeaders()
+    const { data } = await api.patch(url, payload, { headers })
+    return data
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return error.response?.data
+  }
+}
