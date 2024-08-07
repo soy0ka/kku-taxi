@@ -18,13 +18,7 @@ export const tokenManager = {
   getToken,
 }
 
-interface User {
-  id: number
-  name: string
-  textId: string
-}
-
-const setUser = async (user: User) => {
+const setUser = async (user: object) => {
   await AsyncStorage.setItem('@USER', JSON.stringify(user))
 }
 
@@ -41,4 +35,22 @@ export const userManager = {
   setUser,
   removeUser,
   getUser,
+}
+
+const setPushToken = async (pushToken: string) => {
+  await AsyncStorage.setItem('@PUSH_TOKEN', pushToken)
+}
+
+const removePushToken = async () => {
+  await AsyncStorage.removeItem('@PUSH_TOKEN')
+}
+
+const getPushToken = async () => {
+  return await AsyncStorage.getItem('@PUSH_TOKEN')
+}
+
+export const pushTokenManager = {
+  setPushToken,
+  removePushToken,
+  getPushToken,
 }
