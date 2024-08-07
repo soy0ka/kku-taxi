@@ -9,10 +9,10 @@ export interface UserMe {
   name: string
   email: string
   textId: string
-  account: {
+  bankaccount: {
     bankName: string
     account: string
     holder: string
-  }
+  }[]
   _count: { partyMemberships: number }
 }
