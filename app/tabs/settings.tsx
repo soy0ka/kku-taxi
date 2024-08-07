@@ -40,13 +40,13 @@ export default function SettingTab() {
   }
 
   const fetchUser = async () => {
-    const user = await fetcher('/auth/me')
+    const user = await fetcher('/user/@me')
     await userManager.setUser(user.data)
     setUser(user.data)
   }
 
   const fetchDevices = async () => {
-    const device = await fetcher('/auth/mydevice')
+    const device = await fetcher('/user/@me/devices')
     setDevices(device.data)
   }
 

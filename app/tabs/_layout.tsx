@@ -49,9 +49,7 @@ export default function TabLayout() {
 async function registerToken() {
   const token = await registerForPushNotificationsAsync()
   if (token) {
-    await patcher('/user/@me/devices', { pushToken: token }).then((res) => {
-      console.log(res)
-    })
+    await patcher('/user/@me/devices', { pushToken: token })
   }
 }
 

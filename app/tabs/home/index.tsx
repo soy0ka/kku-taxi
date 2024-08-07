@@ -1,6 +1,7 @@
 import styles from '@/app/styles'
 import { PartyCard } from '@/components/partyCard'
 import { PartyModalRef } from '@/components/partyModal'
+import { ApiStatus } from '@/types/api'
 import { Party } from '@/types/parties'
 import { fetcher } from '@/utils/apiClient'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
@@ -46,7 +47,9 @@ export default function Home() {
 
   const fetchNotification = async () => {
     const notification = await fetcher('/notice')
-    setNotification(notification.data.message)
+    if (notification.status === ApiStatus.SUCCESS) {
+      setNotification(notification.data.message)
+    }
   }
 
   const fetchParties = async () => {

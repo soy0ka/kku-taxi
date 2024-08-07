@@ -40,8 +40,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, setModal }) => {
       <HStack>
         <Text mb={5}>
           계좌번호:{' '}
-          {user?.account
-            ? `${user?.account.bankName} ${user?.account.account}`
+          {user?.bankaccount[0]
+            ? `${user?.bankaccount[0].bankName} ${user?.bankaccount[0].account}`
             : '계좌정보 없음'}
         </Text>
         <LinkText

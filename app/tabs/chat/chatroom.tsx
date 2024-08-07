@@ -3,6 +3,7 @@ import { PayRequestModal } from '@/components/payRequest'
 import { Party } from '@/types/parties'
 import { UserMe } from '@/types/users'
 import { fetcher, poster } from '@/utils/apiClient'
+import { getTextId } from '@/utils/getTextId'
 import { Profile } from '@/utils/gravatar'
 import { userManager } from '@/utils/localStorage'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
@@ -39,7 +40,7 @@ interface Message {
   sender: {
     id: number
     name: string
-    textId: string
+    email: string
   }
 }
 
@@ -55,7 +56,7 @@ export default function Chatroom() {
   const [party, setParty] = React.useState<Party>()
   const [socket, setSocket] = React.useState<Socket | null>(null)
   const [payModalOpen, setPayModalOpen] = React.useState(false)
-  const URL = process.env.EXPO_PUBLIC_WS_URL || 'http://localhost:3000'
+  const URL = process.env.EXPO_PUBLIC_WS_URL ?? 'http://localhost:3000'
 
   React.useEffect(() => {
     const ws = io(URL)
@@ -90,7 +91,7 @@ export default function Chatroom() {
   }, [socket])
 
   const fetchMessages = async () => {
-    const response = await fetcher(`/chat/room/${id}`)
+    const response = await fetcher(`/chat/${id}/messages`)
     if (response) {
       setMessages(response.data)
       setTimeout(() => {
@@ -100,8 +101,8 @@ export default function Chatroom() {
   }
 
   const fetchParty = async () => {
-    const party = await fetcher(`/party/chat/${id}`)
-    setParty(party.data)
+    const response = await fetcher(`/chat/${id}/details`)
+    setParty(response.data.Party[0])
   }
 
   const fetchUser = async () => {
@@ -279,7 +280,9 @@ export default function Chatroom() {
                         {message.sender.name}
                       </AvatarFallbackText>
                       <AvatarImage
-                        source={{ uri: Profile(message.sender.textId) }}
+                        source={{
+                          uri: Profile(getTextId(message.sender.email)),
+                        }}
                         alt={`${message.sender.name}의 프로필사진`}
                       />
                     </Avatar>
@@ -290,7 +293,7 @@ export default function Chatroom() {
                           style={{ color: '#666', marginLeft: 5 }}
                           fontSize={12}
                         >
-                          @{message.sender.textId}
+                          @{getTextId(message.sender.email)}
                         </Text>
                       </HStack>
                       <Text size="sm">{message.content}</Text>
@@ -304,7 +307,9 @@ export default function Chatroom() {
                         })
                         alertRef.current?.openAlert(
                           '신고가 접수되었습니다.',
-                          `@${message.sender.textId}: ${message.content} `
+                          `@${getTextId(message.sender.email)}: ${
+                            message.content
+                          } `
                         )
                       }}
                     >

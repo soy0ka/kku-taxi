@@ -31,9 +31,9 @@ export default function ChatRooms() {
   }, [navigation])
 
   const fetchChatRooms = async () => {
-    const res = await fetcher('/chat/me')
+    const res = await fetcher('/chat/@me')
     if (!res) return
-    setChatRooms(res.data)
+    setChatRooms(res.data.chatrooms)
   }
 
   return (

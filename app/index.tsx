@@ -1,5 +1,7 @@
+import { Alert, AlertRef } from '@/components/alert'
 import { ApiStatus } from '@/types/api'
 import { fetcher, poster } from '@/utils/apiClient'
+import { userManager } from '@/utils/localStorage'
 import {
   Box,
   Button,
@@ -12,8 +14,6 @@ import {
 } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 import React from 'react'
-import { Alert, AlertRef } from '../components/alert'
-import { userManager } from '../utils/localStorage'
 import Styles from './styles'
 
 export default function index() {
@@ -21,7 +21,7 @@ export default function index() {
   const alertRef = React.useRef<AlertRef>(null)
 
   React.useEffect(() => {
-    fetcher('/auth/me').then((res) => {
+    fetcher('/user/@me').then((res) => {
       if (res.status === ApiStatus.SUCCESS) {
         userManager.setUser(res.data)
         router.push('/tabs')
