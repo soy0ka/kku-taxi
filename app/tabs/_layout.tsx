@@ -1,4 +1,4 @@
-import { poster } from '@/utils/apiClient'
+import { patcher } from '@/utils/apiClient'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import * as Notifications from 'expo-notifications'
 import { Tabs } from 'expo-router'
@@ -49,7 +49,9 @@ export default function TabLayout() {
 async function registerToken() {
   const token = await registerForPushNotificationsAsync()
   if (token) {
-    await poster('/auth/notification', { token })
+    await patcher('/user/@me/devices', { pushToken: token }).then((res) => {
+      console.log(res)
+    })
   }
 }
 
