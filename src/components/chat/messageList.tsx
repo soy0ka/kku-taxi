@@ -1,8 +1,8 @@
 // import { Message } from '@/types/messages';
-import { Message } from '@/src/types/message'
-import { poster } from '@/src/utils/apiClient'
-import { getTextId } from '@/src/utils/getTextId'
-import { Profile } from '@/src/utils/gravatar'
+import { Message } from '@/types/message'
+import { poster } from '@/utils/apiClient'
+import { getTextId } from '@/utils/getTextId'
+import { Profile } from '@/utils/gravatar'
 import {
   Avatar,
   AvatarFallbackText,

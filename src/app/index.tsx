@@ -28,11 +28,11 @@ export default function Index() {
       .then((res) => {
         if (res.status === ApiStatus.SUCCESS) {
           userManager.setUser(res.data)
-          router.push('/tabs')
+          router.replace('/tabs')
         }
       })
       .catch(() => {
-        showAlert('알림', '사용자 정보를 가져오는 중 오류가 발생했습니다')
+        showAlert('알림', '로그인된 사용자 정보를 가져오는데 실패했습니다')
       })
   }, [])
 
