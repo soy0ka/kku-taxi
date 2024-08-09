@@ -1,7 +1,7 @@
-import { ChatRoom } from '@/src/types/chatrooms'
-import { fetcher } from '@/src/utils/apiClient'
-import { formatDateToKorean } from '@/src/utils/dateFormatter'
-import { Profile } from '@/src/utils/gravatar'
+import { ChatRoom } from '@/types/chatrooms'
+import { fetcher } from '@/utils/apiClient'
+import { formatDateToKorean } from '@/utils/dateFormatter'
+import { Profile } from '@/utils/gravatar'
 import {
   Avatar,
   AvatarFallbackText,

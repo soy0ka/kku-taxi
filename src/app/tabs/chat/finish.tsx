@@ -1,5 +1,5 @@
-import { fetcher } from '@/src/utils/apiClient'
-import { Profile } from '@/src/utils/gravatar'
+import { fetcher } from '@/utils/apiClient'
+import { Profile } from '@/utils/gravatar'
 import {
   Accordion,
   AccordionContent,

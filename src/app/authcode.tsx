@@ -1,7 +1,7 @@
-import { Alert, AlertRef } from '@/src/components/alert'
-import { ApiStatus } from '@/src/types/api'
-import { poster } from '@/src/utils/apiClient'
-import { tokenManager } from '@/src/utils/localStorage'
+import { Alert, AlertRef } from '@/components/alert'
+import { ApiStatus } from '@/types/api'
+import { poster } from '@/utils/apiClient'
+import { tokenManager } from '@/utils/localStorage'
 import {
   Box,
   Button,

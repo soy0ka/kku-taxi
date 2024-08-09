@@ -1,7 +1,7 @@
-import { Alert, AlertRef } from '@/src/components/alert'
-import { ApiStatus } from '@/src/types/api'
-import { fetcher, poster } from '@/src/utils/apiClient'
-import { userManager } from '@/src/utils/localStorage'
+import { useAlert } from '@/contexts/AlertContext'
+import { ApiStatus } from '@/types/api'
+import { fetcher, poster } from '@/utils/apiClient'
+import { userManager } from '@/utils/localStorage'
 import {
   Box,
   Button,
@@ -21,7 +21,7 @@ const EMAIL_DOMAIN = '@kku.ac.kr'
 
 export default function Index() {
   const [email, setEmail] = React.useState('')
-  const alertRef = React.useRef<AlertRef>(null)
+  const { showAlert } = useAlert()
 
   React.useEffect(() => {
     fetcher('/user/@me')
@@ -32,20 +32,13 @@ export default function Index() {
         }
       })
       .catch(() => {
-        alertRef.current?.openAlert(
-          '알림',
-          '사용자 정보를 가져오는 중 오류가 발생했습니다.'
-        )
+        showAlert('알림', '사용자 정보를 가져오는 중 오류가 발생했습니다')
       })
   }, [])
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+$/
     return emailRegex.test(email)
-  }
-
-  const showAlert = (title: string, message: string) => {
-    alertRef.current?.openAlert(title, message)
   }
 
   const login = () => {
@@ -57,19 +50,18 @@ export default function Index() {
     poster(LOGIN_URL, { email: `${email}${EMAIL_DOMAIN}` })
       .then((res) => {
         if (!res || res.status !== ApiStatus.SUCCESS) {
-          showAlert('알림', '에러가 발생했어요')
+          showAlert('알림', '로그인에 실패했습니다.')
         } else {
           router.push('/authcode')
         }
       })
       .catch(() => {
-        showAlert('알림', '서버 요청 중 오류가 발생했습니다.')
+        showAlert('알림', '로그인에 실패했습니다.')
       })
   }
 
   return (
     <Box style={Styles.container}>
-      <Alert ref={alertRef} />
       <Heading>로그인</Heading>
       <Input mt={15} mb={15}>
         <InputField
@@ -77,7 +69,7 @@ export default function Index() {
           value={email}
           onChangeText={(text) => setEmail(text)}
         />
-        <InputSlot pl={10}>
+        <InputSlot pl={10} mr="$1.5">
           <Text>{EMAIL_DOMAIN}</Text>
         </InputSlot>
       </Input>

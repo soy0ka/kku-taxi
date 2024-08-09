@@ -1,4 +1,4 @@
-import { patcher } from '@/src/utils/apiClient'
+import { patcher } from '@/utils/apiClient'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import * as Notifications from 'expo-notifications'
 import { Tabs } from 'expo-router'
