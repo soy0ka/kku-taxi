@@ -1,5 +1,5 @@
-import { ApiBase } from '@/types/api'
-import { tokenManager } from '@/utils/localStorage'
+import { ApiBase } from '@/src/types/api'
+import { tokenManager } from '@/src/utils/localStorage'
 import Axios from 'axios'
 import * as Application from 'expo-application'
 import Constants from 'expo-constants'

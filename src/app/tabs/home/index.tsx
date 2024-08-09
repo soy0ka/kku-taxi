@@ -1,9 +1,9 @@
-import styles from '@/app/styles'
-import { PartyCard } from '@/components/partyCard'
-import { PartyModalRef } from '@/components/partyModal'
-import { ApiStatus } from '@/types/api'
-import { Party } from '@/types/parties'
-import { fetcher } from '@/utils/apiClient'
+import styles from '@/src/app/styles'
+import { PartyCard } from '@/src/components/partyCard'
+import { PartyModalRef } from '@/src/components/partyModal'
+import { ApiStatus } from '@/src/types/api'
+import { Party } from '@/src/types/parties'
+import { fetcher } from '@/src/utils/apiClient'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
   AddIcon,

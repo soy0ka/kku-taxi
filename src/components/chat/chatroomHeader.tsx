@@ -1,5 +1,5 @@
-import { Party } from '@/types/parties'
-import { UserMe } from '@/types/users'
+import { Party } from '@/src/types/parties'
+import { UserMe } from '@/src/types/users'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
   Box,

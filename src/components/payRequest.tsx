@@ -1,6 +1,6 @@
-import styles from '@/app/styles'
-import { Party } from '@/types/parties'
-import { poster } from '@/utils/apiClient'
+import styles from '@/src/app/styles'
+import { Party } from '@/src/types/parties'
+import { poster } from '@/src/utils/apiClient'
 import {
   Button,
   ButtonText,

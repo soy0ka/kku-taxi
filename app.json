@@ -5,19 +5,16 @@
     "slug": "kku-taxi",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "icon": "./src/assets/images/icon.png",
+    "platforms": ["ios", "android"],
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./src/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "notification": {
-      "icon": "./assets/images/icon.png",
+      "icon": "./src/assets/images/icon.png",
       "color": "#000000"
     },
     "ios": {
@@ -35,14 +32,14 @@
       "googleServicesFile": "./googleServices/google-services.json",
       "permissions": [],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
+        "foregroundImage": "./src/assets/images/icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./src/assets/images/favicon.png"
     },
     "plugins": [
       "expo-router",

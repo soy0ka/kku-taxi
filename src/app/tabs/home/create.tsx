@@ -1,10 +1,10 @@
-import styles from '@/app/styles'
-import { Alert, AlertRef } from '@/components/alert'
-import { DestinationSelector } from '@/components/destinationSelector'
-import { ApiStatus } from '@/types/api'
-import { poster } from '@/utils/apiClient'
-import { formatDateToKorean } from '@/utils/dateFormatter'
-import EasterEgg from '@/utils/easterEgg'
+import styles from '@/src/app/styles'
+import { Alert, AlertRef } from '@/src/components/alert'
+import { DestinationSelector } from '@/src/components/destinationSelector'
+import { ApiStatus } from '@/src/types/api'
+import { poster } from '@/src/utils/apiClient'
+import { formatDateToKorean } from '@/src/utils/dateFormatter'
+import EasterEgg from '@/src/utils/easterEgg'
 import {
   Box,
   Button,

@@ -1,9 +1,9 @@
-import { Alert } from '@/components/alert'
-import ChatroomHeader from '@/components/chat/chatroomHeader'
-import MessageInput from '@/components/chat/messageInput'
-import MessageList from '@/components/chat/messageList'
-import { PayRequestModal } from '@/components/payRequest'
-import useChatroom from '@/hooks/useChatroom'
+import { Alert } from '@/src/components/alert'
+import ChatroomHeader from '@/src/components/chat/chatroomHeader'
+import MessageInput from '@/src/components/chat/messageInput'
+import MessageList from '@/src/components/chat/messageList'
+import { PayRequestModal } from '@/src/components/payRequest'
+import useChatroom from '@/src/hooks/useChatroom'
 import { Box, KeyboardAvoidingView } from '@gluestack-ui/themed'
 import { useLocalSearchParams } from 'expo-router'
 import React, { useEffect, useState } from 'react'
@@ -14,15 +14,8 @@ const Chatroom: React.FC = () => {
   const [value, setValue] = useState<string>('')
   const [payModalOpen, setPayModalOpen] = useState(false)
 
-  const {
-    user,
-    messages,
-    party,
-    scrollViewRef,
-    alertRef,
-    fetchMessages,
-    handleSend,
-  } = useChatroom(Number(id))
+  const { user, messages, party, scrollViewRef, alertRef, handleSend } =
+    useChatroom(Number(id))
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
