@@ -1,4 +1,4 @@
-import { formatDateToKorean } from '@/src/utils/dateFormatter'
+import { formatDateToKorean } from '@/utils/dateFormatter'
 import {
   Card,
   Heading,

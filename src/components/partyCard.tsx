@@ -1,7 +1,7 @@
-import { PartyModal, PartyModalRef } from '@/src/components/partyModal'
-import { Party } from '@/src/types/parties'
-import { formatDateWithRelativeDay } from '@/src/utils/dateFormatter'
-import { Profile } from '@/src/utils/gravatar'
+import { PartyModal, PartyModalRef } from '@/components/partyModal'
+import { Party } from '@/types/parties'
+import { formatDateWithRelativeDay } from '@/utils/dateFormatter'
+import { Profile } from '@/utils/gravatar'
 import {
   Avatar,
   AvatarImage,

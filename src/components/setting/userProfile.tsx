@@ -1,5 +1,5 @@
-import { UserMe } from '@/src/types/users'
-import { Profile } from '@/src/utils/gravatar'
+import { UserMe } from '@/types/users'
+import { Profile } from '@/utils/gravatar'
 import {
   Avatar,
   AvatarFallbackText,

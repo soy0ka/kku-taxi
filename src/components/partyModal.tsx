@@ -1,6 +1,6 @@
-import { Party } from '@/src/types/parties'
-import { fetcher } from '@/src/utils/apiClient'
-import { formatRelativeDate, getTimeRemaining } from '@/src/utils/dateFormatter'
+import { Party } from '@/types/parties'
+import { fetcher } from '@/utils/apiClient'
+import { formatRelativeDate, getTimeRemaining } from '@/utils/dateFormatter'
 import {
   Button,
   ButtonText,

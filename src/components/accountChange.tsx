@@ -1,6 +1,6 @@
-import styles from '@/src/app/styles'
-import { ApiStatus } from '@/src/types/api'
-import { poster } from '@/src/utils/apiClient'
+import styles from '@/app/styles'
+import { ApiStatus } from '@/types/api'
+import { poster } from '@/utils/apiClient'
 import {
   Button,
   ButtonText,
