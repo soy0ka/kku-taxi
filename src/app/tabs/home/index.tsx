@@ -29,7 +29,7 @@ import { Platform } from 'react-native'
 export default function Home() {
   const navigation = useNavigation()
   const [direction, setDirection] = React.useState<'toSchool' | 'fromSchool'>(
-    'fromSchool'
+    'fromSchool',
   )
   const [parties, setParties] = React.useState<Party[]>([])
   const [notification, setNotification] = React.useState<string | null>(null)

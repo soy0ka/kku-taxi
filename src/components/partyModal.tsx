@@ -104,5 +104,5 @@ export const PartyModal = React.forwardRef<PartyModalRef, object>(
         </ModalContent>
       </Modal>
     )
-  }
+  },
 )

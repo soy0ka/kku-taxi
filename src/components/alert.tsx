@@ -19,54 +19,46 @@ export type AlertRef = {
   openAlert: (alertTitle: string, alertMessage: string) => void
   closeAlert: () => void
 }
-export const Alert = React.forwardRef<AlertRef, object>(function AlertComponent(
-  props,
-  ref
-) {
-  const [open, setOpen] = React.useState(false)
-  const [data, setData] = React.useState({ title: '', message: '' })
+export const Alert = React.forwardRef<AlertRef, object>(
+  function AlertComponent(props, ref) {
+    const [open, setOpen] = React.useState(false)
+    const [data, setData] = React.useState({ title: '', message: '' })
 
-  React.useImperativeHandle(ref, () => ({
-    openAlert(alertTitle: string, alertMessage: string) {
-      setData({ title: alertTitle, message: alertMessage })
-      setOpen(true)
-    },
-    closeAlert() {
-      setOpen(false)
-    },
-  }))
+    const closeAlert = () => setOpen(false)
 
-  return (
-    <Modal
-      isOpen={open}
-      onClose={() => {
-        setOpen(false)
-      }}
-    >
-      <ModalBackdrop />
-      <ModalContent>
-        <ModalHeader>
-          <Heading size="lg">{data.title}</Heading>
-          <ModalCloseButton>
-            <Icon as={CloseIcon} />
-          </ModalCloseButton>
-        </ModalHeader>
-        <ModalBody>
-          <Text>{data.message}</Text>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            size="sm"
-            action="positive"
-            borderWidth="$0"
-            onPress={() => {
-              setOpen(false)
-            }}
-          >
-            <ButtonText>확인</ButtonText>
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  )
-})
+    React.useImperativeHandle(ref, () => ({
+      openAlert(alertTitle: string, alertMessage: string) {
+        setData({ title: alertTitle, message: alertMessage })
+        setOpen(true)
+      },
+      closeAlert,
+    }))
+
+    return (
+      <Modal isOpen={open} onClose={closeAlert}>
+        <ModalBackdrop />
+        <ModalContent>
+          <ModalHeader>
+            <Heading size="lg">{data.title}</Heading>
+            <ModalCloseButton>
+              <Icon as={CloseIcon} />
+            </ModalCloseButton>
+          </ModalHeader>
+          <ModalBody>
+            <Text>{data.message}</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              size="sm"
+              action="positive"
+              borderWidth="$0"
+              onPress={closeAlert}
+            >
+              <ButtonText>확인</ButtonText>
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    )
+  },
+)

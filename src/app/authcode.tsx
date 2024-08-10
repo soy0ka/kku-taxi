@@ -23,7 +23,7 @@ export default function AuthCodeScreen() {
     if (!code)
       return alertRef.current?.openAlert(
         '인증코드를 입력해주세요',
-        '인증코드는 6자리 숫자로 이루어져있습니다'
+        '인증코드는 6자리 숫자로 이루어져있습니다',
       )
     poster('/auth/code', { code }).then((res) => {
       if (res.status === ApiStatus.SUCCESS) {
@@ -33,12 +33,12 @@ export default function AuthCodeScreen() {
         if (res.error?.code === 'C101') {
           alertRef.current?.openAlert(
             '인증코드가 틀렸어요',
-            '인증코드를 다시 확인해주세요'
+            '인증코드를 다시 확인해주세요',
           )
         } else if (res.error?.code === 'C102') {
           alertRef.current?.openAlert(
             '인증코드가 만료되었어요',
-            '인증코드는 5분간 유효해요'
+            '인증코드는 5분간 유효해요',
           )
         }
       }

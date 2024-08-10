@@ -22,13 +22,13 @@ const Chatroom: React.FC = () => {
       'keyboardDidShow',
       () => {
         scrollViewRef.current?.scrollToEnd({ animated: true })
-      }
+      },
     )
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
         scrollViewRef.current?.scrollToEnd({ animated: true })
-      }
+      },
     )
 
     return () => {
