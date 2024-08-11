@@ -96,7 +96,7 @@ export default function Home() {
             </HStack>
             <Divider mt={20} mb={20} />
             {parties && parties.length ? (
-              <ScrollView maxHeight="$96">
+              <ScrollView maxHeight="auto">
                 {parties.map((party: Party) => (
                   <PartyCard
                     key={party.id}

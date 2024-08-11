@@ -1,4 +1,5 @@
 // import { Message } from '@/types/messages';
+import { useAlert } from '@/contexts/AlertContext'
 import { Message } from '@/types/message'
 import { poster } from '@/utils/apiClient'
 import { getTextId } from '@/utils/getTextId'
@@ -16,20 +17,19 @@ import {
   VStack
 } from '@gluestack-ui/themed'
 import React from 'react'
-import { AlertRef } from '../alert'
 
 interface MessageListProps {
   messages: Message[]
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   scrollViewRef: React.RefObject<any>
-  alertRef: React.RefObject<AlertRef>
 }
 
 const MessageList: React.FC<MessageListProps> = ({
   messages,
-  scrollViewRef,
-  alertRef
+  scrollViewRef
 }) => {
+  const Alert = useAlert()
+
   return (
     <ScrollView
       ref={scrollViewRef}
@@ -88,8 +88,8 @@ const MessageList: React.FC<MessageListProps> = ({
                       id: message.id,
                       reason: 'unset'
                     })
-                    alertRef.current?.openAlert(
-                      '신고가 접수되었습니다.',
+                    Alert.showAlert(
+                      '신고가 접수되었습니다',
                       `@${getTextId(message.sender.email)}: ${message.content} `
                     )
                   }}
