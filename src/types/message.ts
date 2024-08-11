@@ -7,6 +7,7 @@ export interface Message {
   sender: {
     id: number
     name: string
+    textId: string
     email: string
   }
 }

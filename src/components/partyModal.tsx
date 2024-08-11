@@ -1,3 +1,4 @@
+import { useAlert } from '@/contexts/AlertContext'
 import { Party } from '@/types/parties'
 import { fetcher } from '@/utils/apiClient'
 import { formatRelativeDate, getTimeRemaining } from '@/utils/dateFormatter'
@@ -24,6 +25,7 @@ export type PartyModalRef = {
 
 export const PartyModal = React.forwardRef<PartyModalRef, object>(
   function AlertComponent(props, ref) {
+    const Alert = useAlert()
     const [open, setOpen] = React.useState(false)
     const [data, setData] = React.useState<Party>()
     const router = useRouter()
@@ -89,7 +91,9 @@ export const PartyModal = React.forwardRef<PartyModalRef, object>(
               sx={{ width: '$20' }}
               borderWidth="$0"
               onPress={() => {
-                fetcher(`/party/join/${data?.id}`)
+                if (!data)
+                  return Alert.showAlert('에러', '파티 정보가 없습니다.')
+                fetcher(`/party/${data.id}/join`)
                 setOpen(false)
 
                 // 첫 번째 경로로 이동

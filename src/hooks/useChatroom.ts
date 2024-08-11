@@ -19,7 +19,7 @@ const useChatroom = (id: number) => {
   const URL = process.env.EXPO_PUBLIC_WS_URL ?? 'http://localhost:3000'
 
   useEffect(() => {
-    const ws = io(URL)
+    const ws = io(URL + '/chat')
     setSocket(ws)
     ws.emit('joinRoom', id)
     fetchUser()
