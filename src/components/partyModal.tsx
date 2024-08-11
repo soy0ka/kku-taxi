@@ -1,6 +1,7 @@
 import { useAlert } from '@/contexts/AlertContext'
+import { ApiStatus } from '@/types/api'
 import { Party } from '@/types/parties'
-import { fetcher } from '@/utils/apiClient'
+import { poster } from '@/utils/apiClient'
 import { formatRelativeDate, getTimeRemaining } from '@/utils/dateFormatter'
 import {
   Button,
@@ -93,14 +94,17 @@ export const PartyModal = React.forwardRef<PartyModalRef, object>(
               onPress={() => {
                 if (!data)
                   return Alert.showAlert('에러', '파티 정보가 없습니다.')
-                fetcher(`/party/${data.id}/join`)
-                setOpen(false)
+                poster(`/party/${data.id}/join`, {}).then((res) => {
+                  setOpen(false)
 
-                // 첫 번째 경로로 이동
-                router.push('/tabs/chat')
-                setTimeout(() => {
-                  router.push(`/tabs/chat/chatroom?id=${data?.id}`)
-                }, 200)
+                  if (res.status === ApiStatus.ERROR && res.error) {
+                    return Alert.showAlert(`에러`, res.error.message)
+                  }
+                  router.push('/tabs/chat')
+                  setTimeout(() => {
+                    router.push(`/tabs/chat/chatroom?id=${res.data.chatRoomId}`)
+                  }, 200)
+                })
               }}
             >
               <ButtonText>참여</ButtonText>

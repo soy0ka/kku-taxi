@@ -35,6 +35,7 @@ const useChatroom = (id: number) => {
   useEffect(() => {
     if (!socket) return
     const messageHandler = (message: Message) => {
+      console.log('message', message)
       setMessages((prev) => [...prev, message])
       setTimeout(() => {
         scrollViewRef.current?.scrollToEnd({ animated: true })

@@ -67,9 +67,11 @@ export default function Create() {
     if (response.status === ApiStatus.ERROR) {
       showAlert('에러', String(response.error?.message))
     } else {
-      console.log(response)
       showAlert('성공', '팟이 생성되었습니다.')
-      router.push(`/tabs/chat/chatroom?id=${response.data.chatRoomId}`)
+      router.push('/tabs/chat')
+      setTimeout(() => {
+        router.push(`/tabs/chat/chatroom?id=${response.data.chatRoomId}`)
+      }, 200)
     }
   }
 
