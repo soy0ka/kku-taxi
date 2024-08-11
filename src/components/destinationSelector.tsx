@@ -6,11 +6,12 @@ import {
   SelectInput,
   SelectItem,
   SelectPortal,
-  SelectTrigger,
+  SelectTrigger
 } from '@gluestack-ui/themed'
 import React from 'react'
 
 interface DestinationSelectorProps {
+  // eslint-disable-next-line no-unused-vars
   onChange?: (value: number) => void
   props: {
     title: string
@@ -18,7 +19,7 @@ interface DestinationSelectorProps {
 }
 export const DestinationSelector: React.FC<DestinationSelectorProps> = ({
   props,
-  onChange,
+  onChange
 }) => {
   const places = [
     '충주역',
@@ -29,7 +30,7 @@ export const DestinationSelector: React.FC<DestinationSelectorProps> = ({
     '중원도서관',
     '신촌마을',
     '해오름기숙사',
-    '모시래마을 & 기숙사',
+    '모시래마을 & 기숙사'
   ]
 
   return (

@@ -11,12 +11,13 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Text,
+  Text
 } from '@gluestack-ui/themed'
 import { useRouter } from 'expo-router'
 import React from 'react'
 
 export type PartyModalRef = {
+  // eslint-disable-next-line no-unused-vars
   openModal: (party: Party) => void
   closeModal: () => void
 }
@@ -34,7 +35,7 @@ export const PartyModal = React.forwardRef<PartyModalRef, object>(
       },
       closeModal() {
         setOpen(false)
-      },
+      }
     }))
 
     return (
@@ -104,5 +105,5 @@ export const PartyModal = React.forwardRef<PartyModalRef, object>(
         </ModalContent>
       </Modal>
     )
-  },
+  }
 )

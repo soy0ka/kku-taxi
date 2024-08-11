@@ -5,7 +5,7 @@ import {
   HStack,
   LinkText,
   ScrollView,
-  Text,
+  Text
 } from '@gluestack-ui/themed'
 import React from 'react'
 
@@ -20,13 +20,14 @@ interface ApiDevice {
 interface LoginedDeviceListProps {
   devices: ApiDevice[]
   currentdevice: string
+  // eslint-disable-next-line no-unused-vars
   expireToken: (token: string) => void
 }
 
 const LoginedDeviceList: React.FC<LoginedDeviceListProps> = ({
   devices,
   currentdevice,
-  expireToken,
+  expireToken
 }) => {
   return (
     <React.Fragment>
@@ -42,7 +43,7 @@ const LoginedDeviceList: React.FC<LoginedDeviceListProps> = ({
                 padding: 10,
                 backgroundColor: '#f5f5f5',
                 borderRadius: 5,
-                marginBottom: 10,
+                marginBottom: 10
               }}
             >
               {currentdevice === device.device && (

@@ -7,7 +7,7 @@ import * as Device from 'expo-device'
 import { Platform } from 'react-native'
 
 export const api = Axios.create({
-  baseURL: process.env.EXPO_PUBLIC_API_URL,
+  baseURL: process.env.EXPO_PUBLIC_API_URL
 })
 
 export const getDeviceId = async () => {
@@ -29,7 +29,7 @@ const getHeaders = async () => {
     'X-Device-id': deviceId,
     'X-Platform': Platform.OS,
     'X-Device': await Device.deviceName,
-    'X-App-Version': Constants.expoConfig?.version || '0.0.0',
+    'X-App-Version': Constants.expoConfig?.version || '0.0.0'
   }
 }
 

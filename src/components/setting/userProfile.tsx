@@ -10,7 +10,7 @@ import {
   Progress,
   ProgressFilledTrack,
   Text,
-  VStack,
+  VStack
 } from '@gluestack-ui/themed'
 import React from 'react'
 

@@ -2,6 +2,7 @@ import { Alert, AlertRef } from '@/components/alert'
 import React, { createContext, ReactNode, useContext, useRef } from 'react'
 
 type AlertContextType = {
+  // eslint-disable-next-line no-unused-vars
   showAlert: (alertTitle: string, alertMessage: string) => void
 }
 

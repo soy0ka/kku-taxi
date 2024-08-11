@@ -1,6 +1,6 @@
 export enum ApiStatus {
-  SUCCESS = 'success',
-  ERROR = 'error',
+  'SUCCESS' = 'success',
+  'ERROR' = 'error'
 }
 
 export interface ApiBase {

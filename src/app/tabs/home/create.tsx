@@ -27,11 +27,12 @@ import {
   SelectTrigger,
   Text,
   Textarea,
-  TextareaInput,
+  TextareaInput
 } from '@gluestack-ui/themed'
 import RNDateTimePicker, {
-  DateTimePickerAndroid,
+  DateTimePickerAndroid
 } from '@react-native-community/datetimepicker'
+import { router } from 'expo-router'
 import React from 'react'
 import { Platform } from 'react-native'
 
@@ -60,14 +61,15 @@ export default function Create() {
       dateTime: date,
       departure,
       arrival,
-      maxSize,
+      maxSize
     })
 
     if (response.status === ApiStatus.ERROR) {
       showAlert('에러', String(response.error?.message))
     } else {
+      console.log(response)
       showAlert('성공', '팟이 생성되었습니다.')
-      // router.push(`/tabs/chat/chatroom?id=${response.data.id}`)
+      router.push(`/tabs/chat/chatroom?id=${response.data.chatRoomId}`)
     }
   }
 
@@ -102,7 +104,7 @@ export default function Create() {
                   value: date,
                   mode: 'date',
                   onChange: (_, selectedDate) => setDate(selectedDate || date),
-                  minimumDate: new Date(),
+                  minimumDate: new Date()
                 })
               }
               style={{ ...styles.Button, width: '49%', marginRight: 'auto' }}
@@ -117,7 +119,7 @@ export default function Create() {
                   mode: 'time',
                   onChange: (_, selectedDate) => setDate(selectedDate || date),
                   minimumDate: new Date(),
-                  display: 'spinner',
+                  display: 'spinner'
                 })
               }
               style={{ ...styles.Button, width: '49%' }}

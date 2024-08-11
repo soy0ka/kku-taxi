@@ -1,6 +1,6 @@
-import { Party } from './parties'
+import { ChatParty } from './parties'
 export interface ChatRoom {
   id: number
   name: string
-  Party: Party[]
+  Party: ChatParty[]
 }

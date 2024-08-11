@@ -13,7 +13,7 @@ import {
   LinkText,
   ScrollView,
   Text,
-  VStack,
+  VStack
 } from '@gluestack-ui/themed'
 import React from 'react'
 import { AlertRef } from '../alert'
@@ -28,7 +28,7 @@ interface MessageListProps {
 const MessageList: React.FC<MessageListProps> = ({
   messages,
   scrollViewRef,
-  alertRef,
+  alertRef
 }) => {
   return (
     <ScrollView
@@ -49,7 +49,7 @@ const MessageList: React.FC<MessageListProps> = ({
             padding: 10,
             backgroundColor: '#F0F0F0',
             borderRadius: 10,
-            marginBottom: 10,
+            marginBottom: 10
           }}
         >
           {message.isSystem ? (
@@ -63,7 +63,7 @@ const MessageList: React.FC<MessageListProps> = ({
                   <AvatarFallbackText>{message.sender.name}</AvatarFallbackText>
                   <AvatarImage
                     source={{
-                      uri: Profile(getTextId(message.sender.email)),
+                      uri: Profile(getTextId(message.sender.email))
                     }}
                     alt={`${message.sender.name}의 프로필사진`}
                   />
@@ -85,7 +85,7 @@ const MessageList: React.FC<MessageListProps> = ({
                   onPress={() => {
                     poster('/chat/report', {
                       id: message.id,
-                      reason: 'unset',
+                      reason: 'unset'
                     })
                     alertRef.current?.openAlert(
                       '신고가 접수되었습니다.',

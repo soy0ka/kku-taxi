@@ -15,7 +15,7 @@ const getToken = async () => {
 export const tokenManager = {
   setToken,
   removeToken,
-  getToken,
+  getToken
 }
 
 const setUser = async (user: object) => {
@@ -34,7 +34,7 @@ const getUser = async () => {
 export const userManager = {
   setUser,
   removeUser,
-  getUser,
+  getUser
 }
 
 const setPushToken = async (pushToken: string) => {
@@ -52,5 +52,5 @@ const getPushToken = async () => {
 export const pushTokenManager = {
   setPushToken,
   removePushToken,
-  getPushToken,
+  getPushToken
 }

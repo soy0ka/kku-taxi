@@ -16,7 +16,7 @@ import {
   ModalFooter,
   ModalHeader,
   Text,
-  VStack,
+  VStack
 } from '@gluestack-ui/themed'
 import React from 'react'
 
@@ -41,7 +41,7 @@ export const BankAccountModal: React.FC<BankAccountModalProps> = (props) => {
     poster('/auth/account', {
       bank: bank,
       number: account,
-      holder: owner,
+      holder: owner
     }).then((res) => {
       if (res.status === ApiStatus.SUCCESS) {
         props.onClose()

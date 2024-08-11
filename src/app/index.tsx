@@ -10,7 +10,7 @@ import {
   Input,
   InputField,
   InputSlot,
-  Text,
+  Text
 } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 import React from 'react'

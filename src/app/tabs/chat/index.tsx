@@ -13,7 +13,7 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
-  VStack,
+  VStack
 } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
 import React from 'react'
@@ -33,7 +33,7 @@ export default function ChatRooms() {
   const fetchChatRooms = async () => {
     const res = await fetcher('/chat/@me')
     if (!res) return
-    setChatRooms(res.data.chatrooms)
+    setChatRooms(res.data)
   }
 
   return (

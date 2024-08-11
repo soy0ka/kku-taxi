@@ -11,11 +11,12 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Text,
+  Text
 } from '@gluestack-ui/themed'
 import React from 'react'
 
 export type AlertRef = {
+  // eslint-disable-next-line no-unused-vars
   openAlert: (alertTitle: string, alertMessage: string) => void
   closeAlert: () => void
 }
@@ -31,7 +32,7 @@ export const Alert = React.forwardRef<AlertRef, object>(
         setData({ title: alertTitle, message: alertMessage })
         setOpen(true)
       },
-      closeAlert,
+      closeAlert
     }))
 
     return (
@@ -60,5 +61,5 @@ export const Alert = React.forwardRef<AlertRef, object>(
         </ModalContent>
       </Modal>
     )
-  },
+  }
 )

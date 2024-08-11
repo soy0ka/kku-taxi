@@ -16,7 +16,7 @@ import {
   ModalFooter,
   ModalHeader,
   Text,
-  VStack,
+  VStack
 } from '@gluestack-ui/themed'
 import React from 'react'
 
@@ -44,7 +44,7 @@ export const PayRequestModal: React.FC<PayRequestModalProps> = (props) => {
     poster('/party/pay', {
       partyId: props.party.id,
       totalPrice: fee,
-      price: celiPrice,
+      price: celiPrice
     })
     setShowModal(false)
     props.onClose()

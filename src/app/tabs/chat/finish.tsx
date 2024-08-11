@@ -27,7 +27,7 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
-  VStack,
+  VStack
 } from '@gluestack-ui/themed'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
 import React from 'react'
@@ -64,7 +64,7 @@ export default function Finish() {
             alignItems: 'flex-start',
             flex: 1,
             mr: 10,
-            ml: 10,
+            ml: 10
           }}
         >
           <Heading>운행 종료</Heading>
@@ -82,7 +82,7 @@ export default function Finish() {
                         </AvatarFallbackText>
                         <AvatarImage
                           source={{
-                            uri: Profile(member.User.email.split('@')[0]),
+                            uri: Profile(member.User.email.split('@')[0])
                           }}
                           alt={`${member.User.name}의 프로필사진`}
                         />
@@ -129,7 +129,7 @@ export default function Finish() {
                             '제 시간에 도착하지 않았어요',
                             '정산 금액을 보내지 않았어요',
                             '장소에 나타나지 않았어요',
-                            '비매너 행동을 했어요',
+                            '비매너 행동을 했어요'
                           ].map((value) => (
                             <Checkbox
                               size="md"

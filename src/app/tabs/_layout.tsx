@@ -19,7 +19,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="home" color={color} />
-          ),
+          )
         }}
       />
       <Tabs.Screen
@@ -29,7 +29,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="comment" color={color} />
-          ),
+          )
         }}
       />
       <Tabs.Screen
@@ -39,7 +39,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="user" color={color} />
-          ),
+          )
         }}
       />
     </Tabs>
@@ -68,7 +68,7 @@ async function registerForPushNotificationsAsync() {
 
     const token = (
       await Notifications.getExpoPushTokenAsync({
-        projectId: '260ef7f5-24f3-49b6-93ad-5632be016ff2',
+        projectId: '260ef7f5-24f3-49b6-93ad-5632be016ff2'
       })
     ).data
 
@@ -77,7 +77,7 @@ async function registerForPushNotificationsAsync() {
         name: 'default',
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
+        lightColor: '#FF231F7C'
       })
     }
 
@@ -85,8 +85,8 @@ async function registerForPushNotificationsAsync() {
       handleNotification: async () => ({
         shouldShowAlert: true,
         shouldPlaySound: true,
-        shouldSetBadge: true,
-      }),
+        shouldSetBadge: true
+      })
     })
 
     return token

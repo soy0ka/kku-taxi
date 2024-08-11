@@ -77,8 +77,8 @@ const useChatroom = (id: number) => {
       sender: {
         id: user.id,
         name: user.name,
-        textId: user.textId,
-      },
+        textId: user.textId
+      }
     }
     socket?.emit('messageCreate', message)
   }
@@ -90,7 +90,7 @@ const useChatroom = (id: number) => {
     scrollViewRef,
     alertRef,
     fetchMessages,
-    handleSend,
+    handleSend
     // setPayModalOpen,
   }
 }

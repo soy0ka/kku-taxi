@@ -10,7 +10,7 @@ import {
   Heading,
   Pressable,
   Text,
-  VStack,
+  VStack
 } from '@gluestack-ui/themed'
 import React from 'react'
 
@@ -21,7 +21,7 @@ interface PartyCardProps {
 
 export const PartyCard: React.FC<PartyCardProps> = ({
   party,
-  partyModalRef,
+  partyModalRef
 }) => {
   return (
     <Pressable
@@ -45,7 +45,7 @@ export const PartyCard: React.FC<PartyCardProps> = ({
           <Avatar mr="$3">
             <AvatarImage
               source={{
-                uri: Profile(party.owner.email.split('@')[0]),
+                uri: Profile(party.owner.email.split('@')[0])
               }}
               alt={party.owner.name}
             />

@@ -1,5 +1,5 @@
-import { Party } from '@/src/types/parties'
-import { UserMe } from '@/src/types/users'
+import { Party } from '@/types/parties'
+import { UserMe } from '@/types/users'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
   Box,
@@ -8,7 +8,7 @@ import {
   ButtonText,
   Card,
   Heading,
-  Text,
+  Text
 } from '@gluestack-ui/themed'
 import { router } from 'expo-router'
 import React from 'react'
@@ -22,7 +22,7 @@ interface ChatroomHeaderProps {
 const ChatroomHeader: React.FC<ChatroomHeaderProps> = ({
   party,
   user,
-  setPayModalOpen,
+  setPayModalOpen
 }) => {
   return (
     <Card style={{ padding: 10, flexDirection: 'column' }}>
@@ -38,7 +38,7 @@ const ChatroomHeader: React.FC<ChatroomHeaderProps> = ({
         mt="$2.5"
         style={{
           flexDirection: 'row',
-          alignItems: 'center',
+          alignItems: 'center'
         }}
       >
         {party.ownerId !== user?.id && (

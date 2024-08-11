@@ -1,4 +1,16 @@
 import { AnotherUser } from './users'
+
+export interface BaseParty {
+  id: number
+  name: string
+  departure: string
+}
+
+export interface ChatParty extends BaseParty {
+  fromPlace: Place
+  toPlace: Place
+}
+
 export interface Party {
   id: number
   name: string
@@ -22,7 +34,7 @@ export interface Party {
   _count: { partyMemberships: number }
 }
 
-interface Place {
+export interface Place {
   id: number
   name: string
 }

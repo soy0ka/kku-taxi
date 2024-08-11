@@ -18,7 +18,7 @@ export default function Layout() {
         options={{
           title: '채팅방',
           headerShown: true,
-          headerRight: () => <Icon as={MenuIcon} m="$0" w="$6" h="$6" />,
+          headerRight: () => <Icon as={MenuIcon} m="$0" w="$6" h="$6" />
         }}
       />
     </Stack>

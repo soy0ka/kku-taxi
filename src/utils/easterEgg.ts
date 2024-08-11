@@ -76,5 +76,5 @@ const ArrivalAndDestinationsAreSame = (count: number) => {
 }
 
 export default {
-  ArrivalAndDestinationsAreSame,
+  ArrivalAndDestinationsAreSame
 }

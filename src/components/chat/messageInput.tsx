@@ -3,7 +3,7 @@ import {
   Button,
   ButtonText,
   Input,
-  InputField,
+  InputField
 } from '@gluestack-ui/themed'
 import React from 'react'
 
@@ -16,7 +16,7 @@ interface MessageInputProps {
 const MessageInput: React.FC<MessageInputProps> = ({
   value,
   setValue,
-  handleSend,
+  handleSend
 }) => {
   return (
     <Box
@@ -28,7 +28,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         position: 'absolute',
         bottom: 0,
         left: 0,
-        right: 0,
+        right: 0
       }}
     >
       <Input variant="outline" size="md" style={{ flex: 1 }}>
@@ -39,7 +39,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         variant="solid"
         style={{
           backgroundColor: '#036B3F',
-          marginLeft: 10,
+          marginLeft: 10
         }}
         isDisabled={!value}
         onPress={handleSend}
