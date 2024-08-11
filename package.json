@@ -5,17 +5,16 @@
   "scripts": {
     "start": "expo start",
     "eas-build-pre-install": "./prepare-google-services.sh",
+    "eas-pre-build": "./prepare-google-services.sh",
     "build:ios-development": "cross-env $(cat .env.development | xargs) eas build -p ios --profile development --local",
     "build:android-development": "cross-env $(cat .env.development | xargs) eas build -p android --profile development --local",
     "build:production": "cross-env $(cat .env.production | xargs) eas build -p production --local",
-    "build:ios-prodcution": "cross-env $(cat .env.production | xargs) eas build -p ios --profile production --local",
-    "build:android-prodcution": "cross-env $(cat .env.production | xargs) eas build -p android --profile production --local",
+    "build:ios-production": "cross-env $(cat .env.production | xargs) eas build -p ios --profile production --local",
+    "build:android-production": "cross-env $(cat .env.production | xargs) eas build -p android --profile production --local",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "test": "jest --watchAll",
-    "lint": "expo lint",
-    "ios-post-install-fix": "node ./fix-pods.js",
-    "eas-build-post-install": "yarn ios-post-install-fix"
+    "lint": "expo lint"
   },
   "jest": {
     "preset": "jest-expo"
