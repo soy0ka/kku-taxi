@@ -38,16 +38,16 @@ export const BankAccountModal: React.FC<BankAccountModalProps> = (props) => {
 
   const handleBankAccountChange = () => {
     if (!bank || !account || !owner) return setError('모든 정보를 입력해주세요')
-    poster('/auth/account', {
-      bank: bank,
-      number: account,
-      holder: owner
+    poster('/user/@me/bankaccount', {
+      bankName: bank,
+      accountNumber: account,
+      accountHolder: owner
     }).then((res) => {
       if (res.status === ApiStatus.SUCCESS) {
         props.onClose()
         setShowModal(false)
       } else {
-        setError('계좌 정보를 확인해주세요')
+        setError('계좌정보를 업데이트하는데 실패했습니다')
       }
     })
   }
