@@ -21,7 +21,7 @@ interface LoginedDeviceListProps {
   devices: ApiDevice[]
   currentdevice: string
   // eslint-disable-next-line no-unused-vars
-  expireToken: (token: string) => void
+  expireToken: (id: number) => void
 }
 
 const LoginedDeviceList: React.FC<LoginedDeviceListProps> = ({
@@ -56,7 +56,7 @@ const LoginedDeviceList: React.FC<LoginedDeviceListProps> = ({
                 <LinkText
                   size="sm"
                   style={{ marginLeft: 'auto' }}
-                  onPress={() => expireToken(device.token)}
+                  onPress={() => expireToken(device.id)}
                 >
                   로그아웃
                 </LinkText>

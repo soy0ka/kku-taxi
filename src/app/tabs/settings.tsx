@@ -2,8 +2,9 @@ import styles from '@/app/styles'
 import { BankAccountModal } from '@/components/accountChange'
 import LoginedDeviceList from '@/components/setting/loginedDeviceList'
 import UserProfile from '@/components/setting/userProfile'
+import { ApiStatus } from '@/types/api'
 import { UserMe } from '@/types/users'
-import { fetcher, getDeviceId, poster } from '@/utils/apiClient'
+import { deleter, fetcher, getDeviceId } from '@/utils/apiClient'
 import { tokenManager, userManager } from '@/utils/localStorage'
 import { Box, Button, ButtonText, SafeAreaView } from '@gluestack-ui/themed'
 import { router, useNavigation } from 'expo-router'
@@ -56,9 +57,13 @@ export default function SettingTab() {
     router.push('/')
   }
 
-  const expireToken = (token: string) => {
-    setDevices(devices.filter((device: ApiDevice) => device.token !== token))
-    poster('/auth/logout', { token })
+  const expireToken = (id: number) => {
+    setDevices(devices.filter((device: ApiDevice) => device.id !== id))
+    deleter(`/user/@me/devices/${id}`).then((res) => {
+      if (res.status === ApiStatus.SUCCESS) {
+        fetchDevices()
+      }
+    })
   }
 
   return (
