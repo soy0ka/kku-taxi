@@ -71,3 +71,14 @@ export const patcher = async (
     return error.response?.data
   }
 }
+
+export const deleter = async (url: string): Promise<ApiBase> => {
+  try {
+    const headers = await getHeaders()
+    const { data } = await api.delete(url, { headers })
+    return data
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return error.response?.data
+  }
+}
