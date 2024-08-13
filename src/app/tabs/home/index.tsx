@@ -64,7 +64,7 @@ export default function Home() {
   return (
     <React.Fragment>
       <SafeAreaView>
-        <Box>
+        <Box sx={{ mt: Platform.select({ android: '$4.5' }) }}>
           {notification && (
             <Alert
               action="info"
