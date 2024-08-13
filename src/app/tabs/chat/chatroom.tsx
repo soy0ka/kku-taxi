@@ -69,6 +69,7 @@ const Chatroom: React.FC = () => {
     setValue('')
     socket?.emit('messageCreate', {
       content: value,
+      isSystem: false,
       senderId: user.id,
       roomId: id,
       sender: {
