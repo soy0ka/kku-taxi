@@ -41,7 +41,7 @@ const ChatroomHeader: React.FC<ChatroomHeaderProps> = ({
           alignItems: 'center'
         }}
       >
-        {party.ownerId !== user?.id && (
+        {party.owner.id !== user?.id && (
           <Button
             size="sm"
             variant="outline"
@@ -63,7 +63,7 @@ const ChatroomHeader: React.FC<ChatroomHeaderProps> = ({
             </ButtonText>
           </Button>
         )}
-        {party.ownerId === user?.id && (
+        {party.owner.id === user?.id && (
           <React.Fragment>
             <Button
               ml="$2"

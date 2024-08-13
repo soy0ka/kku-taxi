@@ -1,4 +1,5 @@
 import styles from '@/app/styles'
+import { useAlert } from '@/contexts/AlertContext'
 import { Party } from '@/types/parties'
 import { poster } from '@/utils/apiClient'
 import {
@@ -27,6 +28,7 @@ interface PayRequestModalProps {
 }
 
 export const PayRequestModal: React.FC<PayRequestModalProps> = (props) => {
+  const { showAlert } = useAlert()
   const [showModal, setShowModal] = React.useState(false)
   const [fee, setFee] = React.useState<number>(0)
   const [error, setError] = React.useState('')
@@ -35,17 +37,19 @@ export const PayRequestModal: React.FC<PayRequestModalProps> = (props) => {
     setShowModal(props.isOpen)
   }, [props.isOpen])
 
-  const handlePayRequest = (fee: number) => {
+  const handlePayRequest = async (fee: number) => {
     if (!props.party) return
     const memberCount = props.party._count.partyMemberships
     const price = fee / memberCount
     const celiPrice = Math.ceil(price)
 
-    poster('/party/pay', {
-      partyId: props.party.id,
+    const response = await poster(`/party/${props.party.id}/pay`, {
       totalPrice: fee,
       price: celiPrice
     })
+    if (response.error) {
+      showAlert('에러', String(response.error.message))
+    }
     setShowModal(false)
     props.onClose()
   }
