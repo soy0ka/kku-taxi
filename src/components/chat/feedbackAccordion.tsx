@@ -16,7 +16,7 @@ import {
 } from '@gluestack-ui/themed'
 import React from 'react'
 
-export const feedbackAccordion: React.FC = () => {
+export const FeedbackAccordion: React.FC = () => {
   return (
     <Accordion
       width="100%"
@@ -45,7 +45,9 @@ export const feedbackAccordion: React.FC = () => {
         </AccordionHeader>
         <AccordionContent>
           {[
-            '제 시간에 도착하지 않았어요',
+            '미터기 요금과 다른 금액을 요구했어요',
+            '아예 나타나지 않았어요 (노쇼)',
+            '제 시간에 도착하지 않았어요 (지각)',
             '정산 금액을 보내지 않았어요',
             '장소에 나타나지 않았어요',
             '비매너 행동을 했어요'

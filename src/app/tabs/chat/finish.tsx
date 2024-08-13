@@ -1,13 +1,7 @@
+import { FeedbackAccordion } from '@/components/chat/feedbackAccordion'
 import { fetcher } from '@/utils/apiClient'
 import { Profile } from '@/utils/gravatar'
 import {
-  Accordion,
-  AccordionContent,
-  AccordionHeader,
-  AccordionIcon,
-  AccordionItem,
-  AccordionTitleText,
-  AccordionTrigger,
   Avatar,
   AvatarFallbackText,
   AvatarImage,
@@ -15,13 +9,6 @@ import {
   Button,
   ButtonText,
   Card,
-  Checkbox,
-  CheckboxIcon,
-  CheckboxIndicator,
-  CheckboxLabel,
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
   Heading,
   HStack,
   SafeAreaView,
@@ -53,11 +40,12 @@ export default function Finish() {
   }, [navigation])
 
   const fetchMembers = async () => {
-    const members = await fetcher(`/party/chat/${id}`)
-    setMembers(members.data.partyMemberships)
+    const members = await fetcher(`/party/${id}/membsers`)
+    console.log(members)
+    setMembers(members.data)
   }
   return (
-    <SafeAreaView>
+    <SafeAreaView sx={{ flex: 1 }}>
       <ScrollView style={{ padding: 5 }} mt={10}>
         <Box
           sx={{
@@ -97,72 +85,30 @@ export default function Finish() {
                         @{member.User.email.split('@')[0]}
                       </Text>
                     </HStack>
-                    <Accordion
-                      width="100%"
-                      size="md"
-                      variant="unfilled"
-                      type="single"
-                      isCollapsible={true}
-                      isDisabled={false}
-                    >
-                      <AccordionItem value="a">
-                        <AccordionHeader>
-                          <AccordionTrigger>
-                            {({ isExpanded }) => {
-                              return (
-                                <>
-                                  <AccordionTitleText>
-                                    이 이용자에게 문제가 있었나요?
-                                  </AccordionTitleText>
-                                  {isExpanded ? (
-                                    <AccordionIcon as={ChevronUpIcon} />
-                                  ) : (
-                                    <AccordionIcon as={ChevronDownIcon} />
-                                  )}
-                                </>
-                              )
-                            }}
-                          </AccordionTrigger>
-                        </AccordionHeader>
-                        <AccordionContent>
-                          {[
-                            '제 시간에 도착하지 않았어요',
-                            '정산 금액을 보내지 않았어요',
-                            '장소에 나타나지 않았어요',
-                            '비매너 행동을 했어요'
-                          ].map((value) => (
-                            <Checkbox
-                              size="md"
-                              mt="$0.5"
-                              aria-label="Checkbox"
-                              value={''}
-                              key={value}
-                            >
-                              <CheckboxIndicator mr="$2">
-                                <CheckboxIcon as={CheckIcon} />
-                              </CheckboxIndicator>
-                              <CheckboxLabel>{value}</CheckboxLabel>
-                            </Checkbox>
-                          ))}
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
+                    <FeedbackAccordion />
                   </VStack>
                 </Card>
               ))}
-              <Button
-                size="md"
-                action="positive"
-                sx={{ width: '100%', mt: '$5', mb: '$10' }}
-                borderWidth="$0"
-                onPress={() => {}}
-              >
-                <ButtonText>제출하기</ButtonText>
-              </Button>
             </Box>
           )}
         </Box>
       </ScrollView>
+      <Box
+        sx={{
+          padding: 10,
+          backgroundColor: 'white' // 필요시 배경 색상 설정
+        }}
+      >
+        <Button
+          size="md"
+          action="positive"
+          sx={{ width: '100%' }}
+          borderWidth="$0"
+          onPress={() => {}}
+        >
+          <ButtonText>제출하기</ButtonText>
+        </Button>
+      </Box>
     </SafeAreaView>
   )
 }
