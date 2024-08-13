@@ -51,64 +51,65 @@ const MessageList: React.FC<MessageListProps> = ({
             <Text>가장 처음으로 안녕이라고 인사해보는건 어떤가요?</Text>
           </Box>
         ))}
-      {messages.map((message, i) => (
-        <Box
-          key={i}
-          style={{
-            padding: 10,
-            backgroundColor: '#F0F0F0',
-            borderRadius: 10,
-            marginBottom: 10
-          }}
-        >
-          {message && message.isSystem ? (
-            <Box style={{ alignItems: 'center' }}>
-              <Text style={{ color: '#666' }}>{message.content}</Text>
-            </Box>
-          ) : (
-            message && (
-              <React.Fragment>
-                <HStack space="md">
-                  <Avatar bgColor="$indigo600">
-                    <AvatarFallbackText>
-                      {message.sender.name}
-                    </AvatarFallbackText>
-                    <AvatarImage
-                      source={{
-                        uri: Profile(getTextId(message.sender.email))
-                      }}
-                      alt={`${message.sender.name}의 프로필사진`}
-                    />
-                  </Avatar>
-                  <VStack>
-                    <HStack style={{ alignItems: 'center' }}>
-                      <Heading size="sm">{message.sender.name}</Heading>
-                      <Text
-                        style={{ color: '#666', marginLeft: 5 }}
-                        fontSize={12}
-                      >
-                        @{getTextId(message.sender.email)}
-                      </Text>
-                    </HStack>
-                    <Text size="sm">{message.content}</Text>
-                  </VStack>
-                  <LinkText
-                    style={{ fontSize: 12, marginLeft: 'auto' }}
-                    onPress={() => handleReport(message.id)}
+      {messages &&
+        messages.map((message, i) => (
+          <Box
+            key={i}
+            style={{
+              padding: 10,
+              backgroundColor: '#F0F0F0',
+              borderRadius: 10,
+              marginBottom: 10
+            }}
+          >
+            {message && message.isSystem ? (
+              <Box style={{ alignItems: 'center' }}>
+                <Text style={{ color: '#666' }}>{message.content}</Text>
+              </Box>
+            ) : (
+              message && (
+                <React.Fragment>
+                  <HStack space="md">
+                    <Avatar bgColor="$indigo600">
+                      <AvatarFallbackText>
+                        {message.sender.name}
+                      </AvatarFallbackText>
+                      <AvatarImage
+                        source={{
+                          uri: Profile(getTextId(message.sender.email))
+                        }}
+                        alt={`${message.sender.name}의 프로필사진`}
+                      />
+                    </Avatar>
+                    <VStack>
+                      <HStack style={{ alignItems: 'center' }}>
+                        <Heading size="sm">{message.sender.name}</Heading>
+                        <Text
+                          style={{ color: '#666', marginLeft: 5 }}
+                          fontSize={12}
+                        >
+                          @{getTextId(message.sender.email)}
+                        </Text>
+                      </HStack>
+                      <Text size="sm">{message.content}</Text>
+                    </VStack>
+                    <LinkText
+                      style={{ fontSize: 12, marginLeft: 'auto' }}
+                      onPress={() => handleReport(message.id)}
+                    >
+                      신고
+                    </LinkText>
+                  </HStack>
+                  <Text
+                    style={{ color: '#666', fontSize: 12, marginLeft: 'auto' }}
                   >
-                    신고
-                  </LinkText>
-                </HStack>
-                <Text
-                  style={{ color: '#666', fontSize: 12, marginLeft: 'auto' }}
-                >
-                  {new Date(message.createdAt).toLocaleString()}
-                </Text>
-              </React.Fragment>
-            )
-          )}
-        </Box>
-      ))}
+                    {new Date(message.createdAt).toLocaleString()}
+                  </Text>
+                </React.Fragment>
+              )
+            )}
+          </Box>
+        ))}
     </ScrollView>
   )
 }
