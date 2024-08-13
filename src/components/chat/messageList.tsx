@@ -1,5 +1,6 @@
 // import { Message } from '@/types/messages';
 import { useAlert } from '@/contexts/AlertContext'
+import { ApiStatus } from '@/types/api'
 import { Message } from '@/types/message'
 import { poster } from '@/utils/apiClient'
 import { getTextId } from '@/utils/getTextId'
@@ -29,7 +30,14 @@ const MessageList: React.FC<MessageListProps> = ({
   scrollViewRef
 }) => {
   const Alert = useAlert()
-
+  const handleReport = async (messageId: number) => {
+    const res = await poster(`/chat/${messageId}/reports`, { reason: 'unset' })
+    if (res.status === ApiStatus.ERROR) {
+      Alert.showAlert('에러', String(res.error?.message))
+    } else {
+      Alert.showAlert('신고가 접수되었습니다', '해당 메세지가 신고되었습니다')
+    }
+  }
   return (
     <ScrollView
       ref={scrollViewRef}
@@ -86,16 +94,7 @@ const MessageList: React.FC<MessageListProps> = ({
                   </VStack>
                   <LinkText
                     style={{ fontSize: 12, marginLeft: 'auto' }}
-                    onPress={() => {
-                      poster('/chat/report', {
-                        id: message.id,
-                        reason: 'unset'
-                      })
-                      Alert.showAlert(
-                        '신고가 접수되었습니다',
-                        `@${getTextId(message.sender.email)}: ${message.content} `
-                      )
-                    }}
+                    onPress={() => handleReport(message.id)}
                   >
                     신고
                   </LinkText>
