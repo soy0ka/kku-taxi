@@ -36,11 +36,11 @@ yarn-error.*
 *.tsbuildinfo
 
 # firebase
+/GoogleServices
 google-services.json
 GoogleService-Info.plist
 /app/firebase.ts
 google-submit.json
-/GoogleServices
 
 # fastlane
 eas.json
