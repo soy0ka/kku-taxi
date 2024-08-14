@@ -18,7 +18,7 @@ import {
   Text,
   VStack
 } from '@gluestack-ui/themed'
-import { useLocalSearchParams, useNavigation } from 'expo-router'
+import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 import React from 'react'
 
 interface PartyMember {
@@ -53,9 +53,10 @@ export default function Finish() {
     const response = await poster(`/party/${id}/finish`, {
       feedBack: issues
     })
-
+    console.log(response)
     if (response.status === ApiStatus.SUCCESS) {
       showAlert('운행 종료', '피드백이 제출되었습니다')
+      router.replace('/tabs/chat')
     } else {
       showAlert('운행 종료', '피드백 제출에 실패했습니다')
     }
@@ -63,7 +64,7 @@ export default function Finish() {
 
   const fetchMembers = async () => {
     const members = await fetcher(`/party/${id}/members`)
-    console.log(members)
+
     setMembers(members.data)
   }
 
