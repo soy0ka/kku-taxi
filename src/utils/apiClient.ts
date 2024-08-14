@@ -1,5 +1,6 @@
 import { ApiBase } from '@/types/api'
 import { tokenManager } from '@/utils/localStorage'
+import { firebase } from '@react-native-firebase/app-check'
 import Axios from 'axios'
 import * as Application from 'expo-application'
 import Constants from 'expo-constants'
@@ -21,14 +22,17 @@ export const getDeviceId = async () => {
 }
 
 const getHeaders = async () => {
+  const appCheck = await firebase.appCheck()
   const Authorization = await tokenManager.getToken()
   const deviceId = await getDeviceId()
+  const appCheckTokenFB = await appCheck.getToken()
 
   return {
     Authorization: `Bearer ${Authorization}`,
     'X-Device-id': deviceId,
     'X-Platform': Platform.OS,
     'X-Device': await Device.deviceName,
+    'X-App-Check-Token': appCheckTokenFB.token,
     'X-App-Version': Constants.expoConfig?.version || '0.0.0'
   }
 }

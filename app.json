@@ -21,7 +21,7 @@
       "color": "#000000"
     },
     "ios": {
-      "buildNumber": "13",
+      "buildNumber": "14",
       "supportsTablet": true,
       "bundleIdentifier": "com.onde.kkutaxi",
       "googleServicesFile": "./GoogleService-Info.plist",
@@ -51,6 +51,7 @@
       "expo-notifications",
       "expo-splash-screen",
       "@react-native-firebase/app",
+      "@react-native-firebase/app-check",
       [
         "expo-build-properties",
         {

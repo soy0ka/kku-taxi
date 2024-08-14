@@ -1,6 +1,7 @@
 import { AlertProvider } from '@/contexts/AlertContext'
 import { config } from '@gluestack-ui/config'
 import { GluestackUIProvider } from '@gluestack-ui/themed'
+import { firebase } from '@react-native-firebase/app-check'
 import { Stack } from 'expo-router/stack'
 import { getApps, initializeApp } from 'firebase/app'
 import React from 'react'
@@ -20,6 +21,28 @@ const firebaseConfig = {
 if (getApps().length === 0) {
   initializeApp(firebaseConfig)
 }
+
+const appCheckProvider = firebase
+  .appCheck()
+  .newReactNativeFirebaseAppCheckProvider()
+
+appCheckProvider.configure({
+  android: {
+    // eslint-disable-next-line no-undef
+    provider: __DEV__ ? 'debug' : 'playIntegrity',
+    debugToken: process.env.EXPO_PUBLIC_FIREBASE_APPCHECK_ANDROID
+  },
+  apple: {
+    // eslint-disable-next-line no-undef
+    provider: __DEV__ ? 'debug' : 'appAttestWithDeviceCheckFallback',
+    debugToken: process.env.EXPO_PUBLIC_FIREBASE_APPCHECK_IOS
+  }
+})
+
+firebase.appCheck().initializeAppCheck({
+  provider: appCheckProvider,
+  isTokenAutoRefreshEnabled: true
+})
 
 export default function Layout() {
   return (
