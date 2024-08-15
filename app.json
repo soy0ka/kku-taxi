@@ -6,10 +6,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./src/assets/images/splash.png",
@@ -21,7 +18,7 @@
       "color": "#000000"
     },
     "ios": {
-      "buildNumber": "14",
+      "buildNumber": "15",
       "supportsTablet": true,
       "bundleIdentifier": "com.onde.kkutaxi",
       "googleServicesFile": "./GoogleService-Info.plist",
@@ -30,7 +27,7 @@
       }
     },
     "android": {
-      "versionCode": 6,
+      "versionCode": 7,
       "package": "com.onde.kkutaxi",
       "googleServicesFile": "./google-services.json",
       "permissions": [],
