@@ -4590,13 +4590,6 @@
   resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.6.0.tgz#eac397f28bf1d6ae0ae081363eca2f425bedf0d5"
   integrity sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==
 
-"@types/firebase@^3.2.1":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@types/firebase/-/firebase-3.2.1.tgz#17c1c8fee7485ab09668d2461e34540bdf44b3b1"
-  integrity sha512-G8XgHMu2jHlElfc2xVNaYP50F0qrqeTCjgeG1v5b4SRwWG4XKC4fCuEdVZuZaMRmVygcnbRZBAo9O7RsDvmkGQ==
-  dependencies:
-    firebase "*"
-
 "@types/graceful-fs@^4.1.3":
   version "4.1.9"
   resolved "https://registry.yarnpkg.com/@types/graceful-fs/-/graceful-fs-4.1.9.tgz#2a06bc0f68a20ab37b3e36aa238be6abdf49e8b4"
@@ -7035,21 +7028,6 @@ expo-file-system@~17.0.1:
   resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-17.0.1.tgz#b9f8af8c1c06ec71d96fd7a0d2567fa9e1c88f15"
   integrity sha512-dYpnZJqTGj6HCYJyXAgpFkQWsiCH3HY1ek2cFZVHFoEc5tLz9gmdEgTF6nFHurvmvfmXqxi7a5CXyVm0aFYJBw==
 
-expo-firebase-app@~2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/expo-firebase-app/-/expo-firebase-app-2.0.0.tgz#1c2158c6423cd2a1bdb7749b96cc52b678126866"
-  integrity sha512-rhKErhQybgL5Vbv8HndYVzwoXikL62iCd5e8k5cZZhs6S0TiWEx0anKhALvI2eCGBzQmYHM2sIzbi8DeUemuCw==
-  dependencies:
-    expo-core "~2.0.0"
-
-expo-firebase-messaging@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/expo-firebase-messaging/-/expo-firebase-messaging-2.0.0.tgz#0950c226fe485530ac9e6cca7cd2fc61ce9ce8a3"
-  integrity sha512-LRl0oiVNxIM8/M3tXbyz27mOR1GTHIxGlcJKcPuKe1b8wmojghpqKrtdQ/0ePks2xYzOhjbRCmpu0CMd3Uag2w==
-  dependencies:
-    expo-core "~2.0.0"
-    expo-firebase-app "~2.0.0"
-
 expo-font-interface@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/expo-font-interface/-/expo-font-interface-2.0.0.tgz#183d033029e41c2f92c1117425d1381dbb0dd452"
@@ -7394,39 +7372,6 @@ find-yarn-workspace-root@~2.0.0:
   dependencies:
     micromatch "^4.0.2"
 
-firebase@*, firebase@^10.12.2:
-  version "10.12.5"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-10.12.5.tgz#381eccea39002c46d73883b7b0cfbef17d531a76"
-  integrity sha512-J0yL3yh12CfFprTkSOQ9HqBugERyqvWwOuOoo1j1QHmYe9cYLKnBmtNCvGIYInDcsVUnJoRXCM+hxbGf48oVhg==
-  dependencies:
-    "@firebase/analytics" "0.10.7"
-    "@firebase/analytics-compat" "0.2.13"
-    "@firebase/app" "0.10.8"
-    "@firebase/app-check" "0.8.7"
-    "@firebase/app-check-compat" "0.3.14"
-    "@firebase/app-compat" "0.2.38"
-    "@firebase/app-types" "0.9.2"
-    "@firebase/auth" "1.7.6"
-    "@firebase/auth-compat" "0.5.11"
-    "@firebase/database" "1.0.7"
-    "@firebase/database-compat" "1.0.7"
-    "@firebase/firestore" "4.6.5"
-    "@firebase/firestore-compat" "0.3.34"
-    "@firebase/functions" "0.11.6"
-    "@firebase/functions-compat" "0.3.12"
-    "@firebase/installations" "0.6.8"
-    "@firebase/installations-compat" "0.2.8"
-    "@firebase/messaging" "0.12.10"
-    "@firebase/messaging-compat" "0.2.10"
-    "@firebase/performance" "0.6.8"
-    "@firebase/performance-compat" "0.2.8"
-    "@firebase/remote-config" "0.4.8"
-    "@firebase/remote-config-compat" "0.2.8"
-    "@firebase/storage" "0.12.6"
-    "@firebase/storage-compat" "0.3.9"
-    "@firebase/util" "1.9.7"
-    "@firebase/vertexai-preview" "0.0.3"
-
 firebase@10.12.2:
   version "10.12.2"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-10.12.2.tgz#9049286c5fafb6d686bb19ad93c7bb4a9e8756c0"
@@ -7459,6 +7404,39 @@ firebase@10.12.2:
     "@firebase/storage-compat" "0.3.8"
     "@firebase/util" "1.9.6"
     "@firebase/vertexai-preview" "0.0.2"
+
+firebase@^10.12.2:
+  version "10.12.5"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-10.12.5.tgz#381eccea39002c46d73883b7b0cfbef17d531a76"
+  integrity sha512-J0yL3yh12CfFprTkSOQ9HqBugERyqvWwOuOoo1j1QHmYe9cYLKnBmtNCvGIYInDcsVUnJoRXCM+hxbGf48oVhg==
+  dependencies:
+    "@firebase/analytics" "0.10.7"
+    "@firebase/analytics-compat" "0.2.13"
+    "@firebase/app" "0.10.8"
+    "@firebase/app-check" "0.8.7"
+    "@firebase/app-check-compat" "0.3.14"
+    "@firebase/app-compat" "0.2.38"
+    "@firebase/app-types" "0.9.2"
+    "@firebase/auth" "1.7.6"
+    "@firebase/auth-compat" "0.5.11"
+    "@firebase/database" "1.0.7"
+    "@firebase/database-compat" "1.0.7"
+    "@firebase/firestore" "4.6.5"
+    "@firebase/firestore-compat" "0.3.34"
+    "@firebase/functions" "0.11.6"
+    "@firebase/functions-compat" "0.3.12"
+    "@firebase/installations" "0.6.8"
+    "@firebase/installations-compat" "0.2.8"
+    "@firebase/messaging" "0.12.10"
+    "@firebase/messaging-compat" "0.2.10"
+    "@firebase/performance" "0.6.8"
+    "@firebase/performance-compat" "0.2.8"
+    "@firebase/remote-config" "0.4.8"
+    "@firebase/remote-config-compat" "0.2.8"
+    "@firebase/storage" "0.12.6"
+    "@firebase/storage-compat" "0.3.9"
+    "@firebase/util" "1.9.7"
+    "@firebase/vertexai-preview" "0.0.3"
 
 flat-cache@^3.0.4:
   version "3.2.0"
