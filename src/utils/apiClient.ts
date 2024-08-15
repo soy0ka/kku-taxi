@@ -21,15 +21,20 @@ export const getDeviceId = async () => {
   }
 }
 
-const isSimulator = Platform.OS === 'ios' && !Constants.isDevice
+const isIOSSimulator =
+  Platform.OS === 'ios' &&
+  (Device.modelName?.includes('Simulator') ||
+    Device.modelName?.includes('iPhone Simulator'))
 
 const getHeaders = async () => {
   const appCheck = await firebase.appCheck()
   const Authorization = await tokenManager.getToken()
   const deviceId = await getDeviceId()
-  const appCheckTokenFB = isSimulator
+  const appCheckTokenFB = isIOSSimulator
     ? { token: process.env.EXPO_PUBLIC_APPCHECK_BYPASS || '' }
-    : await appCheck.getToken().catch(() => ({ token: '' }))
+    : await appCheck.getToken().catch(() => {
+        return { token: '' }
+      })
 
   return {
     Authorization: `Bearer ${Authorization}`,
